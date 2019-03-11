@@ -1,16 +1,15 @@
 <template>
 <div>
-<div class="container text-center" v-if="evaluateWindowDisply">
-  <h3>您觉得视频怎么样？</h3>
+<div class="container" v-if="evaluateWindowDisply">
+  <h5>您觉得视频怎么样？</h5>
   <form>
     <div class="form-group">
       <rate/>
     </div>
-    <div class="form-group">
-      <textarea class="form-control" rows="3">请尽可能详细描述您的学习经历，例如学习成果，老师讲课风格等</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">提交评价</button>
+    <el-input type="textarea" :rows="6" placeholder="请尽可能详细描述您的学习经历，例如学习成果，老师讲课风格等" v-model="textarea"></el-input>
   </form>
+   <div style="margin: 20px 0;"></div>
+  <button type="submit" class="btn btn-primary">提交评价</button>
 </div>
 
 <div class="p-3">
@@ -85,7 +84,8 @@ export default {
   data(){
     return {
       evaluateWindowDisply:false,
-      evaluateSubmitButtonDisplay:true
+      evaluateSubmitButtonDisplay:true,
+      textarea: ''
       }
   },
   methods: {

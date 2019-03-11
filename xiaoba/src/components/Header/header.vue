@@ -20,10 +20,10 @@
       <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">路边的小贩</a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="#">学习的课程</a>
-        <a class="dropdown-item" href="#">个人评价</a>
-        <a class="dropdown-item" href="#">个人提问</a>
-        <a class="dropdown-item" href="#">资料下载</a>
-        <a class="dropdown-item" href="#">退出</a>
+        <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a>
+        <a class="dropdown-item" href="#" @click="goTo('/ownerquestionlist')">个人提问</a>
+        <a class="dropdown-item" href="#" @click="goTo('/resource')">资料下载</a>
+        <a class="dropdown-item" href="#" @click="goTo('/login')">退出</a>
     </div>
     </li>
    </ul>
@@ -37,6 +37,7 @@ import 'bootstrap'
 export default {
   methods: {
     goTo(path){
+       //this.$router.push({path});
        this.$router.replace(path);
     }
   },

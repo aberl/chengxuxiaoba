@@ -6,6 +6,10 @@ import CourseList from '../pages/videolist/courselist.vue'
 import CourseVideo from '../pages/video/coursevideo.vue'
 import MessageList from '../pages/message/messageList.vue'
 import Login from '../pages/login/login.vue'
+import Questionlist from '../pages/question/questionlist.vue'
+import Ownerevaluatelist from '../pages/evaluate/ownerevaluatelist.vue'
+import Ownerquestionlist from '../pages/question/ownerquestionlist.vue'
+import Resource from '../pages/resource/resource.vue'
 
 Vue.use(VueRouter);
 
@@ -37,14 +41,34 @@ export default new VueRouter({
             component: CourseList
         },
         {
-            path: '/courseVideo',
+            path: '/coursevideo',
             name: 'CourseVideo',
             component: CourseVideo
         },
         {
-            path: '/messageList',
+            path: '/messagelist',
             name: 'MessageList',
             component: MessageList
+        },
+        {
+            path: '/questionlist',
+            name: 'questionlist',
+            component: Questionlist
+        },
+        {
+            path: '/ownerevaluatelist',
+            name: 'Ownerevaluatelist',
+            component: Ownerevaluatelist
+        },
+        {
+            path: '/ownerquestionlist',
+            name: 'Ownerquestionlist',
+            component: Ownerquestionlist
+        },
+        {
+            path: '/Resource',
+            name: 'Resource',
+            component: Resource
         }
     ]
 });
