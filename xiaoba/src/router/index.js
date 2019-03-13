@@ -4,12 +4,14 @@ import Mindex from '../pages/index/index.vue'
 import CourseDetail from '../pages/videolist/coursedetail.vue'
 import CourseList from '../pages/videolist/courselist.vue'
 import CourseVideo from '../pages/video/coursevideo.vue'
+import ViewHistory from '../pages/video/viewhistory.vue'
 import MessageList from '../pages/message/messageList.vue'
 import Login from '../pages/login/login.vue'
 import Questionlist from '../pages/question/questionlist.vue'
 import Ownerevaluatelist from '../pages/evaluate/ownerevaluatelist.vue'
 import Ownerquestionlist from '../pages/question/ownerquestionlist.vue'
 import Resource from '../pages/resource/resource.vue'
+import Forgetpwd from '../pages/login/forgetpwd.vue'
 
 Vue.use(VueRouter);
 
@@ -46,6 +48,11 @@ export default new VueRouter({
             component: CourseVideo
         },
         {
+            path: '/viewhistory',
+            name: 'ViewHistory',
+            component: ViewHistory
+        },
+        {
             path: '/messagelist',
             name: 'MessageList',
             component: MessageList
@@ -69,6 +76,11 @@ export default new VueRouter({
             path: '/Resource',
             name: 'Resource',
             component: Resource
+        },
+        {
+            path: '/forgetpwd',
+            name: 'Forgetpwd',
+            component: Forgetpwd
         }
     ]
 });
