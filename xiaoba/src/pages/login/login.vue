@@ -3,14 +3,16 @@
     <div style="margin: 200px 0;"></div>
     <form class="form-signin">
    <headwe4login/>
-     
+   xxx{{validatetionCode == null? false:(validatetionCode.code == 1)}}
+   <warnningdialog v-bind:displayflag="validatetionCode == null? false:(validatetionCode.code == 1)"></warnningdialog>
+
   <el-tabs v-model="activeTab">
     <!--注册-->
    <el-tab-pane name="reg">
     <span slot="label"><i class="iconfont ai-iconzhuce"></i>注 册</span>
     <div style="margin-top: 15px;">
         <el-input placeholder="请输入手机号码" v-model="mobilephone4reg" clearable>
-          <el-button slot="append" type="primary" @click="countDown" class="input-with-select" v-bind:disabled="isValidationCodeButtonDisabled">{{validationCodeButtonContent}}</el-button>
+          <el-button slot="append" type="primary" @click="sendValidtionCode({'mobilePhoneNo':mobilephone4reg,'category':'register'})" class="input-with-select" v-bind:disabled="isValidationCodeButtonDisabled">{{validationCodeButtonContent}}</el-button>
         </el-input>
       </div>
     <br/>
@@ -69,9 +71,14 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from "vuex";
 import headwe4login from "../../components/Header/header4login.vue";
+import warnningdialog from "../../components/Dialog/warnning.vue";
 
 export default {
+  computed: mapState({
+    validatetionCode: state => state.user.validatetionCode
+  }),
   data() {
     return {
       activeTab: "accountlogin",
@@ -84,13 +91,14 @@ export default {
       timer: null,
 
       isValidationCodeButtonDisabled: false, //发送验证码按钮的禁用状态
-      validationCodeButtonContent:"发送验证码",
+      validationCodeButtonContent: "发送验证码",
       disabledContent: "s后重新发送", // 按钮里显示的内容
       enableContent: "发送验证码", // 按钮里显示的内容
-      countDountTime: '' //记录具体倒计时时间
+      countDountTime: "" //记录具体倒计时时间
     };
   },
   methods: {
+    ...mapActions(["sendValidtionCode"]),
     goTo(path) {
       //this.$router.push({path});
       this.$router.replace(path);
@@ -103,7 +111,8 @@ export default {
           this.isValidationCodeButtonDisabled = true;
           if (this.countDountTime > 1) {
             this.countDountTime--;
-            this.validationCodeButtonContent = this.countDountTime + this.disabledContent;
+            this.validationCodeButtonContent =
+              this.countDountTime + this.disabledContent;
             return;
           }
 
@@ -117,7 +126,8 @@ export default {
     }
   },
   components: {
-    headwe4login
+    headwe4login,
+    warnningdialog
   }
 };
 </script>
