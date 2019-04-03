@@ -3,9 +3,9 @@
     <div style="margin: 200px 0;"></div>
     <form class="form-signin">
    <headwe4login/>
-   xxx{{validatetionCode == null? false:(validatetionCode.code == 1)}}
-   <warnningdialog v-bind:displayflag="validatetionCode == null? false:(validatetionCode.code == 1)"></warnningdialog>
-
+   xxx{{validatetionCode == null? false:(validatetionCode.message)}}||{{isSendValidateCodeSuccess == null?false:!isSendValidateCodeSuccess}}
+   <warnningdialog @input="input" :displayflag="isSendValidateCodeSuccess == null?false:!isSendValidateCodeSuccess"></warnningdialog>
+  
   <el-tabs v-model="activeTab">
     <!--注册-->
    <el-tab-pane name="reg">
@@ -77,10 +77,15 @@ import warnningdialog from "../../components/Dialog/warnning.vue";
 
 export default {
   computed: mapState({
-    validatetionCode: state => state.user.validatetionCode
+    validatetionCode: state => state.user.validatetionCode,
+    isSendValidateCodeSuccess: state =>
+      state.user.validatetionCode == null
+        ? null
+        : state.user.validatetionCode.code == 0
   }),
   data() {
     return {
+      tag: this.isSendValidateCodeSuccess,
       activeTab: "accountlogin",
       mobilephone4log: "",
       password4login: "",
@@ -98,7 +103,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["sendValidtionCode"]),
+    ...mapActions(["sendValidtionCode","resetValidtionCode"]),
+    input(flag){
+      console.log("parent flag is "+flag);
+      // this.$store.state.user.validatetionCode = null;
+      this.resetValidtionCode();
+    },
     goTo(path) {
       //this.$router.push({path});
       this.$router.replace(path);

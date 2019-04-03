@@ -1,40 +1,36 @@
-<<template>
+<template>
   <div>
-<el-dialog
-  title="提示"
-  :visible.sync="dialogVisible"
-  size="tiny"
-  :before-close="handleClose">
-  <span>这是一段信息</span>
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-  </span>
-</el-dialog>
+    <el-dialog title="提示" :visible.sync="dialogVisible" size="tiny" :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
+    child ==>{{dialogVisible}} // {{this.displayflag}}
   </div>
 </template>
-
 <script>
 export default {
-    props:['displayflag'],
+  props: ["displayflag"],
   data() {
     return {
       dialogVisible: this.displayflag
     };
   },
   methods: {
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+    handleClose() {
+      this.dialogVisible = false;
+      this.$emit('input', this.dialogVisible)
+    },
+    handleDisplay() {
+      this.dialogVisible = true;
     }
   },
-  watch:{
-      displayflag:function name(params){
-          this.dialogVisible=this.displayflag;
-      }
+  watch: {
+    displayflag: function(newval, oldval) {
+      console.log(newval, oldval);
+      this.dialogVisible = newval;
+    }
   }
 };
 </script>
