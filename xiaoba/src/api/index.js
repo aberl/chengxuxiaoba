@@ -37,3 +37,16 @@ export const reqGetUserInfoByMobilePhone = mobilePhoneNo =>
  */
 export const reqLogin = (mobilePhoneNo, password) =>
   ajax(BASE_URL + "/users/token", { mobilePhoneNo, password }, "POST");
+
+/**
+ * 修改密碼
+ * @param {*} mobilePhoneNo
+ * @param {*} validationCode
+ * @param {*} password
+ */
+export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
+  ajax(
+    BASE_URL + "/users/password",
+    { mobilePhoneNo, validationCode, password },
+    "PUT"
+  );

@@ -18,7 +18,7 @@
     <br>
 
     <div class="input-group">
-      <el-input type="password" placeholder="密码由6-12位数字或字母组成" v-model="password4reg" clearable></el-input>
+      <el-input type="password" placeholder="密码由6-12位数字或字母组成" v-model="password4reg" show-password></el-input>
     </div>
     <br>
     <button type="button" class="btn btn-success btn-lg btn-block" @click="register">注 册</button>
@@ -27,7 +27,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import warnningdialog from "../Dialog/warnning.vue";
 import { warn } from "../../VueAPI/Dialog/dialog";
 import {
   matchMobilePhone,
@@ -157,7 +156,6 @@ export default {
     }
   },
   components: {
-    warnningdialog
   }
 };
 </script>

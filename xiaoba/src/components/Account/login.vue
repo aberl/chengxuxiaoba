@@ -33,7 +33,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["receiveUserInfo","conserveUserInfo"]),
+    ...mapActions(["receiveUserInfo", "conserveUserInfo"]),
+    goTo(path) {
+      this.$router.replace(path);
+    },
     async login() {
       if (this.mobilephone4login == null || this.mobilephone4login == "") {
         warn("手机号不能为空", "");
@@ -63,7 +66,6 @@ export default {
 
       //去首页
       this.$router.replace("/");
-
     }
   },
   components: {}
