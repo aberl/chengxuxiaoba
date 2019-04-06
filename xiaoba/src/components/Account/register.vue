@@ -61,7 +61,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["receiveUserInfo"]),
+    ...mapActions(["receiveUserInfo","conserveUserInfo"]),
     async sendcode() {
       if (this.mobilephone4reg == null || this.mobilephone4reg == "") {
         warn("手机号不能为空", "");
@@ -130,7 +130,7 @@ export default {
       }
 
       this.receiveUserInfo(userInfo.data);
-
+      this.conserveUserInfo(userInfo.data);
       //去首页
       this.$router.replace("/");
     },

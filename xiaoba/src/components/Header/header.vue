@@ -32,7 +32,7 @@
             <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a>
             <a class="dropdown-item" href="#" @click="goTo('/ownerquestionlist')">个人提问</a>
             <a class="dropdown-item" href="#" @click="goTo('/resource')">资料下载</a>
-            <a class="dropdown-item" href="#" @click="goTo('/login')">退出</a>
+            <a class="dropdown-item" href="#" @click="logout">退出</a>
           </div>
         </li>
         <li v-if="!userInfo.name">
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState({
@@ -54,8 +54,13 @@ export default {
     })
   },
   methods: {
+    ...mapActions(['removeUserInfo']),
     goTo(path) {
       this.$router.replace(path);
+    },
+    logout(){
+      this.removeUserInfo();
+      this.goTo('/login');
     }
   },
   components: {}

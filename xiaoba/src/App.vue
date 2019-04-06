@@ -5,16 +5,17 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-  methods: {
-
+  mounted() {
+    this.getUserInfo();
   },
-  components: {
-
-  }
-}
+  methods: {
+    ...mapActions(["getUserInfo"])
+  },
+  components: {}
+};
 </script>
 
 <style>
-
 </style>

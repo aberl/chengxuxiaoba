@@ -23,9 +23,17 @@ export const reqRegisterAccount = (mobilePhoneNo, validationCode, password) =>
     "POST"
   );
 
-  /**
-   * 根据用户手机号获取用户信息
-   * @param {*} mobilePhoneNo 
-   */
+/**
+ * 根据用户手机号获取用户信息
+ * @param {*} mobilePhoneNo
+ */
 export const reqGetUserInfoByMobilePhone = mobilePhoneNo =>
   ajax(BASE_URL + "/users/mobilephoneno/" + mobilePhoneNo);
+
+/**
+ * 用户登录
+ * @param {*} mobilePhoneNo
+ * @param {*} password
+ */
+export const reqLogin = (mobilePhoneNo, password) =>
+  ajax(BASE_URL + "/users/token", { mobilePhoneNo, password }, "POST");
