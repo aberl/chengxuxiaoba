@@ -9,3 +9,12 @@ const BASE_URL = "/api";
  */
 export const reqSendValidationCode = (mobilePhoneNo, category) =>
   ajax(BASE_URL+"/validation/code", { mobilePhoneNo, category }, "POST");
+
+/**
+ * 注册
+ * @param {*} mobilePhoneNo 
+ * @param {*} validationCode 
+ * @param {*} password 
+ */
+export const reqRegisterAccount = (mobilePhoneNo, validationCode,password) =>
+  ajax(BASE_URL+"/users/account", { mobilePhoneNo, validationCode ,password}, "POST");
