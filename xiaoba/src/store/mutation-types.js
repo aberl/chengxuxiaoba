@@ -2,10 +2,8 @@
  * 包含N个mutation的type名称常量
  */
 
- export const REQUEST_SENDVALIDATIONCODE = 'request_sendvalidationcode'
- export const REQUEST_RESETVALIDATIONCODE = 'request_resetvalidationcode'
+ export const REQUEST_RECEIVE_USERINFO = 'request_receive_userinfo'
 
  export default {
-    REQUEST_SENDVALIDATIONCODE,
-    REQUEST_RESETVALIDATIONCODE
+   REQUEST_RECEIVE_USERINFO
  }

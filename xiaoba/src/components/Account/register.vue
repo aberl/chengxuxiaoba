@@ -18,7 +18,7 @@
     <br>
 
     <div class="input-group">
-      <el-input type="password" placeholder="密码由6-12位数字和字母组成" v-model="password4reg" clearable></el-input>
+      <el-input type="password" placeholder="密码由6-12位数字或字母组成" v-model="password4reg" clearable></el-input>
     </div>
     <br>
     <button type="button" class="btn btn-success btn-lg btn-block" @click="register">注 册</button>
@@ -26,10 +26,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import warnningdialog from "../Dialog/warnning.vue";
 import { warn } from "../../VueAPI/Dialog/dialog";
-import { matchMobilePhone,matchRegisterPassword } from "../../VueAPI/Regex/regex";
-import { reqSendValidationCode, reqRegisterAccount } from "../../api";
+import {
+  matchMobilePhone,
+  matchRegisterPassword
+} from "../../VueAPI/Regex/regex";
+import {
+  reqSendValidationCode,
+  reqRegisterAccount,
+  reqGetUserInfoByMobilePhone
+} from "../../api";
 
 export default {
   data() {
@@ -53,6 +61,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["receiveUserInfo"]),
     async sendcode() {
       if (this.mobilephone4reg == null || this.mobilephone4reg == "") {
         warn("手机号不能为空", "");
@@ -98,9 +107,8 @@ export default {
         return;
       }
 
-      if(!matchRegisterPassword(this.password4reg))
-      {
-        warn('密码必须由6-12位数字和字母组成');
+      if (!matchRegisterPassword(this.password4reg)) {
+        warn("密码必须由6-12位数字和字母组成");
         return;
       }
 
@@ -114,6 +122,17 @@ export default {
         warn(result.message, "");
         return;
       }
+
+      const userInfo = await reqGetUserInfoByMobilePhone(this.mobilephone4reg);
+      if (userInfo.code != 0) {
+        warn(userInfo.message, "");
+        return;
+      }
+
+      this.receiveUserInfo(userInfo.data);
+
+      //去首页
+      this.$router.replace("/");
     },
 
     countDown() {
