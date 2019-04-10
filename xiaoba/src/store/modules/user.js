@@ -9,7 +9,7 @@ import {
 } from "../mutation-types.js";
 
 const state = {
-  userInfo: {} || JSON.parse(localStorage.getItem("userInfo"))
+  userInfo: {} //|| JSON.parse(localStorage.getItem("userInfo"))
 };
 
 const actions = {
@@ -21,6 +21,10 @@ const actions = {
   },
   getUserInfo({ commit }) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo == null) {
+      return;
+    }
+    
     commit(REQUEST_RECEIVE_USERINFO, { userInfo });
   },
   removeUserInfo({ commit }) {
@@ -37,6 +41,7 @@ const mutations = {
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
   [REQUEST_REMOVE_USERINFO](state) {
+    state.userInfo = {};
     localStorage.removeItem("userInfo");
   }
 };

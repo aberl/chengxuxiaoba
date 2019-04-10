@@ -65,6 +65,12 @@ export default {
       rdirectContent: "5s后自动跳转到登录页"
     };
   },
+  mounted: function() {
+    var localUserInfo=JSON.parse(localStorage.getItem("userInfo"));
+    if(localUserInfo.name){
+      this.goTo('/');
+    }
+  },
   computed: {
     //判断手机号码
     isRightPhoneNumber: function() {

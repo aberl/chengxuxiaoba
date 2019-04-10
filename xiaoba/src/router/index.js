@@ -13,10 +13,31 @@ import Ownerquestionlist from '../pages/question/ownerquestionlist.vue'
 import Resource from '../pages/resource/resource.vue'
 import Forgetpwd from '../pages/login/forgetpwd.vue'
 
+
+import Admin_Mindex from '../pages/admin/adminIndex.vue'
+import Admin_courselist from '../pages/admin/course/courselist.vue'
+import Admin_addcourse from '../pages/admin/course/addcourse.vue'
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
     routes:[
+        {
+            path: '/op',
+            name: 'op',
+            component: Admin_Mindex
+        },
+        {
+            path: '/op/courselist',
+            name: 'courselist',
+            component: Admin_courselist 
+        },
+        {
+            path: '/op/addcourse',
+            name: 'addcourse',
+            component: Admin_addcourse 
+        }
+        ,
         {
             path: '/login',
             name: 'login',

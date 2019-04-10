@@ -15,12 +15,20 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { warn } from "../../VueAPI/Dialog/dialog";
 import { matchMobilePhone } from "../../VueAPI/Regex/regex";
 import { reqLogin } from "../../api";
 export default {
+  mounted: function() {
+    if (this.userInfo.name) {
+      this.goTo("/");
+    }
+  },
   computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo
+    }),
     //判断手机号码
     isRightPhoneNumber: function() {
       return matchMobilePhone(this.mobilephone4login);
