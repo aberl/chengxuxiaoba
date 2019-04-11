@@ -13,7 +13,7 @@
 <script>    
 import headerTop from '../../../components/Admin/Header/adminHeader.vue'
 import footerGuide from '../../../components/Footer/footer.vue'
-import leftNavi from '../../../components/Navi/adminLeftNavi.vue'
+import leftNavi from '../../../components/Admin/Navi/adminLeftNavi.vue'
 
 export default {
   methods:{

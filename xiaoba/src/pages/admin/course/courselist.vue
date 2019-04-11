@@ -1,46 +1,141 @@
 <template>
   <div>
-      <headerTop/>
-
-<el-row :gutter="10">
-  <el-col :xs="6" :sm="6" :md="4" :lg="4"><div class="grid-content bg-purple-light"><leftNavi/></div></el-col>
-  <el-col :xs="16" :sm="16" :md="18" :lg="18">巴拉巴拉小魔仙</el-col>
-</el-row>
-      <footerGuide/>
+    <headerTop/>
+    <el-container>
+      <el-aside width="200px">
+        <leftNavi/>
+      </el-aside>
+      <el-main>
+<el-table
+    :data="tableData"
+    style="width: 100%"
+    max-height="250">
+    <el-table-column
+      fixed
+      prop="date"
+      label="日期"
+      width="150">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="province"
+      label="省份"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="city"
+      label="市区"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址"
+      width="300">
+    </el-table-column>
+    <el-table-column
+      prop="zip"
+      label="邮编"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      fixed="right"
+      label="操作"
+      width="120">
+      <template slot-scope="scope">
+        <el-button
+          @click.native.prevent="deleteRow(scope.$index, tableData)"
+          type="text"
+          size="small">
+          移除
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+      </el-main>
+    </el-container>
+    <footerGuide/>
   </div>
 </template>
 
-<script>    
-import headerTop from '../../../components/Admin/Header/adminHeader.vue'
-import footerGuide from '../../../components/Footer/footer.vue'
-import leftNavi from '../../../components/Navi/adminLeftNavi.vue'
+<script>
+import headerTop from "../../../components/Admin/Header/adminHeader.vue";
+import footerGuide from "../../../components/Footer/footer.vue";
+import leftNavi from "../../../components/Admin/Navi/adminLeftNavi.vue";
 
 export default {
-  methods:{
+    methods: {
+      handleClick() {
+        console.log(1);
+      }
+    },
+data() {
+      return {
+        tableData: [{
+          date: '2016-05-03',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-08',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-06',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }]
+      }
   },
-components:{
+  components: {
     headerTop,
     footerGuide,
     leftNavi
-}
-}
+  }
+};
 </script>
 
 <style>
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
+.el-main {
+   text-align: center; 
+}
 </style>

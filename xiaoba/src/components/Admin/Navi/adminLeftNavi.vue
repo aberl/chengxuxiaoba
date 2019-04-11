@@ -2,8 +2,8 @@
   <el-row class="tac">
     <el-col>
       <el-menu
-        :default-active="this.$router.path"
-        router 
+        :default-active="activeIndex"
+        router
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
@@ -14,21 +14,19 @@
           </template>
           <el-submenu index="1-1">
             <template slot="title">模块</template>
-            <el-menu-item index="/op/addcourse">新增模块</el-menu-item>
             <el-menu-item index="/op/courselist">模块列表</el-menu-item>
+            <el-menu-item index="/op/addcourse">新增模块</el-menu-item>
           </el-submenu>
           <el-submenu index="1-2">
             <template slot="title">课程</template>
             <el-menu-item index="1-2-1">新增课程</el-menu-item>
-            <el-menu-item index="1-2-2">
-             课程列表
-            </el-menu-item>
+            <el-menu-item index="1-2-2">课程列表</el-menu-item>
           </el-submenu>
         </el-submenu>
 
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-message"></i>视频管理
+            <i class="el-icon-message"></i>视{{this.$router.path}}频管理
           </template>
           <el-submenu index="2-1">
             <template slot="title">视频</template>
@@ -56,6 +54,12 @@
 
 <script>
 export default {
+  computed: {
+    activeIndex: function() {
+      if (this.$route.path) return this.$route.path;
+      else return "";
+    }
+  },
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
