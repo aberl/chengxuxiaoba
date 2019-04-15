@@ -1,14 +1,14 @@
 <template>
   <div>
     <headerTop/>
-
     <el-container>
       <el-aside width="200px">
         <leftNavi/>
       </el-aside>
-      <el-main>欢迎来到管理员页面</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
-
     <footerGuide/>
   </div>
 </template>
@@ -19,7 +19,8 @@ import footerGuide from "../../components/Footer/footer.vue";
 import leftNavi from "../../components/Admin/Navi/adminLeftNavi.vue";
 
 export default {
-  methods: {},
+  methods: {
+  },
   components: {
     headerTop,
     footerGuide,
@@ -29,14 +30,14 @@ export default {
 </script>
 
 <style>
-.el-main{
+.el-main {
   /* text-align: center; */
   font-size: 30px;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
-.sans：{
-  font-size: 30px
+.sans： {
+  font-size: 30px;
 }
 </style>

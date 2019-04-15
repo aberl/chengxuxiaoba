@@ -16,6 +16,7 @@ import footerGuide from '../../../components/Footer/footer.vue'
 import leftNavi from '../../../components/Admin/Navi/adminLeftNavi.vue'
 
 export default {
+  inject: ['reload'],
   methods:{
   },
 components:{
