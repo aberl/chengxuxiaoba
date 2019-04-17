@@ -2,6 +2,7 @@
   <div>
     <el-table :data="tableData" style="width: 100%" @row-click="getDetails">
       <el-table-column fixed prop="name" label="名称"></el-table-column>
+      <el-table-column fixed prop="course" label="所属课程"></el-table-column>
       <el-table-column prop="createdatetime" label="创建时间"></el-table-column>
       <el-table-column prop="status" label="状态"></el-table-column>
       <el-table-column fixed="right" label="操作">
@@ -20,6 +21,16 @@
         label-width="100px"
         class="demo-ruleForm"
       >
+    <el-form-item label="所属课程" prop="course">
+        <el-select v-model="rowSelected.course" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+    </el-form-item>
         <el-form-item label="模块名称" prop="name">
           <el-input v-model="rowSelected.name"></el-input>
         </el-form-item>
@@ -68,14 +79,32 @@ export default {
       }
   },
   data() {
-    return {
+    return { options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        value: '',
       dialogFormVisible: false,
       ruleForm: {
+        course:"",
         name: "",
         desc: "",
         status: "active"
       },
       rules: {
+        course:[{ required: true, message: "请选择课程", trigger: "blur" }],
         name: [
           { required: true, message: "请输入模块名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
@@ -83,6 +112,7 @@ export default {
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }]
       },
       rowSelected:{
+        course:"",
         name: "",
         createdatetime: "",
         desc: "",
@@ -93,30 +123,35 @@ export default {
         {
           createdatetime: "2016-05-03",
           name: "JAVA",
+          course:"JAVA",
           status: "正常",
           desc:"JAVA"
         },
         {
           createdatetime: "2016-05-03",
           name: "数据库",
+          course:"数据库",
           status: "正常",
           desc:"数据库"
         },
         {
           createdatetime: "2016-05-03",
           name: "前端",
+          course:"前端",
           status: "正常",
           desc:"JA前端A"
         },
         {
           createdatetime: "2016-05-03",
           name: "开发工具",
+          course:"开发工具",
           status: "正常",
           desc:"开发工具"
         },
         {
           createdatetime: "2016-05-03",
           name: "大数据",
+          course:"大数据",
           status: "正常",
           desc:"大数据"
         }

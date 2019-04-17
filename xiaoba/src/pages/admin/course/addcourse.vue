@@ -1,47 +1,78 @@
 <template>
-  <div>
-      <headerTop/>
-
-<el-row :gutter="10">
-  <el-col :xs="6" :sm="6" :md="4" :lg="4"><div class="grid-content bg-purple-light"><leftNavi/></div></el-col>
-  <el-col :xs="16" :sm="16" :md="18" :lg="18">新增</el-col>
-</el-row>
-      <footerGuide/>
-  </div>
+  <el-form
+    :model="ruleForm"
+    :rules="rules"
+    ref="ruleForm"
+    label-width="100px"
+    class="demo-ruleForm"
+  >
+    <el-form-item label="名称" prop="name">
+      <el-input v-model="ruleForm.name"></el-input>
+    </el-form-item>
+    <el-form-item label="图片" prop="name">
+      <el-upload
+        class="upload-demo"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :file-list="fileList"
+      >
+        <el-button size="small" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
+    </el-form-item>
+    <el-form-item label="描述" prop="desc">
+      <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+    </el-form-item>
+    <el-form-item label="状态" prop="status">
+      <el-radio-group v-model="ruleForm.status">
+        <el-radio class="radio" label="1">激活</el-radio>
+        <el-radio class="radio" label="-1">注销</el-radio>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+      <el-button @click="resetForm('ruleForm')">重置</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
-<script>    
-import headerTop from '../../../components/Admin/Header/adminHeader.vue'
-import footerGuide from '../../../components/Footer/footer.vue'
-import leftNavi from '../../../components/Admin/Navi/adminLeftNavi.vue'
-
+<script>
 export default {
-  inject: ['reload'],
-  methods:{
+  data() {
+    return {
+      ruleForm: {
+        name: "",
+        desc: "",
+        status: "1"
+      },
+      rules: {
+        course: [{ required: true, message: "请选择课程", trigger: "blur" }],
+        name: [
+          { required: true, message: "请输入模块名称", trigger: "blur" },
+          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+        ],
+        desc: [{ required: true, message: "请填写描述", trigger: "blur" }]
+      }
+    };
   },
-components:{
-    headerTop,
-    footerGuide,
-    leftNavi
-}
-}
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
+  }
+};
 </script>
 
 <style>
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
 </style>

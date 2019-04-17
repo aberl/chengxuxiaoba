@@ -19,7 +19,7 @@
           </el-submenu>
           <el-submenu index="1-2">
             <template slot="title">课程</template>
-            <el-menu-item index="/op/courselist">新增课程</el-menu-item>
+            <el-menu-item index="/op/addcourse">新增课程</el-menu-item>
             <el-menu-item index="/op/addcourse">课程列表</el-menu-item>
           </el-submenu>
         </el-submenu>
