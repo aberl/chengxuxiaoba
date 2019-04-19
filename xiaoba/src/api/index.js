@@ -50,3 +50,20 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
     { mobilePhoneNo, validationCode, password },
     "PUT"
   );
+
+/**
+ * 上传文件
+ * @param {*} purpose 
+ * @param {*} uploadFile 
+ */
+export const reqUploadFile = (form) =>
+ajax(
+  BASE_URL + "/uploadfile/file",
+  form,
+  "POST",
+  {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  }
+);

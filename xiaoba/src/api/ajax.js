@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default function ajax(url = '', data = {}, type = 'GET') {
+export default function ajax(url = '', data = {}, type = 'GET', config) {
   return new Promise(function (resolve, reject) {
 
     let promise
@@ -19,7 +19,7 @@ export default function ajax(url = '', data = {}, type = 'GET') {
       promise = axios.get(url)
     } else if (type === 'POST') {
       // 发送post请求
-      promise = axios.post(url, data)
+      promise = axios.post(url, data,config)
     }
     else if (type === 'PUT') {
       // 发送post请求
