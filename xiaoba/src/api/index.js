@@ -56,14 +56,20 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
  * @param {*} purpose 
  * @param {*} uploadFile 
  */
-export const reqUploadFile = (form) =>
+export const reqUploadFile = (form,config) =>
 ajax(
   BASE_URL + "/uploadfile/file",
   form,
   "POST",
-  {
-    headers: {
-      "Content-Type": "multipart/form-data"
-    }
-  }
+  config
+);
+
+/**
+ * 删除文件
+ * @param {*} filename 
+ */
+export const reqRemoveUploadFile = (filename) =>
+ajax(
+  BASE_URL + "/uploadfile/"+filename,null,
+  "DELETE"
 );

@@ -9,18 +9,19 @@
     <el-form-item label="名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="图片" prop="name">
+    <el-form-item label="图片" ref="registerRef" prop="images">
       <el-upload
         class="upload-demo"
         action="string"
+        :before-upload="beforeUpload"
+        :on-success="uploadSuccess"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
-        :file-list="fileList"
         :http-request="httprequest"
-        :data="imageData"
+        accept=".jpg, .png"
       >
         <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
       </el-upload>
     </el-form-item>
     <el-form-item label="描述" prop="desc">
@@ -40,51 +41,111 @@
 </template>
 
 <script>
-import { reqUploadFile } from "../../../api";
+import { reqUploadFile, reqRemoveUploadFile } from "../../../api";
 export default {
   data() {
     return {
-      fileList: [],
-      imageData: {
-        name: "name",
-        purpose: "purpose",
-        uploadFile: null
-      },
+      fileLimitSize: 5,
+      fileUploadPercent: 0,
       ruleForm: {
         name: "",
         desc: "",
-        status: "1"
+        status: "1",
+        images: []
       },
       rules: {
-        course: [{ required: true, message: "请选择课程", trigger: "blur" }],
         name: [
           { required: true, message: "请输入模块名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ],
-        desc: [{ required: true, message: "请填写描述", trigger: "blur" }]
+        desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
+        images: [
+          {
+            required: true,
+            message: "只能上传jpg/png文件，且不超过5M",
+            trigger: "change"
+          }
+        ]
       }
     };
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    beforeUpload(file) {
+      this.file = file;
+      if (file.size / 1024 / 1024 > this.fileLimitSize) {
+        this.$message.error(
+          "只能上传jpg/png文件，且不超过" + this.fileLimitSize + "M"
+        );
+        return false;
+      }
+
+      var isExistSameFile = false;
+      for (var index in this.ruleForm.images) {
+        if (this.ruleForm.images[index].originname == this.file.name) {
+          isExistSameFile = true;
+          break;
+        }
+      }
+
+      if (isExistSameFile) {
+        this.$message.error(this.file.name + "已上传");
+        return false;
+      }
+
+      return true;
+    },
+    uploadProgress(file) {},
+    uploadSuccess(response, file, fileList) {
+      this.$refs['ruleForm'].validateField('images');
+    },
+    async handleRemove(file, fileList) {
+      var newname = "";
+      var removeIndex = -1;
+      for (var index in this.ruleForm.images) {
+        if (this.ruleForm.images[index].originname == this.file.name) {
+          removeIndex = index;
+          newname = this.ruleForm.images[index].newname;
+          break;
+        }
+      }
+      if (removeIndex != -1) {
+        this.ruleForm.images.splice(removeIndex, 1);
+        const result = await reqRemoveUploadFile(newname);
+        if (result.code == 0) {
+          this.ruleForm.images.splice(removeIndex, 1);
+        } else {
+          return false;
+        }
+      }
     },
     handlePreview(file) {
       console.log(file);
     },
-    async httprequest(item) {
-      console.log(item.file);
-      var fileObj = item.file;
-
+    async httprequest(uploader) {
+      var fileObj = uploader.file;
       var form = new FormData();
-      form.append("uploadFile", item.file);
-      form.append("purpose", "xx");
+      form.append("uploadFile", uploader.file);
+      form.append("purpose", "COURSE_BACKGROUND");
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
+        },
+        onUploadProgress: progressEvent => {
+          let percent =
+            ((progressEvent.loaded / progressEvent.total) * 100) | 0;
+          uploader.onProgress({
+            percent: percent
+          });
         }
       };
-      const result = await reqUploadFile(form);
+      const result = await reqUploadFile(form, config);
+      if (result.code == 0) {
+        var image = {
+          originname: uploader.file.name,
+          newname: result.data.name
+        };
+        this.ruleForm.images.push(image);
+      }
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -97,7 +158,7 @@ export default {
       });
     },
     resetForm(formName) {
-      this.$refs[formName].resetFields();
+      // this.$refs[formName].resetFields();
     }
   }
 };
