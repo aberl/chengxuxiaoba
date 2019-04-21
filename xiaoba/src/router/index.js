@@ -19,7 +19,7 @@ import Admin_addcourse from "../pages/admin/course/addcourse.vue";
 import Admin_modulelist from "../pages/admin/course/modulelist.vue";
 import Admin_addmodule from "../pages/admin/course/addmodule.vue";
 import Admin_module from "../pages/admin/course/module.vue";
-import Admin_welcomePage from "../pages/admin/welcomePage.vue";
+import Admin_modifycourse from "../pages/admin/course/modifycourse.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +39,11 @@ export default new VueRouter({
           path: "/op/addcourse",
           name: "addcourse",
           component: Admin_addcourse
+        },
+        {
+          path: "/op/modifycourse",
+          name: "modifycourse",
+          component: Admin_modifycourse
         },
         {
           path: "/op/module",

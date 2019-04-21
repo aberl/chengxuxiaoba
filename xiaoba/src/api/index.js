@@ -73,3 +73,23 @@ ajax(
   BASE_URL + "/uploadfile/"+filename,null,
   "DELETE"
 );
+
+/**
+ * 添加课程
+ * @param {*} name 
+ * @param {*} description 
+ * @param {*} images 
+ * @param {*} status 
+ */
+export const reqAddCourse = (name,description,images,status) =>
+ajax(
+  BASE_URL + "/courses",
+  {name,description,images,status},
+  "POST"
+);
+
+/**
+ * 获取所有课程列表
+ */
+export const reqGetAllCourseList = ()=>
+  ajax(BASE_URL + "/courses");

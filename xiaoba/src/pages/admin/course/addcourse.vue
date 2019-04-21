@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { reqUploadFile, reqRemoveUploadFile } from "../../../api";
+import { reqUploadFile, reqRemoveUploadFile, reqAddCourse } from "../../../api";
 export default {
   data() {
     return {
@@ -56,14 +56,14 @@ export default {
       rules: {
         name: [
           { required: true, message: "请输入模块名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
         images: [
           {
             required: true,
             message: "只能上传jpg/png文件，且不超过5M",
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       }
@@ -82,32 +82,29 @@ export default {
       var isExistSameFile = false;
       for (var index in this.ruleForm.images) {
         if (this.ruleForm.images[index].originname == this.file.name) {
-          isExistSameFile = true;
-          break;
+          this.$message.error(this.file.name + "已上传");
+          return false;
         }
-      }
-
-      if (isExistSameFile) {
-        this.$message.error(this.file.name + "已上传");
-        return false;
       }
 
       return true;
     },
     uploadProgress(file) {},
-    uploadSuccess(response, file, fileList) {
-      this.$refs['ruleForm'].validateField('images');
-    },
+    uploadSuccess(response, file, fileList) {},
     async handleRemove(file, fileList) {
+      if (file.status != "success") return false;
+
       var newname = "";
       var removeIndex = -1;
+      console.log("delete file name : " + file.name);
       for (var index in this.ruleForm.images) {
-        if (this.ruleForm.images[index].originname == this.file.name) {
+        console.log(this.ruleForm.images[index].originname);
+        if (this.ruleForm.images[index].originname == file.name) {
           removeIndex = index;
           newname = this.ruleForm.images[index].newname;
-          break;
         }
       }
+      console.log(removeIndex);
       if (removeIndex != -1) {
         this.ruleForm.images.splice(removeIndex, 1);
         const result = await reqRemoveUploadFile(newname);
@@ -147,15 +144,31 @@ export default {
         this.ruleForm.images.push(image);
       }
     },
-    submitForm(formName) {
+
+    async submitForm(formName) {
+      var flag = true;
       this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
+        if (!valid) {
+          flag = false;
         }
       });
+      if (!flag) return false;
+
+      var _images = [];
+      this.ruleForm.images.forEach(item => {
+        _images.push(item.newname);
+      });
+
+      const result = await reqAddCourse(
+        this.ruleForm.name,
+        this.ruleForm.desc,
+        JSON.stringify(_images),
+        this.ruleForm.status
+      );
+
+      if (result.code == 0) {
+        this.$router.replace("/op/courselist");
+      }
     },
     resetForm(formName) {
       // this.$refs[formName].resetFields();
