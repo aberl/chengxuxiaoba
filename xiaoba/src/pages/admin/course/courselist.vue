@@ -13,6 +13,7 @@
           >注销</el-button>
           <el-button
             @click.native.prevent="deleteRow(scope.$index, tableData)"
+            @click="goTo('/op/modifycourse')"
             type="text"
             size="small"
           >编辑</el-button>
@@ -38,6 +39,9 @@ export default {
     ...mapActions(["getAllCourseList"]),
     handleClick() {
       console.log(1);
+    },
+    goTo(path) {
+      this.$router.replace(path);
     }
   },
   data() {

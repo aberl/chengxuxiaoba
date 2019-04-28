@@ -18,7 +18,7 @@
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         :http-request="httprequest"
-        accept=".jpg, .png"
+        accept="*"
       >
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
@@ -37,12 +37,20 @@
       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
+    {{uploadImages}}
   </el-form>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import { reqUploadFile, reqRemoveUploadFile, reqAddCourse } from "../../../api";
 export default {
+  computed: {
+    ...mapState({
+      uploadResult: state => state.file.currentUploadResult,
+      uploadImages: state => state.file.uploadFiles
+    })
+  },
   data() {
     return {
       fileLimitSize: 5,
@@ -70,9 +78,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["uploadFile", "removeFile"]),
     beforeUpload(file) {
-      this.file = file;
-      if (file.size / 1024 / 1024 > this.fileLimitSize) {
+      if (file.size / 1024 / 1024 < this.fileLimitSize) {
         this.$message.error(
           "只能上传jpg/png文件，且不超过" + this.fileLimitSize + "M"
         );
@@ -80,69 +88,28 @@ export default {
       }
 
       var isExistSameFile = false;
-      for (var index in this.ruleForm.images) {
-        if (this.ruleForm.images[index].originname == this.file.name) {
-          this.$message.error(this.file.name + "已上传");
+      for (var index in this.uploadImages) {
+        console.log(this.uploadImages[index].originname+"|"+file.name);
+        if (this.uploadImages[index].originname == file.name) {
+          this.$message.error(file.name + "已上传");
           return false;
         }
       }
 
       return true;
     },
-    uploadProgress(file) {},
     uploadSuccess(response, file, fileList) {},
     async handleRemove(file, fileList) {
+      
       if (file.status != "success") return false;
 
-      var newname = "";
-      var removeIndex = -1;
-      console.log("delete file name : " + file.name);
-      for (var index in this.ruleForm.images) {
-        console.log(this.ruleForm.images[index].originname);
-        if (this.ruleForm.images[index].originname == file.name) {
-          removeIndex = index;
-          newname = this.ruleForm.images[index].newname;
-        }
-      }
-      console.log(removeIndex);
-      if (removeIndex != -1) {
-        this.ruleForm.images.splice(removeIndex, 1);
-        const result = await reqRemoveUploadFile(newname);
-        if (result.code == 0) {
-          this.ruleForm.images.splice(removeIndex, 1);
-        } else {
-          return false;
-        }
-      }
+      this.removeFile(file);
     },
     handlePreview(file) {
       console.log(file);
     },
     async httprequest(uploader) {
-      var fileObj = uploader.file;
-      var form = new FormData();
-      form.append("uploadFile", uploader.file);
-      form.append("purpose", "COURSE_BACKGROUND");
-      let config = {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-        onUploadProgress: progressEvent => {
-          let percent =
-            ((progressEvent.loaded / progressEvent.total) * 100) | 0;
-          uploader.onProgress({
-            percent: percent
-          });
-        }
-      };
-      const result = await reqUploadFile(form, config);
-      if (result.code == 0) {
-        var image = {
-          originname: uploader.file.name,
-          newname: result.data.name
-        };
-        this.ruleForm.images.push(image);
-      }
+     await this.uploadFile(uploader);
     },
 
     async submitForm(formName) {

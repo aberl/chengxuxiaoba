@@ -93,3 +93,23 @@ ajax(
  */
 export const reqGetAllCourseList = ()=>
   ajax(BASE_URL + "/courses");
+
+  /**
+ * 获取课程详情
+ */
+export const reqGetCourseDetails = (courseId)=>
+ajax(BASE_URL + "/courses/"+courseId);
+
+/**
+ * 更新课程
+ * @param {*} name 
+ * @param {*} description 
+ * @param {*} images 
+ * @param {*} status 
+ */
+export const reqModifyCourse = (name,description,images,status) =>
+ajax(
+  BASE_URL + "/courses",
+  {name,description,images,status},
+  "PUT"
+);
