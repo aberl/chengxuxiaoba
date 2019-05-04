@@ -19,7 +19,7 @@
         :on-remove="handleRemove"
         :http-request="httprequest"
         :file-list="ruleForm.images"
-        accept=".jpg, .png"
+        accept="*"
       >
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
@@ -38,26 +38,31 @@
       <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
-    {{this.ruleForm}}
   </el-form>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import { reqUploadFile, reqRemoveUploadFile, reqAddCourse } from "../../../api";
+import {
+  uploadFile,
+  isMatchFileSize,
+  isMatchUploaded,
+  removeFile,
+  getIndex
+} from "../../../VueAPI/File/uploadFile";
 export default {
   mounted() {
     this.getCourseDetails(this.$route.query.id);
   },
   computed: {
     ...mapState({
-      ruleForm: state => state.course.courseDetails
+      ruleForm: state => state.course.courseDetails,
+      modifyResult: state => state.course.result
     })
   },
   data() {
     return {
-      removeImages: [],
-      addImages: [],
       fileLimitSize: 5,
       fileUploadPercent: 0,
       rules: {
@@ -77,27 +82,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getCourseDetails","modifyCourseDetails"]),
+    ...mapActions(["getCourseDetails", "modifyCourseDetails"]),
     beforeUpload(file) {
-      if (file.size / 1024 / 1024 > this.fileLimitSize) {
-        this.$message.error(
-          "只能上传jpg/png文件，且不超过" + this.fileLimitSize + "M"
-        );
-        return false;
-      }
+      var _flag = isMatchFileSize(file, this.fileLimitSize);
+      if (!_flag) return _flag;
 
-      let _existIndex = -1;
+      _flag = isMatchUploaded(file, this.ruleForm.images);
+      if (!_flag) return _flag;
 
-  for (var _index in this.ruleForm.images) {
-        if (this.ruleForm.images[_index].name == file.name) {
-         _existIndex = _index;
-          break;
-        }
-      }
- if (_existIndex != -1) {
-        this.$message.error(file.name + "已上传");
-        return false;
-      }
       return true;
     },
     uploadProgress(file) {},
@@ -106,18 +98,22 @@ export default {
       if (file.status != "success") return false;
       let fileUid = file.uid;
 
-      for (var _index in this.ruleForm.images) {
-        if (this.ruleForm.images[_index].name == file.name) {
-          this.ruleForm.images.splice(_index, 1);
-        }
+      var _index = getIndex(file, this.ruleForm.images);
+      if (_index != -1) {
+        this.ruleForm.images.splice(_index, 1);
       }
     },
     handlePreview(file) {
       console.log(file);
     },
     async httprequest(uploader) {
-      let imageFile = uploader.file;
-      this.ruleForm.images.push({ name: imageFile.name, url: "", isNew:false, file: imageFile });
+      const result = await uploadFile(uploader);
+      if (result.code == 0) {
+        this.ruleForm.images.push({
+          name: uploader.file.name,
+          newname: result.data.name
+        });
+      }
     },
     async submitForm(formName) {
       var flag = true;
@@ -128,10 +124,27 @@ export default {
       });
       if (!flag) return false;
 
-      this.modifyCourseDetails(this.ruleForm);
+      var _images = [];
+      this.ruleForm.images.forEach(item => {
+        _images.push(item.newname);
+      });
+
+      await this.modifyCourseDetails({
+        id: this.ruleForm.id,
+        name: this.ruleForm.name,
+        desc: this.ruleForm.desc,
+        images: JSON.stringify(_images),
+        status: this.ruleForm.status
+      });
+
+      if (eval(this.modifyResult.data)) {
+        this.$router.replace("/op/courselist");
+      }
     },
     resetForm(formName) {
-      // this.$refs[formName].resetFields();
+      this.ruleForm.name="";
+      this.ruleForm.desc="";
+      this.ruleForm.status="1"
     }
   }
 };

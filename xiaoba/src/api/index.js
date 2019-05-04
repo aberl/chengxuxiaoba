@@ -107,9 +107,9 @@ ajax(BASE_URL + "/courses/"+courseId);
  * @param {*} images 
  * @param {*} status 
  */
-export const reqModifyCourse = (name,description,images,status) =>
+export const reqModifyCourse = (id,name,description,images,status) =>
 ajax(
   BASE_URL + "/courses",
-  {name,description,images,status},
+  {id,name,description,images,status},
   "PUT"
 );

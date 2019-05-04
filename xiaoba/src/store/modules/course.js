@@ -6,20 +6,19 @@ import {REQUEST_RECEIVE_COURSEALLLIST,
     REQUEST_MODIFY_COURSEDETAILS,
     REQUEST_ADD_COURSEDETAILS} from "../mutation-types.js";
 
-import { reqGetAllCourseList,reqGetCourseDetails } from "../../api";
+import { reqGetAllCourseList,reqGetCourseDetails,reqAddCourse,reqModifyCourse } from "../../api";
 
 const state = {
     courseDetails:{name:"",desc:"",status:0,images:[]},
-    courseList:[]
+    courseList:[],
+    result:{},
 }
 
 const actions={
     async addCourse({commit}, course){
         const result = await reqAddCourse(course.name,course.desc,course.images,course.status);
-        if(result.code == 0)
-        {
-            commit(REQUEST_ADD_COURSEDETAILS,{courseList: result.data});
-        }
+        
+        commit(REQUEST_ADD_COURSEDETAILS,{course: result});
     },
     async getAllCourseList({commit}){
         const result = await reqGetAllCourseList();
@@ -37,13 +36,17 @@ const actions={
         }
     },
 
-    async modifyCourseDetails({commit}, courseDetails)
+    async modifyCourseDetails({commit}, {id,name,desc,images,status})
     {
-        console.log(courseDetails)
+        const result = await reqModifyCourse(id,name,desc,images,status);
+        commit(REQUEST_MODIFY_COURSEDETAILS,{course: result});
     }
 }
 
 const mutations={
+    [REQUEST_ADD_COURSEDETAILS](state,{course}){
+        state.result=course;
+    },
     [REQUEST_RECEIVE_COURSEALLLIST](state,{courseList}){
         state.courseList=courseList;
     },
@@ -64,16 +67,22 @@ const mutations={
             for(var index in _images)
             {
                 nameIndex= _images[index].lastIndexOf("/");
-                _imageDetail.push({name:_images[index].substr(nameIndex+1), url:_images[index], isNew:true});
+                var _imagename=_images[index].substr(nameIndex+1);
+                _imageDetail.push({name:_imagename, 
+                    newname:_imagename,url:_images[index]});
             }
         }
 
         state.courseDetails={
+            id:_id,
             name: _name,
             desc: _desc,
             status: String(_status),
             images: _imageDetail
           }
+    },
+    [REQUEST_MODIFY_COURSEDETAILS](state,{course}){
+        state.result=course;
     }
 }
 

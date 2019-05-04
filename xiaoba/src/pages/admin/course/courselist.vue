@@ -7,13 +7,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            type="text"
-            size="small"
-          >注销</el-button>
-          <el-button
-            @click.native.prevent="deleteRow(scope.$index, tableData)"
-            @click="goTo('/op/modifycourse')"
+            @click="goToDetail('/op/modifycourse', tableData[scope.$index].id)"
             type="text"
             size="small"
           >编辑</el-button>
@@ -40,8 +34,8 @@ export default {
     handleClick() {
       console.log(1);
     },
-    goTo(path) {
-      this.$router.replace(path);
+    goToDetail(path,id) {
+      this.$router.replace({path:path, query:{id:id}});
     }
   },
   data() {
