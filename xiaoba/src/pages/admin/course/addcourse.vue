@@ -13,6 +13,7 @@
       <el-upload
         class="upload-demo"
         action="string"
+        :multiple=false
         :before-upload="beforeUpload"
         :on-success="uploadSuccess"
         :on-preview="handlePreview"
@@ -67,7 +68,7 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "请输入模块名称", trigger: "blur" },
+          { required: true, message: "请输入课程名称", trigger: "blur" },
           { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],

@@ -94,6 +94,11 @@ ajax(
 export const reqGetAllCourseList = ()=>
   ajax(BASE_URL + "/courses");
 
+/**
+ * 获取所有有效课程列表
+ */
+export const reqGetAllEffectiveCourseList = ()=>
+  ajax(BASE_URL + "/courses/effective");
   /**
  * 获取课程详情
  */
@@ -113,3 +118,24 @@ ajax(
   {id,name,description,images,status},
   "PUT"
 );
+
+/**
+ * 添加课程模块
+ * @param {*} courseId 
+ * @param {*} name 
+ * @param {*} description 
+ * @param {*} images 
+ * @param {*} status 
+ */
+export const reqAddCourseModule = (courseId,courseName,name,description,images,status) =>
+ajax(
+  BASE_URL + "/courses/module",
+  {courseId,courseName,name,description,images,status},
+  "POST"
+);
+
+/**
+ * 获取所有课程模块列表
+ */
+export const reqGetAllCourseModuleList = (courseId)=>
+  ajax(BASE_URL + "/courses/"+courseId+"/coursemodule/all");

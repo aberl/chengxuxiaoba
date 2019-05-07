@@ -53,7 +53,10 @@ import {
 } from "../../../VueAPI/File/uploadFile";
 export default {
   mounted() {
+    if(this.$route.query.id)
     this.getCourseDetails(this.$route.query.id);
+    else
+    this.$router.replace("/op/courselist")
   },
   computed: {
     ...mapState({
@@ -67,7 +70,7 @@ export default {
       fileUploadPercent: 0,
       rules: {
         name: [
-          { required: true, message: "请输入模块名称", trigger: "blur" },
+          { required: true, message: "请输入课程名称", trigger: "blur" },
           { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
