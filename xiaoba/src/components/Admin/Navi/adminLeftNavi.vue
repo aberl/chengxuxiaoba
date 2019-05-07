@@ -14,8 +14,9 @@
           </template>
           <el-submenu index="1-1">
             <template slot="title">模块</template>
-            <el-menu-item index="/op/modulelist">模块列表</el-menu-item>
             <el-menu-item index="/op/addmodule">新增模块</el-menu-item>
+            <el-menu-item index="/op/modifycoursemodule">模块修改</el-menu-item>
+            <el-menu-item index="/op/modulelist">模块列表</el-menu-item>
           </el-submenu>
           <el-submenu index="1-2">
             <template slot="title">课程</template>
