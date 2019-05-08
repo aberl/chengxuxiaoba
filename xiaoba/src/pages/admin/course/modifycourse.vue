@@ -19,7 +19,7 @@
         :on-remove="handleRemove"
         :http-request="httprequest"
         :file-list="ruleForm.images"
-        accept="*"
+        accept=".jpg,.png"
       >
         <el-button size="small" type="primary">点击上传</el-button>
         <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
@@ -35,8 +35,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
+      <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -53,10 +52,8 @@ import {
 } from "../../../VueAPI/File/uploadFile";
 export default {
   mounted() {
-    if(this.$route.query.id)
-    this.getCourseDetails(this.$route.query.id);
-    else
-    this.$router.replace("/op/courselist")
+    if (this.$route.query.id) this.getCourseDetails(this.$route.query.id);
+    else this.$router.replace("/op/courselist");
   },
   computed: {
     ...mapState({
@@ -145,9 +142,9 @@ export default {
       }
     },
     resetForm(formName) {
-      this.ruleForm.name="";
-      this.ruleForm.desc="";
-      this.ruleForm.status="1"
+      this.ruleForm.name = "";
+      this.ruleForm.desc = "";
+      this.ruleForm.status = "1";
     }
   }
 };

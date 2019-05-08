@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-table v-bind:data="tableData" style="width: 100%" max-height="550">
+    <el-table v-bind:data="tableData" style="width: 100%">
       <el-table-column fixed prop="createDateTime" label="创建日期"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column prop="statusDesc" label="状态"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button

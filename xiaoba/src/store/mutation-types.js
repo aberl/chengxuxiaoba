@@ -10,10 +10,15 @@
  export const REQUEST_RECEIVE_COURSEDETAILS = 'request_receive_coursedetails'
  export const REQUEST_ADD_COURSEDETAILS = 'request_add_coursedetails'
  export const REQUEST_MODIFY_COURSEDETAILS = 'request_modify_coursedetails'
+ export const REQUEST_RECEIVE_COURSEMODULEDETAILS = 'request_receive_coursemoduledetails'
 
  export const REQUEST_ADD_COURSEMODULE = 'request_add_coursemodule'
  export const REQUEST_RECEIVE_COURSEMODULEALLLIST = 'request_receive_coursemodulealllist'
- 
+ export const REQUEST_MODIFY_COURSEMODULEDETAILS = 'request_modify_coursemoduledetails'
+
+
+ export const REQUEST_REMOVE_FILE = 'request_remove_file'
+ export const REQUEST_UPLOAD_FILE = 'request_upload_file'
 
  export default {
    REQUEST_RECEIVE_USERINFO,
@@ -24,5 +29,9 @@
    REQUEST_ADD_COURSEDETAILS,
    REQUEST_MODIFY_COURSEDETAILS,
    REQUEST_ADD_COURSEMODULE,
-   REQUEST_RECEIVE_COURSEMODULEALLLIST
+   REQUEST_RECEIVE_COURSEMODULEALLLIST,
+   REQUEST_REMOVE_FILE,
+   REQUEST_UPLOAD_FILE,
+   REQUEST_RECEIVE_COURSEMODULEDETAILS,
+   REQUEST_MODIFY_COURSEMODULEDETAILS
  }

@@ -7,7 +7,10 @@ import {
   REQUEST_MODIFY_COURSEDETAILS,
   REQUEST_ADD_COURSEDETAILS,
   REQUEST_ADD_COURSEMODULE,
-  REQUEST_RECEIVE_COURSEMODULEALLLIST
+  REQUEST_RECEIVE_COURSEMODULEALLLIST,
+  REQUEST_RECEIVE_COURSEMODULEDETAILS,
+  REQUEST_MODIFY_COURSEMODULEDETAILS
+  
 } from "../mutation-types.js";
 
 import {
@@ -17,13 +20,16 @@ import {
   reqModifyCourse,
   reqAddCourseModule,
   reqGetAllEffectiveCourseList,
-  reqGetAllCourseModuleList
+  reqGetAllCourseModuleList,
+  reqGetCourseModuleDetails,
+  reqModifyCourseModule
 } from "../../api";
 
 const state = {
   courseDetails: { name: "", desc: "", status: 0, images: [] },
   courseList: [],
   courseModuleList:[],
+  courseModuleDetails:{},
   result: {}
 };
 
@@ -74,12 +80,21 @@ const actions = {
 
     commit(REQUEST_ADD_COURSEMODULE, { coursemodule: result });
   },
-  
+  async getCourseModuleDetails({ commit }, courseModuleId) {
+    const result = await reqGetCourseModuleDetails(courseModuleId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_COURSEMODULEDETAILS, { courseModule: result.data });
+    }
+  },
   async getAllCourseModuleList({ commit },courseId) {
     const result = await reqGetAllCourseModuleList(courseId);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_COURSEMODULEALLLIST, { courseModuleList: result.data });
     }
+  },
+  async modifyCourseModuleDetails({ commit }, { id, courseId,courseName,name, desc, images, status }) {
+    const result = await reqModifyCourseModule(id, courseId,courseName,name, desc, images, status);
+    commit(REQUEST_MODIFY_COURSEMODULEDETAILS, { coursemodule: result });
   },
 };
 
@@ -127,8 +142,46 @@ const mutations = {
   [REQUEST_ADD_COURSEMODULE](state, { coursemodule }) {
     state.result = coursemodule;
   },
+
+  [REQUEST_MODIFY_COURSEMODULEDETAILS](state, { coursemodule }) {
+    state.result = coursemodule;
+  },
   [REQUEST_RECEIVE_COURSEMODULEALLLIST](state,{courseModuleList}){
     state.courseModuleList=courseModuleList;
+  },
+  [REQUEST_RECEIVE_COURSEMODULEDETAILS](state, { courseModule }) {
+    if (courseModule == null) return;
+
+    let _id = courseModule.id;
+    let _courseId = courseModule.courseId;
+    let _courseName = courseModule.courseName;
+    let _name = courseModule.name;
+    let _desc = courseModule.description;
+    let _status = courseModule.status;
+    let _images = JSON.parse(courseModule.images);
+    let _imageDetail = [];
+    if (_images != null && _images.length > 0) {
+      let nameIndex = -1;
+      for (var index in _images) {
+        nameIndex = _images[index].lastIndexOf("/");
+        var _imagename = _images[index].substr(nameIndex + 1);
+        _imageDetail.push({
+          name: _imagename,
+          newname: _imagename,
+          url: _images[index]
+        });
+      }
+    }
+console.log(_imageDetail)
+    state.courseModuleDetails = {
+      id: _id,
+      courseId:_courseId,
+      courseName:_courseName,
+      name: _name,
+      desc: _desc,
+      status: String(_status),
+      images: _imageDetail
+    };
   }
 };
 

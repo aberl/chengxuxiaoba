@@ -135,7 +135,27 @@ ajax(
 );
 
 /**
+ * 更新课程
+ * @param {*} name 
+ * @param {*} description 
+ * @param {*} images 
+ * @param {*} status 
+ */
+export const reqModifyCourseModule = (id,courseId,courseName,name,description,images,status) =>
+ajax(
+  BASE_URL + "/courses/module",
+  {id,courseId,courseName,name,description,images,status},
+  "PUT"
+);
+
+/**
  * 获取所有课程模块列表
  */
 export const reqGetAllCourseModuleList = (courseId)=>
   ajax(BASE_URL + "/courses/"+courseId+"/coursemodule/all");
+
+/**
+ * 获取课程模块详情
+ */
+export const reqGetCourseModuleDetails = (courseModuleId)=>
+ajax(BASE_URL + "/courses/coursemodule/"+courseModuleId);
