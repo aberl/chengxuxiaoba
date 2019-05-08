@@ -1,10 +1,11 @@
 import { Message } from 'element-ui';
 
 import { reqUploadFile, reqRemoveUploadFile } from "../../api";
-export function uploadFile(uploader) {
+
+export function uploadFile(uploader, filepurpose) {
   var form = new FormData();
   form.append("uploadFile", uploader.file);
-  form.append("purpose", "COURSE_BACKGROUND");
+  form.append("purpose", filepurpose);
   var config = {
     headers: {
       "Content-Type": "multipart/form-data"

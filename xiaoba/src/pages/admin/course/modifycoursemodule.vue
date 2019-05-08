@@ -146,7 +146,7 @@ export default {
       console.log(file);
     },
     async httprequest(uploader) {
-      const result = await uploadFile(uploader);
+      const result = await uploadFile(uploader,"COURSE_MODULE_DETAILS");
       if (result.code == 0) {
         this.ruleForm.images.push({
           name: uploader.file.name,
