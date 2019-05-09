@@ -21,6 +21,9 @@ import Admin_addmodule from "../pages/admin/course/addmodule.vue";
 import Admin_module from "../pages/admin/course/module.vue";
 import Admin_modifycourse from "../pages/admin/course/modifycourse.vue";
 import Admin_modifycoursemodule from "../pages/admin/course/modifycoursemodule.vue";
+import Admin_addvideo from "../pages/admin/video/addvideo.vue";
+import Admin_videolist from "../pages/admin/video/videolist.vue";
+import Admin_modifyvideo from "../pages/admin/video/modifyvideo.vue";
 
 Vue.use(VueRouter);
 
@@ -65,6 +68,21 @@ export default new VueRouter({
           path: "/op/modifycoursemodule",
           name: "modifycoursemodule",
           component: Admin_modifycoursemodule
+        },
+        {
+          path: "/op/addvideo",
+          name: "addvideo",
+          component: Admin_addvideo
+        },
+        {
+          path: "/op/videolist",
+          name: "videolist",
+          component: Admin_videolist
+        },
+        {
+          path: "/op/modifyvideo",
+          name: "modifyvideo",
+          component: Admin_modifyvideo
         }
       ]
     },

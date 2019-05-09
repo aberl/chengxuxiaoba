@@ -29,12 +29,13 @@
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-message"></i>
-            视{{this.$router.path}}频管理
+            视频管理
           </template>
           <el-submenu index="2-1">
             <template slot="title">视频</template>
-            <el-menu-item index="2-1-1">新增视频</el-menu-item>
-            <el-menu-item index="2-1-2">视频列表</el-menu-item>
+            <el-menu-item index="/op/addvideo">新增视频</el-menu-item>
+            <el-menu-item index="/op/modifyvideo">视频修改</el-menu-item>
+            <el-menu-item index="/op/videolist">视频列表</el-menu-item>
           </el-submenu>
         </el-submenu>
 
