@@ -19,6 +19,9 @@
 
  export const REQUEST_REMOVE_FILE = 'request_remove_file'
  export const REQUEST_UPLOAD_FILE = 'request_upload_file'
+ 
+ export const REQUEST_ADD_VIDEO = 'request_add_video'
+ export const REQUEST_RECEIVE_VIDEOALLLIST = 'request_receive_videoalllist'
 
  export default {
    REQUEST_RECEIVE_USERINFO,
@@ -33,5 +36,7 @@
    REQUEST_REMOVE_FILE,
    REQUEST_UPLOAD_FILE,
    REQUEST_RECEIVE_COURSEMODULEDETAILS,
-   REQUEST_MODIFY_COURSEMODULEDETAILS
+   REQUEST_MODIFY_COURSEMODULEDETAILS,
+   REQUEST_ADD_VIDEO,
+   REQUEST_RECEIVE_VIDEOALLLIST
  }

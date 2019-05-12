@@ -49,7 +49,6 @@
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
     </el-form-item>
-    {{this.ruleForm.images}}
   </el-form>
 </template>
 

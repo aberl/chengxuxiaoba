@@ -8,11 +8,12 @@ import actions from './actions.js'
 import user from './modules/user.js'
 import course from './modules/course.js'
 import file from './modules/file.js'
+import video from './modules/video.js'
 
 export default new Vuex.Store({
 	getters,
 	actions,
 	modules:{
-		user,course,file
+		user,course,file,video
 	}
 });

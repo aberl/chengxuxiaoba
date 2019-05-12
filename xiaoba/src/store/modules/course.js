@@ -172,7 +172,6 @@ const mutations = {
         });
       }
     }
-console.log(_imageDetail)
     state.courseModuleDetails = {
       id: _id,
       courseId:_courseId,

@@ -53,109 +53,146 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
 
 /**
  * 上传文件
- * @param {*} purpose 
- * @param {*} uploadFile 
+ * @param {*} purpose
+ * @param {*} uploadFile
  */
-export const reqUploadFile = (form,config) =>
-ajax(
-  BASE_URL + "/uploadfile/file",
-  form,
-  "POST",
-  config
-);
+export const reqUploadFile = (form, config) =>
+  ajax(BASE_URL + "/uploadfile/file", form, "POST", config);
 
 /**
  * 删除文件
- * @param {*} filename 
+ * @param {*} filename
  */
-export const reqRemoveUploadFile = (filename) =>
-ajax(
-  BASE_URL + "/uploadfile/"+filename,null,
-  "DELETE"
-);
+export const reqRemoveUploadFile = filename =>
+  ajax(BASE_URL + "/uploadfile/" + filename, null, "DELETE");
 
 /**
  * 添加课程
- * @param {*} name 
- * @param {*} description 
- * @param {*} images 
- * @param {*} status 
+ * @param {*} name
+ * @param {*} description
+ * @param {*} images
+ * @param {*} status
  */
-export const reqAddCourse = (name,description,images,status) =>
-ajax(
-  BASE_URL + "/courses",
-  {name,description,images,status},
-  "POST"
-);
+export const reqAddCourse = (name, description, images, status) =>
+  ajax(BASE_URL + "/courses", { name, description, images, status }, "POST");
 
 /**
  * 获取所有课程列表
  */
-export const reqGetAllCourseList = ()=>
-  ajax(BASE_URL + "/courses");
+export const reqGetAllCourseList = () => ajax(BASE_URL + "/courses");
 
 /**
  * 获取所有有效课程列表
  */
-export const reqGetAllEffectiveCourseList = ()=>
+export const reqGetAllEffectiveCourseList = () =>
   ajax(BASE_URL + "/courses/effective");
-  /**
+/**
  * 获取课程详情
  */
-export const reqGetCourseDetails = (courseId)=>
-ajax(BASE_URL + "/courses/"+courseId);
+export const reqGetCourseDetails = courseId =>
+  ajax(BASE_URL + "/courses/" + courseId);
 
 /**
  * 更新课程
- * @param {*} name 
- * @param {*} description 
- * @param {*} images 
- * @param {*} status 
+ * @param {*} name
+ * @param {*} description
+ * @param {*} images
+ * @param {*} status
  */
-export const reqModifyCourse = (id,name,description,images,status) =>
-ajax(
-  BASE_URL + "/courses",
-  {id,name,description,images,status},
-  "PUT"
-);
+export const reqModifyCourse = (id, name, description, images, status) =>
+  ajax(BASE_URL + "/courses", { id, name, description, images, status }, "PUT");
 
 /**
  * 添加课程模块
- * @param {*} courseId 
- * @param {*} name 
- * @param {*} description 
- * @param {*} images 
- * @param {*} status 
+ * @param {*} courseId
+ * @param {*} name
+ * @param {*} description
+ * @param {*} images
+ * @param {*} status
  */
-export const reqAddCourseModule = (courseId,courseName,name,description,images,status) =>
-ajax(
-  BASE_URL + "/courses/module",
-  {courseId,courseName,name,description,images,status},
-  "POST"
-);
+export const reqAddCourseModule = (
+  courseId,
+  courseName,
+  name,
+  description,
+  images,
+  status
+) =>
+  ajax(
+    BASE_URL + "/courses/module",
+    { courseId, courseName, name, description, images, status },
+    "POST"
+  );
 
 /**
  * 更新课程
- * @param {*} name 
- * @param {*} description 
- * @param {*} images 
- * @param {*} status 
+ * @param {*} name
+ * @param {*} description
+ * @param {*} images
+ * @param {*} status
  */
-export const reqModifyCourseModule = (id,courseId,courseName,name,description,images,status) =>
-ajax(
-  BASE_URL + "/courses/module",
-  {id,courseId,courseName,name,description,images,status},
-  "PUT"
-);
+export const reqModifyCourseModule = (
+  id,
+  courseId,
+  courseName,
+  name,
+  description,
+  images,
+  status
+) =>
+  ajax(
+    BASE_URL + "/courses/module",
+    { id, courseId, courseName, name, description, images, status },
+    "PUT"
+  );
 
 /**
  * 获取所有课程模块列表
  */
-export const reqGetAllCourseModuleList = (courseId)=>
-  ajax(BASE_URL + "/courses/"+courseId+"/coursemodule/all");
+export const reqGetAllCourseModuleList = courseId =>
+  ajax(BASE_URL + "/courses/" + courseId + "/coursemodule/all");
 
 /**
  * 获取课程模块详情
  */
-export const reqGetCourseModuleDetails = (courseModuleId)=>
-ajax(BASE_URL + "/courses/coursemodule/"+courseModuleId);
+export const reqGetCourseModuleDetails = courseModuleId =>
+  ajax(BASE_URL + "/courses/coursemodule/" + courseModuleId);
+
+/**
+ * 添加视频
+ * @param {*} courseModuleId
+ * @param {*} file
+ * @param {*} name
+ * @param {*} attachments
+ * @param {*} duration
+ * @param {*} description
+ */
+export const reqAddVideo = (
+  courseModuleId,
+  file,
+  name,
+  attachments,
+  duration,
+  description,status
+) =>
+  ajax(
+    BASE_URL + "/videos",
+    { courseModuleId,
+      file,
+      name,
+      attachments,
+      duration,
+      description,
+      status},
+    "POST"
+  );
+
+/**
+ * 获取视频列表
+ * @param {*} courseModuleId 
+ * @param {*} pageNum 
+ * @param {*} pageSize 
+ * @param {*} sort 
+ */
+export const reqGetAllVideoList = (courseModuleId, pageNum, pageSize, sort) =>
+ajax(BASE_URL + "/courses/"+courseModuleId+"/videos?pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);

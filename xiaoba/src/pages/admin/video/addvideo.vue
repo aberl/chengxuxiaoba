@@ -32,15 +32,33 @@
     <el-form-item label="视频名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="视频" ref="registerRef" prop="images">
-      <el-upload class="upload-demo" action="string" :multiple="false" accept=".mp4, .rmvb">
+    <el-form-item label="视频" ref="registerRef" prop="video">
+      <el-upload
+        class="upload-demo"
+        action="string"
+        :multiple="false"
+        :before-upload="beforeUploadVideo"
+        :on-remove="handleRemoveVideo"
+        :http-request="httprequestVideo"
+        accept=".mp4, .rmvb"
+      >
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
     </el-form-item>
-    <el-form-item label="附件" ref="registerRef" prop="images">
-      <el-upload class="upload-demo" action="string" :multiple="false" accept=".mp4, .rmvb">
+    <el-form-item label="附件">
+      <el-upload
+        class="upload-demo"
+        action="string"
+        :before-upload="beforeUploadAttachments"
+        :on-remove="handleRemoveAttachments"
+        :http-request="httprequestAttachments"
+        accept="*"
+      >
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
+    </el-form-item>
+    <el-form-item label="视频时长" prop="duration">
+      <el-input v-model="ruleForm.duration"></el-input>
     </el-form-item>
     <el-form-item label="视频描述" prop="desc">
       <el-input type="textarea" v-model="ruleForm.desc"></el-input>
@@ -55,18 +73,24 @@
       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
-    {{this.courseoptions}}||{{this.coursemoduleoptions}}
   </el-form>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import {
+  uploadFile,
+  isMatchUploaded,
+  removeFile,
+  getIndex
+} from "../../../VueAPI/File/uploadFile";
 export default {
   mounted() {
     this.getAllEffectCourseList();
   },
   computed: {
     ...mapState({
+      addResult: state => state.video.result,
       courseoptions: state => {
         var _options = [];
         for (var index in state.course.courseList) {
@@ -95,11 +119,12 @@ export default {
       ruleForm: {
         courseId: "",
         courseModuleId: "",
-        courseName: "",
+        video: "",
+        attachments: [],
         name: "",
+        duration: "",
         desc: "",
-        status: "1",
-        images: []
+        status: "1"
       },
       rules: {
         courseId: [
@@ -109,14 +134,17 @@ export default {
           { required: true, message: "请选择课程模块", trigger: "change" }
         ],
         name: [
-          { required: true, message: "请输入模块名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
+          { required: true, message: "请输入视频名称", trigger: "blur" },
+          { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
-        images: [
+        duration: [
+          { required: true, message: "请填写视频播放时长", trigger: "blur" }
+        ],
+        video: [
           {
             required: true,
-            message: "只能上传jpg/png文件，且不超过5M",
+            message: "只能上传mp4/rmvb文件",
             trigger: "blur"
           }
         ]
@@ -124,10 +152,60 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getAllEffectCourseList", "getAllCourseModuleList"]),
+    ...mapActions(["getAllEffectCourseList","getAllCourseModuleList","addVideo"]),
     courseSelected(val) {
-        this.getAllCourseModuleList(val);
-        this.ruleForm.courseModuleId="";
+      this.getAllCourseModuleList(val);
+      this.ruleForm.courseModuleId = "";
+    },
+    beforeUploadVideo(file) {
+      if (this.ruleForm.video) {
+        this.$message.error("视频已上传，请删除后再上传");
+        return false;
+      }
+      return true;
+    },
+    async handleRemoveVideo(file, fileList) {
+      if (file.status != "success") return false;
+
+      var fileList = [];
+      fileList.push(this.ruleForm.video);
+      var result = await removeFile(file, fileList);
+      if (result.code == 0) {
+        this.ruleForm.video = "";
+      }
+    },
+    async httprequestVideo(uploader) {
+      const result = await uploadFile(uploader, "COURSE_VIDEO");
+      if (result.code == 0) {
+        this.ruleForm.video = {
+          name: uploader.file.name,
+          newname: result.data.name
+        };
+      }
+    },
+    beforeUploadAttachments(file) {
+      var _flag = isMatchUploaded(file, this.ruleForm.attachments);
+      if (!_flag) return _flag;
+
+      return true;
+    },
+    async handleRemoveAttachments(file, fileList) {
+      if (file.status != "success") return false;
+
+      var result = await removeFile(file, this.ruleForm.attachments);
+      if (result.code == 0) {
+        var _index = getIndex(file, this.ruleForm.attachments);
+        this.ruleForm.images.splice(_index, 1);
+      }
+    },
+    async httprequestAttachments(uploader) {
+      const result = await uploadFile(uploader, "VIDEO_ATTACHMENTS");
+      if (result.code == 0) {
+        this.ruleForm.attachments.push({
+          name: uploader.file.name,
+          newname: result.data.name
+        });
+      }
     },
     courseModuleSelected(val) {},
     async submitForm(formName) {
@@ -138,6 +216,19 @@ export default {
         }
       });
       if (!flag) return false;
+
+       var _attachments = [];
+      this.ruleForm.attachments.forEach(item => {
+        _attachments.push(item.newname);
+      });
+      
+      this.ruleForm.attachments = JSON.stringify(_attachments);
+      this.ruleForm.video=this.ruleForm.video.newname;
+     
+      await this.addVideo(this.ruleForm);
+       if (eval(this.addResult.data)) {
+        this.$router.replace("/op/videolist");
+      }
     }
   },
   components: {}
