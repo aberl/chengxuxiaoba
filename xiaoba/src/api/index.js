@@ -196,3 +196,9 @@ export const reqAddVideo = (
  */
 export const reqGetAllVideoList = (courseModuleId, pageNum, pageSize, sort) =>
 ajax(BASE_URL + "/courses/"+courseModuleId+"/videos?pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);
+
+/**
+ * 获取视频
+ */
+export const reqGetVideo = videoId =>
+  ajax(BASE_URL + "/videos/" + videoId);

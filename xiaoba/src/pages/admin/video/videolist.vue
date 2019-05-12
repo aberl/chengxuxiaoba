@@ -24,7 +24,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button
-            @click="goToDetail('/op/modifycoursemodule', tableData[scope.$index].id)"
+            @click="goToDetail('/op/modifyvideo', tableData[scope.$index].id)"
             type="text"
             size="small"
           >编辑</el-button>
@@ -91,6 +91,9 @@ export default {
       "getAllCourseModuleList",
       "getAllVideoList"
     ]),
+    goToDetail(path,id) {
+      this.$router.replace({path:path, query:{id:id}});
+    },
     courseSelected(val) {
       this.getAllCourseModuleList(val);
       this.courseModuleId = "";
