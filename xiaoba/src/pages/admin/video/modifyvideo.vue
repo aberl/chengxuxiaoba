@@ -41,6 +41,7 @@
         :before-upload="beforeUploadVideo"
         :on-remove="handleRemoveVideo"
         :http-request="httprequestVideo"
+        :file-list="ruleForm.video"
         accept=".mp4, .rmvb"
       >
         <el-button size="small" type="primary">点击上传</el-button>
@@ -53,6 +54,7 @@
         :before-upload="beforeUploadAttachments"
         :on-remove="handleRemoveAttachments"
         :http-request="httprequestAttachments"
+        :file-list="ruleForm.attachments"
         accept="*"
       >
         <el-button size="small" type="primary">点击上传</el-button>
@@ -70,11 +72,15 @@
         <el-radio class="radio" label="-1">注销</el-radio>
       </el-radio-group>
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
+    <el-form-item label="观看人数">
+      <el-tag type="success">{{ruleForm.viewCount}}</el-tag>
     </el-form-item>
-    {{this.ruleForm}}
+    <el-form-item label="点赞人数">
+      <el-tag type="success">{{ruleForm.praiseCount}}</el-tag>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -92,6 +98,7 @@ export default {
   },
   computed: {
     ...mapState({
+      modifyResult: state => state.video.result,
       ruleForm: state => state.video.videoDetail,
       courseModule: state => {
         return state.video.videoCourseModule;
@@ -137,43 +144,34 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getVideo", "getCourseModuleDetails"]),
+    ...mapActions(["getVideo", "modifyVideo"]),
     courseSelected(val) {
       this.getAllCourseModuleList(val);
       this.ruleForm.courseModuleId = "";
     },
     beforeUploadVideo(file) {
-      if (this.ruleForm.video) {
+      if (this.ruleForm.video && this.ruleForm.video.length >0) {
         this.$message.error("视频已上传，请删除后再上传");
         return false;
       }
       return true;
     },
-    async getCourseModule(courseModuleId) {
-      console.log(courseModuleId + "xxxxx");
-      // const _result = await this.getCourseModuleDetails(
-      //   courseModuleId
-      // );
-      // if (_result.code == 0)
-      // this.courseModule=_result.data;
-    },
     async handleRemoveVideo(file, fileList) {
       if (file.status != "success") return false;
 
-      var fileList = [];
-      fileList.push(this.ruleForm.video);
-      var result = await removeFile(file, fileList);
+      var result = await removeFile(file, this.ruleForm.video);
       if (result.code == 0) {
-        this.ruleForm.video = "";
+        this.ruleForm.video = [];
       }
     },
     async httprequestVideo(uploader) {
       const result = await uploadFile(uploader, "COURSE_VIDEO");
       if (result.code == 0) {
-        this.ruleForm.video = {
-          name: uploader.file.name,
-          newname: result.data.name
-        };
+        this.ruleForm.video = [{
+          name: result.data.originName,
+          newname: result.data.name,
+          url:result.data.path
+        }];
       }
     },
     beforeUploadAttachments(file) {
@@ -188,7 +186,7 @@ export default {
       var result = await removeFile(file, this.ruleForm.attachments);
       if (result.code == 0) {
         var _index = getIndex(file, this.ruleForm.attachments);
-        this.ruleForm.images.splice(_index, 1);
+        this.ruleForm.attachments.splice(_index, 1);
       }
     },
     async httprequestAttachments(uploader) {
@@ -196,7 +194,8 @@ export default {
       if (result.code == 0) {
         this.ruleForm.attachments.push({
           name: uploader.file.name,
-          newname: result.data.name
+          newname: result.data.name,
+          url:result.data.path
         });
       }
     },
@@ -210,16 +209,8 @@ export default {
       });
       if (!flag) return false;
 
-      var _attachments = [];
-      this.ruleForm.attachments.forEach(item => {
-        _attachments.push(item.newname);
-      });
-
-      this.ruleForm.attachments = JSON.stringify(_attachments);
-      this.ruleForm.video = this.ruleForm.video.newname;
-
-      await this.addVideo(this.ruleForm);
-      if (eval(this.addResult.data)) {
+      await this.modifyVideo(this.ruleForm);
+      if (eval(this.modifyResult.data)) {
         this.$router.replace("/op/videolist");
       }
     }

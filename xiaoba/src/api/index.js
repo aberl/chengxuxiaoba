@@ -173,32 +173,75 @@ export const reqAddVideo = (
   name,
   attachments,
   duration,
-  description,status
+  description,
+  status
 ) =>
   ajax(
     BASE_URL + "/videos",
-    { courseModuleId,
-      file,
-      name,
-      attachments,
-      duration,
-      description,
-      status},
+    { courseModuleId, file, name, attachments, duration, description, status },
     "POST"
   );
 
 /**
  * 获取视频列表
- * @param {*} courseModuleId 
- * @param {*} pageNum 
- * @param {*} pageSize 
- * @param {*} sort 
+ * @param {*} courseModuleId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
  */
 export const reqGetAllVideoList = (courseModuleId, pageNum, pageSize, sort) =>
-ajax(BASE_URL + "/courses/"+courseModuleId+"/videos?pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);
+  ajax(
+    BASE_URL +
+      "/courses/" +
+      courseModuleId +
+      "/videos?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
 
 /**
  * 获取视频
  */
-export const reqGetVideo = videoId =>
-  ajax(BASE_URL + "/videos/" + videoId);
+export const reqGetVideo = videoId => ajax(BASE_URL + "/videos/" + videoId);
+
+/**
+ * 修改视频
+ * @param {*} id
+ * @param {*} file
+ * @param {*} name
+ * @param {*} attachments
+ * @param {*} duration
+ * @param {*} description
+ * @param {*} status
+ * @param {*} viewCount
+ * @param {*} praiseCount
+ */
+export const reqModifyVideo = (
+  id,
+  file,
+  name,
+  attachments,
+  duration,
+  description,
+  status,
+  viewCount,
+  praiseCount
+) =>
+  ajax(
+    BASE_URL + "/videos",
+    {
+      id,
+      file,
+      name,
+      attachments,
+      duration,
+      description,
+      status,
+      viewCount,
+      praiseCount
+    },
+    "PUT"
+  );
