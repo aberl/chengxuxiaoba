@@ -25,6 +25,8 @@ import Admin_addvideo from "../pages/admin/video/addvideo.vue";
 import Admin_videolist from "../pages/admin/video/videolist.vue";
 import Admin_modifyvideo from "../pages/admin/video/modifyvideo.vue";
 
+import Admin_userlist from "../pages/admin/user/userlist.vue";
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -83,6 +85,11 @@ export default new VueRouter({
           path: "/op/modifyvideo",
           name: "modifyvideo",
           component: Admin_modifyvideo
+        },
+        {
+          path: "/op/userlist",
+          name: "userlist",
+          component: Admin_userlist
         }
       ]
     },

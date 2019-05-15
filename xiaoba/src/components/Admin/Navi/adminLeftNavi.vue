@@ -39,18 +39,17 @@
           </el-submenu>
         </el-submenu>
 
-        <el-menu-item index="3">
-          <i class="el-icon-menu"></i>用户管理
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>消息管理
-        </el-menu-item>
-        <el-menu-item index="5">
-          <i class="el-icon-setting"></i>评论管理
-        </el-menu-item>
-        <el-menu-item index="6">
-          <i class="el-icon-setting"></i>问答管理
-        </el-menu-item>
+        <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-message"></i>
+            用户管理
+          </template>
+          <el-submenu index="3-1">
+            <template slot="title">用户</template>
+            <el-menu-item index="/op/modifyvideo">用户修改</el-menu-item>
+            <el-menu-item index="/op/userlist">用户列表</el-menu-item>
+          </el-submenu>
+        </el-submenu>
       </el-menu>
     </el-col>
   </el-row>
