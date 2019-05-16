@@ -1,7 +1,7 @@
 /**
  * 用户模块
  */
-import { reqGetUserList } from "../../api";
+import { reqGetUserList,reqGetUserInfo } from "../../api";
 
 import {
   REQUEST_RECEIVE_USERALLLIST,
@@ -21,6 +21,15 @@ const actions = {
     const result = await reqGetUserList(pageNum, pagesize, "-id",query);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_USERALLLIST, { userlist: result.data });
+    }
+  },
+  async getuserinfo({commit},id){
+    const result = await reqGetUserInfo(id);
+    if (result.code == 0) {
+    
+      result.data["status"] = String(result.data.status);
+      console.log(result.data.status)
+      commit(REQUEST_RECEIVE_USERINFO, { userInfo:result.data });
     }
   },
   receiveUserInfo({ commit }, userInfo) {

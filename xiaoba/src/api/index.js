@@ -38,7 +38,14 @@ export const reqGetUserList = (pageNum, pageSize, sort,query) =>
  */
 export const reqGetUserInfoByMobilePhone = mobilePhoneNo =>
   ajax(BASE_URL + "/users/mobilephoneno/" + mobilePhoneNo);
-
+  
+/**
+ * 根据id获取用户信息
+ * @param {*} id
+ */
+export const reqGetUserInfo = id =>
+  ajax(BASE_URL + "/users/" + id);
+  
 /**
  * 用户登录
  * @param {*} mobilePhoneNo

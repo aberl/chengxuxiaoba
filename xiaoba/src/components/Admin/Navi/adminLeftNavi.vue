@@ -46,7 +46,7 @@
           </template>
           <el-submenu index="3-1">
             <template slot="title">用户</template>
-            <el-menu-item index="/op/modifyvideo">用户修改</el-menu-item>
+            <el-menu-item index="/op/user">用户修改</el-menu-item>
             <el-menu-item index="/op/userlist">用户列表</el-menu-item>
           </el-submenu>
         </el-submenu>
