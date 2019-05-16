@@ -2,7 +2,7 @@
   <div>
     <div style="margin-top: 15px;">
       <el-input placeholder="请输入账户名称，手机号码或状态(激活或者失效)..." v-model="searchcontent">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
       </el-input>
     </div>
     <el-table :data="tableData" style="width: 100%">
@@ -37,18 +37,28 @@
 import { mapState, mapActions } from "vuex";
 export default {
   mounted() {
-    this.getuserlist({ pageNum: this.currentPageNum, pagesize: this.pageSize,query:""});
+    this.getUserList();
   },
   methods: {
     ...mapActions(["getuserlist"]),
+    search(){
+        getUserList();
+    },
     handleSizeChange(val) {
-      this.pageSize=val;
-      this.getuserlist({ pageNum: this.currentPageNum, pagesize: this.pageSize });
+      this.pageSize = val;
+      getUserList();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
-      this.currentPageNum=val;
-      this.getuserlist({ pageNum: this.currentPageNum, pagesize: this.pageSize });
+      this.currentPageNum = val;
+      getUserList();
+    },
+    getUserList() {
+      this.getuserlist({
+        pageNum: this.currentPageNum,
+        pagesize: this.pageSize,
+        query: this.searchcontent
+      });
     }
   },
   computed: {
@@ -56,7 +66,7 @@ export default {
       tableData: state => {
         return state.user.userlist.data;
       },
-      totalCount:state => {
+      totalCount: state => {
         return state.user.userlist.totalCount;
       }
     })
@@ -64,7 +74,7 @@ export default {
   data() {
     return {
       currentPageNum: 1,
-      pagesizes: [20,40,80,100],
+      pagesizes: [20, 40, 80, 100],
       pageSize: 20,
       searchcontent: ""
     };

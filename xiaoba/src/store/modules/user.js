@@ -18,7 +18,7 @@ const state = {
 
 const actions = {
   async getuserlist({commit},{pageNum,pagesize,query}){
-    const result = await reqGetUserList(pageNum, pagesize, "-id");
+    const result = await reqGetUserList(pageNum, pagesize, "-id",query);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_USERALLLIST, { userlist: result.data });
     }

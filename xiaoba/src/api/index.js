@@ -29,8 +29,8 @@ export const reqRegisterAccount = (mobilePhoneNo, validationCode, password) =>
  * @param {*} pageSize 
  * @param {*} sort 
  */
-export const reqGetUserList = (pageNum, pageSize, sort) =>
-  ajax(BASE_URL + "/users/?pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);
+export const reqGetUserList = (pageNum, pageSize, sort,query) =>
+  ajax(BASE_URL + "/users/?query="+query+"&pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);
 
 /**
  * 根据用户手机号获取用户信息
