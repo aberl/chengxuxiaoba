@@ -4,8 +4,10 @@
 
  export const REQUEST_RECEIVE_USERALLLIST = 'request_receive_useralllist'
  export const REQUEST_RECEIVE_USERINFO = 'request_receive_userinfo'
+ export const REQUEST_UPDATE_USERINFO = 'request_update_userinfo'
  export const REQUEST_CONSERVE_USERINFO = 'request_receive_userinfo'
  export const REQUEST_REMOVE_USERINFO = 'request_remove_userinfo'
+ export const REQUEST_RECEIVE_ROLEALLLIST = 'request_receive_rolealllist'
 
  export const REQUEST_RECEIVE_COURSEALLLIST = 'request_receive_coursealllist'
  export const REQUEST_RECEIVE_COURSEDETAILS = 'request_receive_coursedetails'
@@ -44,5 +46,7 @@
    REQUEST_ADD_VIDEO,
    REQUEST_RECEIVE_VIDEOALLLIST,
    REQUEST_RECEIVE_VIDEODETAILS,
-   REQUEST_MODIFY_VIDEO
+   REQUEST_MODIFY_VIDEO,
+   REQUEST_RECEIVE_ROLEALLLIST,
+   REQUEST_UPDATE_USERINFO
  }

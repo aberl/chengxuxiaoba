@@ -45,7 +45,12 @@ export const reqGetUserInfoByMobilePhone = mobilePhoneNo =>
  */
 export const reqGetUserInfo = id =>
   ajax(BASE_URL + "/users/" + id);
-  
+
+export const reqModifyUser = (user) =>
+  ajax(BASE_URL + "/users/account", 
+  user, "PUT");
+
+
 /**
  * 用户登录
  * @param {*} mobilePhoneNo
@@ -66,6 +71,13 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
     { mobilePhoneNo, validationCode, password },
     "PUT"
   );
+
+/**
+ * 获取角色集合
+ */
+export const reqGetRoleList = () =>
+ajax(BASE_URL + "/users/roles");
+
 
 /**
  * 上传文件
