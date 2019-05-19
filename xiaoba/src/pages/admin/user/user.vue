@@ -1,16 +1,16 @@
 <template>
-  <el-form ref="form" :model="this.userInfo" label-width="80px">
+  <el-form ref="form" :model="userInfo" label-width="80px">
     <el-form-item label="账户名">
-      <el-input v-model="this.userInfo.name" :disabled="true"></el-input>
+      <el-input v-model="userInfo.name" :disabled="true"></el-input>
     </el-form-item>
     <el-form-item label="状态">
-      <el-radio-group v-model="this.userInfo.status">
+      <el-radio-group v-model="userInfo.status">
         <el-radio class="radio" label="1">激活</el-radio>
         <el-radio class="radio" label="-1">注销</el-radio>
       </el-radio-group>
     </el-form-item>
     <el-form-item label="创建时间">
-      <el-input v-model="this.userInfo.createDateTime"></el-input>
+      <el-input v-model="userInfo.createDateTime"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit">立即创建</el-button>
@@ -28,9 +28,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => {
-        return state.user.userInfo;
-      }
+      userInfo: state => state.user.userInfo
     })
   },
   data() {

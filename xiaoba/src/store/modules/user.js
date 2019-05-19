@@ -58,7 +58,17 @@ const mutations = {
     state.userlist.currentNum=userlist.currentNum
   },
   [REQUEST_RECEIVE_USERINFO](state, { userInfo }) {
-    state.userInfo = userInfo;
+    state.userInfo =userInfo;
+    // state.userInfo = {
+    //   name:userInfo.name,
+    //   headerImg:userInfo.headerImg,
+    //   mobilePhoneNo:userInfo.mobilePhoneNo,
+    //   wechatAccount:userInfo.wechatAccount,
+    //   wechatHeaderImg:userInfo.wechatHeaderImg,
+    //   status:userInfo.status,
+    //   statusDesc:userInfo.statusDesc,
+    //   createDateTime:userInfo.createDateTime
+    // }
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
     state.userInfo = userInfo;
