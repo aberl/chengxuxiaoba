@@ -11,9 +11,7 @@
         <li>
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">课程</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" @click="goTo('/coursedetail')">JAVA</a>
-            <a class="dropdown-item" href="#" @click="goTo('/coursedetail')">数据库</a>
-            <a class="dropdown-item" href="#" @click="goTo('/coursedetail')">Node</a>
+            <a class="dropdown-item" href="#" v-for="course in courseList" :key="course">{{course.name}}</a>
           </div>
         </li>
         <li>
@@ -52,11 +50,15 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+  mounted() {
+    this.getAllCourseList();
+  },
   computed: mapState({
+      courseList: state => state.course.courseList,
     userInfo: state => state.user.userInfo
   }),
   methods: {
-    ...mapActions(["removeUserInfo"]),
+    ...mapActions(["removeUserInfo","getAllCourseList"]),
     goTo(path) {
       this.$router.replace(path);
     },
