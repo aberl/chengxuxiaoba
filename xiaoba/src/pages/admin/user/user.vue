@@ -19,11 +19,11 @@
     </el-form-item>
     <el-form-item label="VIP时效">
     <el-col :span="11">
-      <el-date-picker type="date" placeholder="选择日期" v-model="this.userInfo.vipStartDate" style="width: 100%;"></el-date-picker>
+      <el-date-picker type="date" placeholder="选择日期" v-model="userInfo.vipStartDate" value-format="yyyy-MM-dd HH:mm:ss"  style="width: 100%;"></el-date-picker>
     </el-col>
     <el-col class="line" :span="2">-</el-col>
     <el-col :span="11">
-      <el-date-picker type="date" placeholder="选择日期" v-model="this.userInfo.vipEndDate" style="width: 100%;"></el-date-picker>
+      <el-date-picker type="date" placeholder="选择日期" v-model="userInfo.vipEndDate" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
     </el-col>
   </el-form-item>
     <el-form-item label="创建时间">
@@ -39,8 +39,14 @@
 import { mapState, mapActions } from "vuex";
 export default {
   mounted() {
-    this.getuserinfo(26);
+      if (this.$route.query.id)
+      {
+    this.getuserinfo(this.$route.query.id);
     this.getrolelist();
+      }
+      else{
+          this.$router.replace("/op/userlist");
+      }
   },
   computed: {
     ...mapState({
@@ -68,7 +74,7 @@ export default {
     onSubmit() {
       console.log(this.userInfo);
         this.updateUserInfo(this.userInfo);
-      console.log("submit!");
+      this.$router.replace("/op/userlist");
     }
   },
   components: {}

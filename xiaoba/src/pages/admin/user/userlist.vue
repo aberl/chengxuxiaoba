@@ -12,7 +12,7 @@
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button
-            @click="goToDetail('/op/modifyvideo', tableData[scope.$index].id)"
+            @click="goToDetail('/op/user', tableData[scope.$index].id)"
             type="text"
             size="small"
           >编辑</el-button>
@@ -59,6 +59,9 @@ export default {
         pagesize: this.pageSize,
         query: this.searchcontent
       });
+    },
+    goToDetail(path,id) {
+      this.$router.replace({path:path, query:{id:id}});
     }
   },
   computed: {
