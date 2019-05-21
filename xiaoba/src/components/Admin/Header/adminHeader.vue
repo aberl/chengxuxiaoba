@@ -31,6 +31,11 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+  mounted: function() {
+    if (this.userInfo.roles.indexOf("1") < 0) {
+      this.goTo("/");
+    }
+  },
   computed: {
     ...mapState({
       userInfo: state => state.user.userInfo
