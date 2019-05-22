@@ -25,6 +25,7 @@
     <div v-if="userInfo.name">
       <img src="./images/busheader2.png">
     </div>
+    {{this.userInfo}}
   </div>
 </template>
 
@@ -32,6 +33,10 @@
 import { mapState, mapActions } from "vuex";
 export default {
   mounted: function() {
+    if(!this.userInfo.roles){
+        this.goTo("/");
+        return;
+    }
     if (this.userInfo.roles.indexOf("1") < 0) {
       this.goTo("/");
     }

@@ -3,86 +3,47 @@
       <headerTop/>
        <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">程序小巴首页大标题</h1>
-          <p class="lead text-muted">课程</p>
+          <h1 class="jumbotron-heading">课程列表</h1>
+          <p class="lead text-muted"></p>
         </div>
       </section>
-      <div class="album py-5 bg-light">
-          <div class="container">
-            <div class="row">
-                  <div class="col-md-3" @click="ToCourseDetail('JAVA')">
-                    <div class="card mb-3 box-shadow">
-                      <div class="card-text text-center" style="height: 200px; width: 100%; background-image: url(../static/images/primary256.png);">
-                        <h3>JAVA</h3>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">100人已观看</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3" @click="ToCourseDetail('JAVA')">
-                    <div class="card mb-3 box-shadow">
-                      <div class="card-text text-center" style="height: 200px; width: 100%; background-image: url(../static/images/primary256.png);">
-                        <h3>数据库</h3>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">100人已观看</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3" @click="ToCourseDetail('JAVA')">
-                    <div class="card mb-3 box-shadow">
-                      <div class="card-text text-center" style="height: 200px; width: 100%; background-image: url(../static/images/primary256.png);">
-                        <h3>前端</h3>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">100人已观看</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3" @click="ToCourseDetail('JAVA')">
-                    <div class="card mb-3 box-shadow">
-                      <div class="card-text text-center" style="height: 200px; width: 100%; background-image: url(../static/images/primary256.png);">
-                        <h3>开发工具</h3>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">100人已观看</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-3" @click="ToCourseDetail('JAVA')">
-                    <div class="card mb-3 box-shadow">
-                      <div class="card-text text-center" style="height: 200px; width: 100%; background-image: url(../static/images/primary256.png);">
-                        <h3>儿童编程</h3>
-                      </div>
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <small class="text-muted">100人已观看</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
+<el-row :gutter="12" class="row_padding">
+  <el-col :span="6" v-for="course in courseList">
+    <el-card>
+      <img src="//p.qpic.cn/qqconadmin/0/6797e7785ab44ef183005b9ca38b2211/0?tp=webp" class="image">
+      <div >
+        <span>{{course.name}}</span>
+        <div class="bottom clearfix">
+          <time class="time">{{ course.createDateTime }}</time>
+          <el-button type="text" class="button">查看</el-button>
         </div>
+      </div>
+    </el-card>
+  </el-col>
+</el-row>
       <footerGuide/>
   </div>
 </template>
 
 <script>    
+import { mapState, mapActions } from "vuex";
 import headerTop from '../../components/Header/header.vue'
 import footerGuide from '../../components/Footer/footer.vue'
 
 export default {
+  mounted() {
+    this.getAllEffectCourseList();
+  },
+  computed: mapState({
+      courseList: state => state.course.courseList
+  }),
+  data() {
+    return {
+      currentDate: new Date()
+    };
+  },
   methods:{
+    ...mapActions(["getAllEffectCourseList"]),
     ToCourseDetail(){
       this.$router.push({path:'/coursedetail'});
     }
@@ -95,5 +56,37 @@ components:{
 </script>
 
 <style>
+ .time {
+    font-size: 13px;
+    color: #999;
+  }
+  
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
 
+  .button {
+    padding: 0;
+    float: right;
+  }
+
+  .image {
+    width: 60%;
+    display: block;
+  }
+
+  .clearfix:before,
+  .clearfix:after {
+      display: table;
+      content: "";
+  }
+  
+  .row_padding{
+padding:20px
+  }
+
+  .clearfix:after {
+      clear: both
+  }
 </style>
