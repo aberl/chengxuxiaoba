@@ -113,17 +113,14 @@ const mutations = {
     let _name = course.name;
     let _desc = course.description;
     let _status = course.status;
-    let _images = JSON.parse(course.images);
+
     let _imageDetail = [];
-    if (_images != null && _images.length > 0) {
-      let nameIndex = -1;
-      for (var index in _images) {
-        nameIndex = _images[index].lastIndexOf("/");
-        var _imagename = _images[index].substr(nameIndex + 1);
+    if (course.imageList != null && course.imageList.length > 0) {
+      for (var index in course.imageList) {
         _imageDetail.push({
-          name: _imagename,
-          newname: _imagename,
-          url: _images[index]
+          name:  course.imageList[index].originName,
+          newname:  course.imageList[index].name,
+          url: course.imageList[index].url
         });
       }
     }
@@ -158,17 +155,14 @@ const mutations = {
     let _name = courseModule.name;
     let _desc = courseModule.description;
     let _status = courseModule.status;
-    let _images = JSON.parse(courseModule.images);
+
     let _imageDetail = [];
-    if (_images != null && _images.length > 0) {
-      let nameIndex = -1;
-      for (var index in _images) {
-        nameIndex = _images[index].lastIndexOf("/");
-        var _imagename = _images[index].substr(nameIndex + 1);
+    if (courseModule.imageList != null && courseModule.imageList.length > 0) {
+      for (var index in courseModule.imageList) {
         _imageDetail.push({
-          name: _imagename,
-          newname: _imagename,
-          url: _images[index]
+          name:  courseModule.imageList[index].originName,
+          newname:  courseModule.imageList[index].name,
+          url: courseModule.imageList[index].url
         });
       }
     }

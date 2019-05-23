@@ -29,6 +29,7 @@
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         :http-request="httprequest"
+        list-type="picture"
         accept=".png, .jpg"
       >
         <el-button size="small" type="primary">点击上传</el-button>
@@ -145,11 +146,12 @@ export default {
       console.log(file);
     },
     async httprequest(uploader) {
-      const result = await uploadFile(uploader,"COURSE_MODULE_DETAILS");
+      const result = await uploadFile(uploader, "COURSE_MODULE_DETAILS");
       if (result.code == 0) {
         this.ruleForm.images.push({
           name: uploader.file.name,
-          newname: result.data.name
+          newname: result.data.name,
+          url: result.data.url
         });
       }
     },

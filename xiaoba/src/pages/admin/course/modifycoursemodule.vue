@@ -49,6 +49,7 @@
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
     </el-form-item>
+    {{ruleForm}}
   </el-form>
 </template>
 
@@ -150,7 +151,7 @@ export default {
         this.ruleForm.images.push({
           name: uploader.file.name,
           newname: result.data.name,
-          url:result.data.path
+          url:result.data.url
         });
       }
     },

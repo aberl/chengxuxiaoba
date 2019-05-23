@@ -10,7 +10,7 @@
 <el-row :gutter="12" class="row_padding">
   <el-col :span="6" v-for="course in courseList">
     <el-card>
-      <img src="//p.qpic.cn/qqconadmin/0/6797e7785ab44ef183005b9ca38b2211/0?tp=webp" class="image">
+      <img src="course.url" class="image">
       <div >
         <span>{{course.name}}</span>
         <div class="bottom clearfix">

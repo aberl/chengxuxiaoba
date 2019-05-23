@@ -25,7 +25,6 @@
     <div v-if="userInfo.name">
       <img src="./images/busheader2.png">
     </div>
-    {{this.userInfo}}
   </div>
 </template>
 

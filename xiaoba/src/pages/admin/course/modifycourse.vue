@@ -19,6 +19,7 @@
         :on-remove="handleRemove"
         :http-request="httprequest"
         :file-list="ruleForm.images"
+        list-type="picture"
         accept=".jpg,.png"
       >
         <el-button size="small" type="primary">点击上传</el-button>
@@ -37,6 +38,7 @@
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
     </el-form-item>
+    {{this.ruleForm}}
   </el-form>
 </template>
 
@@ -111,7 +113,8 @@ export default {
       if (result.code == 0) {
         this.ruleForm.images.push({
           name: uploader.file.name,
-          newname: result.data.name
+          newname: result.data.name,
+          url: result.data.url
         });
       }
     },
