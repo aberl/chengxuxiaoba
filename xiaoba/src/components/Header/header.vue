@@ -11,7 +11,7 @@
         <li>
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">课程</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" v-for="course in courseList">
+            <a class="dropdown-item" href="#" v-for="course in courseList" @click="ToCourseDetail(course.id)">
               {{course.name}}
               </a>
           </div>
@@ -61,6 +61,10 @@ export default {
   }),
   methods: {
     ...mapActions(["removeUserInfo","getAllEffectCourseList"]),
+    ToCourseDetail(courseId){
+      console.log(courseId)
+      this.$router.replace({path:'/coursedetail', query:{id:courseId}});
+    },
     goTo(path) {
       this.$router.replace(path);
     },
