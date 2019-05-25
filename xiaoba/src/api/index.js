@@ -181,6 +181,11 @@ export const reqGetAllCourseModuleList = courseId =>
   ajax(BASE_URL + "/courses/" + courseId + "/coursemodule/all");
 
 /**
+ * 获取所有有效课程模块列表
+ */
+export const reqGetAllEffectiveCourseModuleList = courseId =>
+  ajax(BASE_URL + "/courses/"+courseId+"/coursemodule/effective");
+/**
  * 获取课程模块详情
  */
 export const reqGetCourseModuleDetails = courseModuleId =>

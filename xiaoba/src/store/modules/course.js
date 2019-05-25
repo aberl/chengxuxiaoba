@@ -22,7 +22,8 @@ import {
   reqGetAllEffectiveCourseList,
   reqGetAllCourseModuleList,
   reqGetCourseModuleDetails,
-  reqModifyCourseModule
+  reqModifyCourseModule,
+  reqGetAllEffectiveCourseModuleList
 } from "../../api";
 
 const state = {
@@ -88,6 +89,12 @@ const actions = {
   },
   async getAllCourseModuleList({ commit },courseId) {
     const result = await reqGetAllCourseModuleList(courseId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_COURSEMODULEALLLIST, { courseModuleList: result.data });
+    }
+  },
+  async getAllEffectiveCourseModuleList({ commit },courseId) {
+    const result = await reqGetAllEffectiveCourseModuleList(courseId);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_COURSEMODULEALLLIST, { courseModuleList: result.data });
     }

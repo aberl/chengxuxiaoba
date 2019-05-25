@@ -10,12 +10,12 @@
 <el-row :gutter="12" class="row_padding">
   <el-col :span="6" v-for="course in courseList">
     <el-card>
-      <img src="course.url" class="image">
+      <img :src="course.imageList[0].url" class="image" @click="ToCourseDetail(course.id)">
       <div >
         <span>{{course.name}}</span>
         <div class="bottom clearfix">
           <time class="time">{{ course.createDateTime }}</time>
-          <el-button type="text" class="button">查看</el-button>
+          <el-button type="text" class="button" @click="ToCourseDetail(course.id)">查看</el-button>
         </div>
       </div>
     </el-card>
@@ -44,8 +44,8 @@ export default {
   },
   methods:{
     ...mapActions(["getAllEffectCourseList"]),
-    ToCourseDetail(){
-      this.$router.push({path:'/coursedetail'});
+    ToCourseDetail(courseId){
+      this.$router.push({path:'/coursedetail', query:{id:courseId}});
     }
   },
 components:{
@@ -72,8 +72,9 @@ components:{
   }
 
   .image {
-    width: 60%;
-    display: block;
+    width: 100%;
+    height: 200px;
+    display: no-repeat;
   }
 
   .clearfix:before,
