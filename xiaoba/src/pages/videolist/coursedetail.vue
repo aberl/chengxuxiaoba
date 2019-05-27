@@ -9,17 +9,17 @@
     </section>
 
     <el-row :gutter="12" class="row_padding">
-      <el-col :span="6" v-for="module in courseModuleList">
+      <el-col :span="6" v-for="cmodule in courseModuleList" :key="cmodule.id">
         <el-card>
-          <img :src="module.imageList[0].url" class="image" @click="ToCourseList(module.id)">
+          <img :src="cmodule.imageList[0].url" class="image" @click="ToCourseList(cmodule.id)">
           <div>
             <span class="bottom clearfix">
-              {{module.name}}</span>
+              {{cmodule.name}}</span>
             <span class="bottom clearfix">
-              共{{module.videoCount}}个视频/{{module.totalViewCount}}人观看/{{module.totalPraiseCount}}点赞</span>
+              共{{cmodule.videoCount}}个视频/{{cmodule.totalViewCount}}人观看/{{cmodule.totalPraiseCount}}点赞</span>
             <div class="bottom clearfix">
-              <time class="time">{{module.createDateTime}}</time>
-              <el-button type="text" class="button" @click="ToCourseList(module.id)">查看</el-button>
+              <time class="time">{{cmodule.createDateTime}}</time>
+              <el-button type="text" class="button" @click="ToCourseList(cmodule.id)">查看</el-button>
             </div>
           </div>
         </el-card>
