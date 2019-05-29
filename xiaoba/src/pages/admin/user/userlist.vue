@@ -19,6 +19,8 @@
         </template>
       </el-table-column>
     </el-table>
+        <el-row :gutter="20">
+      <el-col :span="12" :offset="6">
     <div class="block">
       <el-pagination
         @size-change="handleSizeChange"
@@ -30,6 +32,8 @@
         :total="totalCount"
       ></el-pagination>
     </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -77,8 +81,8 @@ export default {
   data() {
     return {
       currentPageNum: 1,
-      pagesizes: [20, 40, 80, 100],
-      pageSize: 20,
+      pagesizes: [2, 4, 6, 8],
+      pageSize: 2,
       searchcontent: ""
     };
   },

@@ -44,13 +44,13 @@ export default {
     ...mapState({
       tableData: state => {
         var _data = [];
-        for (var index in state.video.videoList) {
+        for (var index in state.video.videoList.data) {
           _data.push({
-            id:state.video.videoList[index].id,
-            name: state.video.videoList[index].name,
-            courseName: state.video.videoList[index].courseName,
-            createdatetime: state.video.videoList[index].createDateTime,
-            status: state.video.videoList[index].statusDesc,
+            id:state.video.videoList.data[index].id,
+            name: state.video.videoList.data[index].name,
+            courseName: state.video.videoList.data[index].courseName,
+            createdatetime: state.video.videoList.data[index].createDateTime,
+            status: state.video.videoList.data[index].statusDesc,
             courseModuleName:this.courseModuleName
           });
         }
@@ -99,7 +99,7 @@ export default {
       this.courseModuleId = "";
     },
     courseModuleSelected(val) {
-      this.getAllVideoList({courseModuleId:val, pageNum:1});
+      this.getAllVideoList({courseModuleId:val, pageNum:1,pagesize:1000});
     }
   },
   components: {}

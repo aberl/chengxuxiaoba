@@ -1,6 +1,17 @@
 <template>
   <div>
     <headerTop/>
+    <div class="container">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <span class="nav_show">首页</span>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <span class="nav_show">{{courseDetails.name}}</span>
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <br>
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">{{courseDetails.name}}</h1>
@@ -13,10 +24,10 @@
         <el-card>
           <img :src="cmodule.imageList[0].url" class="image" @click="ToCourseList(cmodule.id)">
           <div>
-            <span class="bottom clearfix">
-              {{cmodule.name}}</span>
-            <span class="bottom clearfix">
-              共{{cmodule.videoCount}}个视频/{{cmodule.totalViewCount}}人观看/{{cmodule.totalPraiseCount}}点赞</span>
+            <span class="bottom clearfix">{{cmodule.name}}</span>
+            <span
+              class="bottom clearfix"
+            >共{{cmodule.videoCount}}个视频/{{cmodule.totalViewCount}}人观看/{{cmodule.totalPraiseCount}}点赞</span>
             <div class="bottom clearfix">
               <time class="time">{{cmodule.createDateTime}}</time>
               <el-button type="text" class="button" @click="ToCourseList(cmodule.id)">查看</el-button>
@@ -48,7 +59,7 @@ export default {
   methods: {
     ...mapActions(["getAllEffectiveCourseModuleList", "getCourseDetails"]),
     ToCourseList(coursemoduleid) {
-      this.$router.push({path:'/courselist', query:{id:coursemoduleid}});
+      this.$router.push({ path: "/courselist", query: { id: coursemoduleid } });
     }
   },
   components: {
@@ -60,37 +71,42 @@ export default {
 
 <style>
 .time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
+  font-size: 13px;
+  color: #999;
+}
 
-  .button {
-    padding: 0;
-    float: right;
-  }
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
 
-  .image {
-    width: 100%;
-    height: 200px;
-    display: no-repeat;
-  }
+.button {
+  padding: 0;
+  float: right;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .row_padding{
-padding:20px
-  }
+.image {
+  width: 100%;
+  height: 200px;
+  display: no-repeat;
+}
 
-  .clearfix:after {
-      clear: both
-  }
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.row_padding {
+  padding: 20px;
+}
+
+.clearfix:after {
+  clear: both;
+}
+.nav_show{
+   font-size: 20px;
+   font-family:"Microsoft YaHei" ;
+   font-weight:normal
+}
 </style>

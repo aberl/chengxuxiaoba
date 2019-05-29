@@ -13,7 +13,7 @@ import { reqAddVideo,reqGetAllVideoList,reqGetVideo,reqGetCourseModuleDetails,re
 const state = {
   videoCourseModule:{},
   videoDetail:{},
-  videoList: [],
+  videoList: {currentNum:1,data:[],totalCount:0},
   result: {}
 };
 
@@ -58,8 +58,8 @@ const actions = {
       commit(REQUEST_RECEIVE_VIDEODETAILS, { video: result.data, courseModule:courseModuleresult.data });
     }
   },
-  async getAllVideoList({ commit }, {courseModuleId, pageNum}) {
-    const result = await reqGetAllVideoList(courseModuleId, pageNum, 20, "-id");
+  async getAllVideoList({ commit }, {courseModuleId, pageNum, pagesize}) {
+    const result = await reqGetAllVideoList(courseModuleId, pageNum, pagesize, "id");
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_VIDEOALLLIST, { videoList: result.data });
     }
@@ -104,8 +104,9 @@ const mutations = {
     state.videoCourseModule=courseModule
   },
   [REQUEST_RECEIVE_VIDEOALLLIST](state, { videoList }) {
-      console.log(videoList.data)
-    state.videoList = videoList.data;
+    state.videoList.data = videoList.data;
+    state.videoList.totalCount=videoList.totalCount
+    state.videoList.currentNum=videoList.currentNum
   },
   [REQUEST_MODIFY_VIDEO](state, { video }) {
     state.result = video;
