@@ -2,32 +2,73 @@
   <div>
     <headerTop/>
     <main role="main">
+      <div class="container">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">
+            <span class="nav_show">首页</span>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/coursedetail?id='+courseModuleDetail.courseId }">
+            <span class="nav_show">{{courseModuleDetail.courseName}}</span>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: '/courselist?id='+courseModuleDetail.id }">
+            <span class="nav_show">{{courseModuleDetail.name}}</span>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item>
+            <span class="nav_show">{{videoDetail.name}}</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      {{courseModuleDetail.id}}
+      <br>
       <section class="jumbotron text-center">
         <div class="container">
-          <p class="lead text-muted">JAVA 课程分为初级和高级2部分，大概80节课时，建议在初级学完之后再学习高级课程。</p>
+          <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
         <video width="520" height="440" controls>
-        <source src="../../common/video/test.mp4"  type="video/mp4">
+          <source ref="video" type="video/mp4">
         </video>
       </section>
+      <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
+      <br>
     </main>
-    <comment/>
+    <comment :videoId="this.$route.query.id" :attachment="videoDetail.attachments"/>
+
     <footerGuide/>
+    {{videoDetail}}
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
-import comment from '../../components/Evaluate/comment.vue'
+import comment from "../../components/Evaluate/comment.vue";
 export default {
+  mounted() {
+    this.getVideo(this.$route.query.id);
+    this.$refs.video.src = this.videoDetail.video[0].url;
+  },
   components: {
     headerTop,
     footerGuide,
     comment
+  },
+  computed: {
+    ...mapState({
+      videoDetail: state => state.video.videoDetail,
+      courseModuleDetail: state => state.video.videoCourseModule
+    })
+  },
+  methods: {
+    ...mapActions(["getVideo"])
   }
 };
 </script>
 
 <style>
+.nav_show {
+  font-size: 20px;
+  font-family: "Microsoft YaHei";
+  font-weight: normal;
+}
 </style>

@@ -74,7 +74,7 @@ const mutations = {
     let _video = [{
       name: video.video.originName,
       newname: video.video.name,
-      url: video.video.path
+      url: video.video.url
     }];
     let _attachments=[];
     if(video.attachmentList)
@@ -83,7 +83,7 @@ const mutations = {
       _attachments.push({
         name: video.attachmentList[index].originName,
         newname: video.attachmentList[index].name,
-        url: video.attachmentList[index].path
+        url: video.attachmentList[index].url
       });
     }
   }
