@@ -18,15 +18,15 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      {{courseModuleDetail.id}}
       <br>
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <video width="520" height="440" controls>
+        <!-- <video width="520" height="440" controls>
           <source ref="video" type="video/mp4">
-        </video>
+        </video> -->
+        <videoPlay/>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
       <br>
@@ -34,7 +34,6 @@
     <comment :videoId="this.$route.query.id" :attachment="videoDetail.attachments"/>
 
     <footerGuide/>
-    {{videoDetail}}
   </div>
 </template>
 
@@ -43,15 +42,17 @@ import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
 import comment from "../../components/Evaluate/comment.vue";
+import videoPlay from "../../components/Video/videoPlay.vue";
 export default {
   mounted() {
     this.getVideo(this.$route.query.id);
-    this.$refs.video.src = this.videoDetail.video[0].url;
+   // this.$refs.video.src = this.videoDetail.video[0].url;
   },
   components: {
     headerTop,
     footerGuide,
-    comment
+    comment,
+    videoPlay
   },
   computed: {
     ...mapState({

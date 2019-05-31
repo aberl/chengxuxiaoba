@@ -17,6 +17,7 @@
     "popper.js": "^1.14.7",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
