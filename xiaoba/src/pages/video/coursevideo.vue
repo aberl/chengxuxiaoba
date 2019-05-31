@@ -26,7 +26,7 @@
         <!-- <video width="520" height="440" controls>
           <source ref="video" type="video/mp4">
         </video> -->
-        <videoPlay/>
+        <videoPlay :videoSrc="this.videoDetail.video[0].url"/>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
       <br>
