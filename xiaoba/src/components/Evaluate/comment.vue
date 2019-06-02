@@ -3,7 +3,7 @@
 <el-tabs type="border-card">
   <el-tab-pane>
     <span slot="label"><i class="el-icon-date"></i> 评价</span>
-    <evaluate/>
+    <evaluate :videoId="videoId"/>
   </el-tab-pane>
 
   <el-tab-pane>

@@ -1,107 +1,150 @@
 <template>
-<div>
-<div class="container" v-if="evaluateWindowDisply">
-  <h5>您觉得视频怎么样？</h5>
-  <form>
-    <div class="form-group">
-      <rate/>
+  <div>
+    <div class="container" v-if="evaluateWindowDisply">
+      <h5>您觉得视频怎么样？</h5>
+      <form>
+        <div class="form-group">
+          <rate @changeRate="changeRate"/>
+        </div>
+        <el-input
+        maxlength="100"
+        show-word-limit
+          type="textarea"
+          :rows="6"
+          placeholder="请尽可能详细描述您的学习经历，例如学习成果，老师讲课风格等(字数大小限制在5到100字)"
+          v-model="postForm.evaluation"
+        ></el-input>
+      </form>
+      <div style="margin: 20px 0;"></div>
+      <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitEvaluation">提交评价</el-button>
     </div>
-    <el-input type="textarea" :rows="6" placeholder="请尽可能详细描述您的学习经历，例如学习成果，老师讲课风格等" v-model="textarea"></el-input>
-  </form>
-   <div style="margin: 20px 0;"></div>
-  <button type="submit" class="btn btn-primary">提交评价</button>
-</div>
 
-<div class="p-3">
-        <small class="d-block text-right">
-          <el-button @click="displayEvaluateWindow" type="primary" round v-if="evaluateSubmitButtonDisplay">我要评价</el-button>
-        </small>
-  <div>
-  <div class="media">
-    <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" 
-    style="width: 64px; height: 64px;" 
-    src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_168f682cf52%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_168f682cf52%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2211.546875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-    <p class="media-body text-left">
-    <strong class="d-block">username</strong><rate/>
-    超级赞，看到项目组里用这个，我这个新手完全摸不着头脑，看不懂。现在虽然还没看底层代码，但是对Quartz有了一个比较清晰的概念了，谢谢老师的点点滴滴多多多多多
-    </p>
+    <div class="p-3">
+      <small class="d-block text-right border-bottom padding-bottom">
+        <el-button
+          @click="displayEvaluateWindow"
+          type="primary"
+          round
+          v-if="evaluateSubmitButtonDisplay"
+        >我要评价</el-button>
+      </small>
+      <div v-for="evaluation in evaluationList" :key="evaluation.id">
+        <div class="media padding-top">
+          <el-button type="success" circle>{{evaluation.index}}楼</el-button>&nbsp;&nbsp;
+          <p class="media-body text-left">
+            <strong class="d-block">{{evaluation.accountName}}</strong>
+            <rate :stars="evaluation.stars" :disabled="true"/>
+            {{evaluation.content}}
+          </p>
+        </div>
+        <div class="border-bottom">
+          <div class="d-flex justify-content-between">
+            <small class="text-muted">
+              <span class="iconfont ai-iconzan"></span>
+              {{evaluation.praiseCount}}
+            </small>
+            <small class="text-muted">{{evaluation.createDateTime}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="border-bottom">
-  <div class="d-flex justify-content-between">
-    <small class="text-muted">
-      <span class="iconfont ai-iconzan"></span>100
-    </small>
-    <small class="text-muted">2019/03/08 22:53:22</small>
-  </div>
-  </div>
-</div>
-  <div>
-  <div class="media">
-    <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" 
-    style="width: 64px; height: 64px;" 
-    src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_168f682cf52%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_168f682cf52%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2211.546875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-    <p class="media-body text-left">
-    <strong class="d-block">username</strong><rate/>
-    超级赞，看到项目组里用这个，我这个新手完全摸不着头脑，看不懂。现在虽然还没看底层代码，但是对Quartz有了一个比较清晰的概念了，谢谢老师的点点滴滴多多多多多
-    </p>
-  </div>
-  <div class="border-bottom">
-  <div class="d-flex justify-content-between">
-    <small class="text-muted">
-      <span class="iconfont ai-iconzan"></span>100
-    </small>
-    <small class="text-muted">2019/03/08 22:53:22</small>
-  </div>
-  </div>
-</div>
-  <div>
-  <div class="media">
-    <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" 
-    style="width: 64px; height: 64px;" 
-    src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_168f682cf52%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_168f682cf52%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2211.546875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
-    <p class="media-body text-left">
-    <strong class="d-block">username</strong><rate/>
-    超级赞，看到项目组里用这个，我这个新手完全摸不着头脑，看不懂。现在虽然还没看底层代码，但是对Quartz有了一个比较清晰的概念了，谢谢老师的点点滴滴多多多多多
-    </p>
-  </div>
-  <div class="border-bottom">
-  <div class="d-flex justify-content-between">
-    <small class="text-muted">
-      <span class="iconfont ai-iconzan"></span>100
-    </small>
-    <small class="text-muted">2019/03/08 22:53:22</small>
-  </div>
-  </div>
-</div>
-</div>
-</div>
 </template>
 
 <script>
-import rate from '../Rate/Rate.vue';
+import { mapState, mapActions } from "vuex";
+import rate from "../Rate/Rate.vue";
 
 export default {
-  data(){
+  mounted() {
+    this.getEvaluationList();
+  },
+  props: {
+    videoId: String
+  },
+  data() {
     return {
-      evaluateWindowDisply:false,
-      evaluateSubmitButtonDisplay:true,
-      textarea: ''
+      currentPageNum: 1,
+      pagesizes: [20, 40, 60, 80, 100],
+      pageSize: 10000,
+      evaluateWindowDisply: false,
+      evaluateSubmitButtonDisplay: true,
+      textarea: "",
+      postForm: {
+        stars: null,
+        evaluation: null
+      },
+      rules: {}
+    };
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo,
+      evaluationList: state => state.evaluation.evaluationList.data,
+      totalCount: state => {
+        return state.evaluation.evaluationList.totalCount;
+      },
+      result: state => state.evaluation.result,
+      canBeSubmit: function() {
+        return (
+          this.postForm.stars != null &&
+          this.postForm.evaluation != null &&
+          (this.postForm.evaluation.length >= 5 && this.postForm.evaluation.length<=100)
+        );
       }
+    })
   },
   methods: {
+    ...mapActions(["getAllEvaluationList", "addEvaluation"]),
+    changeRate(stars) {
+      this.postForm.stars = stars;
+    },
     displayEvaluateWindow() {
-        this.evaluateWindowDisply=true;
-        this.evaluateSubmitButtonDisplay=false
+      this.evaluateWindowDisply = true;
+      this.evaluateSubmitButtonDisplay = false;
+    },
+    getEvaluationList() {
+      this.getAllEvaluationList({
+        videoId: this.$route.query.id,
+        pageNum: this.currentPageNum,
+        pagesize: this.pageSize
+      });
+    },
+    async submitEvaluation() {
+      await this.addEvaluation({
+        videoId: this.$route.query.id,
+        content: this.postForm.evaluation,
+        stars: this.postForm.stars,
+        accountId: this.userInfo.id
+      });
+
+      if (this.result.code != 0) {
+        this.$message.error(this.result.message);
+      } else {
+        this.$message({
+          message: "评论成功",
+          type: "success"
+        });
+        this.getEvaluationList();
       }
+      this.evaluateWindowDisply = false;
+    }
   },
   components: {
     rate
   }
-}
+};
 </script>
 
 <style>
-.ai-iconzan{
-  font-size: 18px
+.ai-iconzan {
+  font-size: 18px;
+}
+
+.padding-top {
+  padding-top: 5px;
+}
+.padding-bottom {
+  padding-bottom: 5px;
 }
 </style>

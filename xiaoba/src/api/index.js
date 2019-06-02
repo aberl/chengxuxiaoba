@@ -278,3 +278,63 @@ export const reqModifyVideo = (
     },
     "PUT"
   );
+
+/**
+ * 添加评论
+ * @param {*} videoId 
+ * @param {*} content 
+ * @param {*} stars 
+ * @param {*} accountId 
+ */
+export const reqAddEvaluate = (
+  videoId,
+  content,
+  stars,
+  accountId
+) =>
+  ajax(
+    BASE_URL + "/videos/evaluates",
+    { videoId, content, stars, accountId},
+    "POST"
+  );
+
+  /**
+ * 获取评论列表
+ * @param {*} videoId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
+ */
+export const reqGetAllEvaluatesList = (videoId, pageNum, pageSize, sort) =>
+ajax(
+  BASE_URL +
+    "/videos/" +
+    videoId +
+    "/evaluates?pagenum=" +
+    pageNum +
+    "&sort=" +
+    sort +
+    "&pagesize=" +
+    pageSize
+);
+
+
+  /**
+ * 获取指定用户评论列表
+ * @param {*} userId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
+ */
+export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
+ajax(
+  BASE_URL +
+    "/users/" +
+    userId +
+    "/evaluates?pagenum=" +
+    pageNum +
+    "&sort=" +
+    sort +
+    "&pagesize=" +
+    pageSize
+);

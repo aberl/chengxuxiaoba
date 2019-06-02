@@ -28,7 +28,7 @@
       <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
       <br>
     </main>
-    <comment :videoId="this.$route.query.id" :attachment="videoDetail.attachments"/>
+    <comment :videoId="this.$route.query.id" :accountId="videoDetail.accountId" :attachment="videoDetail.attachments"/>
     <footerGuide/>
   </div>
 </template>
