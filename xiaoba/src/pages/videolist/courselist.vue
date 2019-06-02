@@ -28,15 +28,17 @@
               <strong
                 class="d-block text-gray-dark"
                 style="font-size:15px"
-              >{{ video.index }} . {{video.name}}&nbsp;&nbsp;({{video.duration}}分钟/{{video.viewCount}}人观看)</strong>
+              >{{ video.index }} . {{video.name}}&nbsp;&nbsp;({{video.duration}}分钟/{{video.viewCount}}人观看)d</strong>
             </p>
           </div>
+          <div @click="goto('/coursevideo?id='+video.id)">
           <el-alert
             :title="video.description"
             class="iconfont ai-iconbofang"
             type="info"
             :closable="false"
           ></el-alert>
+          </div>
         </div>
       </div>
     </div>
@@ -122,6 +124,11 @@ export default {
       this.currentPageNum = val;
       this.getVideoList();
     },
+    goto(path){
+      console.log(path)
+      this.$router.replace(path)
+    }
+    ,
     watchCourseVideo(id) {
       this.$router.replace("/coursevideo");
     }

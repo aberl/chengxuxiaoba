@@ -12,7 +12,7 @@ import { reqAddVideo,reqGetAllVideoList,reqGetVideo,reqGetCourseModuleDetails,re
 
 const state = {
   videoCourseModule:{},
-  videoDetail:{},
+  videoDetail:{video:[]},
   videoList: {currentNum:1,data:[],totalCount:0},
   result: {}
 };

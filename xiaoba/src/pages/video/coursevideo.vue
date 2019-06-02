@@ -23,16 +23,12 @@
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <!-- <video width="520" height="440" controls>
-          <source ref="video" type="video/mp4">
-        </video> -->
-        <videoPlay :videoSrc="this.videoDetail.video[0].url"/>
+        <videoPlay :videoSrc="videoSrc"/>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
       <br>
     </main>
     <comment :videoId="this.$route.query.id" :attachment="videoDetail.attachments"/>
-
     <footerGuide/>
   </div>
 </template>
@@ -46,7 +42,6 @@ import videoPlay from "../../components/Video/videoPlay.vue";
 export default {
   mounted() {
     this.getVideo(this.$route.query.id);
-   // this.$refs.video.src = this.videoDetail.video[0].url;
   },
   components: {
     headerTop,
@@ -57,7 +52,12 @@ export default {
   computed: {
     ...mapState({
       videoDetail: state => state.video.videoDetail,
-      courseModuleDetail: state => state.video.videoCourseModule
+      courseModuleDetail: state => state.video.videoCourseModule,
+      videoSrc: state => {
+        if (state.video.videoDetail.video.length > 0) {
+          return state.video.videoDetail.video[0].url;
+        }
+      }
     })
   },
   methods: {
