@@ -33,7 +33,6 @@
       :accountId="videoDetail.accountId"
       :attachment="videoDetail.attachments"
     />
-    {{this.userInfo}}
     <footerGuide/>
   </div>
 </template>

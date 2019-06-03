@@ -348,3 +348,73 @@ export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
       "&pagesize=" +
       pageSize
   );
+
+/**
+ * 创建问题
+ * @param {*} videoId
+ * @param {*} name
+ * @param {*} content
+ * @param {*} questionerId
+ */
+export const reqAddIssues = (videoId, name, content, questionerId) =>
+  ajax(
+    BASE_URL + "/videos/issues",
+    { videoId, content, stars, questionerId },
+    "POST"
+  );
+
+/**
+ * 根据视频获取问题列表
+ * @param {*} videoId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
+ */
+export const reqGetAllIssueList = (videoId, pageNum, pageSize, sort) =>
+  ajax(
+    BASE_URL +
+      "/videos/" +
+      videoId +
+      "/issues?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
+
+/**
+ *  获取指定用户问题列表
+ * @param {*} userId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
+ */
+export const reqGetUserAllIssueList = (userId, pageNum, pageSize, sort) =>
+  ajax(
+    BASE_URL +
+      "/users/" +
+      userId +
+      "/issues?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
+
+/**
+ * 回答问题
+ * @param {*} issueId
+ * @param {*} content
+ * @param {*} answererId
+ */
+export const reqAnswerIssue = (issueId, content, answererId) =>
+  ajax(BASE_URL + "/answer", { issueId, content, answererId }, "POST");
+
+  /**
+   * 获取问题回答列表
+   * @param {*} issueId 
+   */
+export const reqGetAllAnswerList = issueId =>
+  ajax(BASE_URL + "/issues/" + issueId + "/answers");
