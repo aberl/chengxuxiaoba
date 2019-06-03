@@ -23,12 +23,17 @@
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <videoPlay :videoSrc="videoSrc"/>
+        <videoPlay :videoSrc="videoSrc" :videoId="this.$route.query.id"/>
       </section>
-      <div class="container">共{{videoDetail.viewCount}}人观看/{{videoDetail.praiseCount}}人点赞</div>
+      <div class="container">共{{videoDetail.viewCount}}人次观看</div>
       <br>
     </main>
-    <comment :videoId="this.$route.query.id" :accountId="videoDetail.accountId" :attachment="videoDetail.attachments"/>
+    <comment
+      :videoId="this.$route.query.id"
+      :accountId="videoDetail.accountId"
+      :attachment="videoDetail.attachments"
+    />
+    {{this.userInfo}}
     <footerGuide/>
   </div>
 </template>
@@ -41,6 +46,11 @@ import comment from "../../components/Evaluate/comment.vue";
 import videoPlay from "../../components/Video/videoPlay.vue";
 export default {
   mounted() {
+    console.log(this.$route.query.id + "ddddd" + this.userInfo.id);
+    this.increaseVideoWatchRecord({
+      videoId: this.$route.query.id,
+      watchAccountId: this.userInfo.id
+    });
     this.getVideo(this.$route.query.id);
   },
   components: {
@@ -51,6 +61,7 @@ export default {
   },
   computed: {
     ...mapState({
+      userInfo: state => state.user.userInfo,
       videoDetail: state => state.video.videoDetail,
       courseModuleDetail: state => state.video.videoCourseModule,
       videoSrc: state => {
@@ -61,7 +72,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getVideo"])
+    ...mapActions(["getVideo", "increaseVideoWatchRecord"])
   }
 };
 </script>

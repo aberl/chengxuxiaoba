@@ -40,8 +40,7 @@
         <div class="border-bottom">
           <div class="d-flex justify-content-between">
             <small class="text-muted">
-              <span class="iconfont ai-iconzan"></span>
-              {{evaluation.praiseCount}}
+              
             </small>
             <small class="text-muted">{{evaluation.createDateTime}}</small>
           </div>
@@ -58,6 +57,12 @@ import rate from "../Rate/Rate.vue";
 export default {
   mounted() {
     this.getEvaluationList();
+    this.getEvaluationCount();
+  },
+  watch: {
+    totalCount(count) {
+      this.getEvaluationCount();
+    }
   },
   props: {
     videoId: String
@@ -96,6 +101,9 @@ export default {
   },
   methods: {
     ...mapActions(["getAllEvaluationList", "addEvaluation"]),
+    getEvaluationCount(){
+      this.$emit('getEvaluationCount',this.totalCount);
+    },
     changeRate(stars) {
       this.postForm.stars = stars;
     },

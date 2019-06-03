@@ -25,12 +25,22 @@ export const reqRegisterAccount = (mobilePhoneNo, validationCode, password) =>
 
 /**
  *  获取用户列表
- * @param {*} pageNum 
- * @param {*} pageSize 
- * @param {*} sort 
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
  */
-export const reqGetUserList = (pageNum, pageSize, sort,query) =>
-  ajax(BASE_URL + "/users/?query="+query+"&pagenum="+pageNum+"&sort="+sort+"&pagesize="+pageSize);
+export const reqGetUserList = (pageNum, pageSize, sort, query) =>
+  ajax(
+    BASE_URL +
+      "/users/?query=" +
+      query +
+      "&pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
 
 /**
  * 根据用户手机号获取用户信息
@@ -38,18 +48,15 @@ export const reqGetUserList = (pageNum, pageSize, sort,query) =>
  */
 export const reqGetUserInfoByMobilePhone = mobilePhoneNo =>
   ajax(BASE_URL + "/users/mobilephoneno/" + mobilePhoneNo);
-  
+
 /**
  * 根据id获取用户信息
  * @param {*} id
  */
-export const reqGetUserInfo = id =>
-  ajax(BASE_URL + "/users/" + id);
+export const reqGetUserInfo = id => ajax(BASE_URL + "/users/" + id);
 
-export const reqModifyUser = (user) =>
-  ajax(BASE_URL + "/users/account", 
-  user, "PUT");
-
+export const reqModifyUser = user =>
+  ajax(BASE_URL + "/users/account", user, "PUT");
 
 /**
  * 用户登录
@@ -75,9 +82,7 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
 /**
  * 获取角色集合
  */
-export const reqGetRoleList = () =>
-ajax(BASE_URL + "/users/roles");
-
+export const reqGetRoleList = () => ajax(BASE_URL + "/users/roles");
 
 /**
  * 上传文件
@@ -184,7 +189,7 @@ export const reqGetAllCourseModuleList = courseId =>
  * 获取所有有效课程模块列表
  */
 export const reqGetAllEffectiveCourseModuleList = courseId =>
-  ajax(BASE_URL + "/courses/"+courseId+"/coursemodule/effective");
+  ajax(BASE_URL + "/courses/" + courseId + "/coursemodule/effective");
 /**
  * 获取课程模块详情
  */
@@ -212,6 +217,17 @@ export const reqAddVideo = (
   ajax(
     BASE_URL + "/videos",
     { courseModuleId, file, name, attachments, duration, description, status },
+    "POST"
+  );
+
+/**
+ * 增加视频观看记录
+ * @param {*} videoId
+ */
+export const reqIncreaseVideoWatchRecord = (videoId, watchAccountId) =>
+  ajax(
+    BASE_URL + "/videos/record",
+    { id: videoId, watchAccountId: watchAccountId },
     "POST"
   );
 
@@ -281,24 +297,19 @@ export const reqModifyVideo = (
 
 /**
  * 添加评论
- * @param {*} videoId 
- * @param {*} content 
- * @param {*} stars 
- * @param {*} accountId 
+ * @param {*} videoId
+ * @param {*} content
+ * @param {*} stars
+ * @param {*} accountId
  */
-export const reqAddEvaluate = (
-  videoId,
-  content,
-  stars,
-  accountId
-) =>
+export const reqAddEvaluate = (videoId, content, stars, accountId) =>
   ajax(
     BASE_URL + "/videos/evaluates",
-    { videoId, content, stars, accountId},
+    { videoId, content, stars, accountId },
     "POST"
   );
 
-  /**
+/**
  * 获取评论列表
  * @param {*} videoId
  * @param {*} pageNum
@@ -306,20 +317,19 @@ export const reqAddEvaluate = (
  * @param {*} sort
  */
 export const reqGetAllEvaluatesList = (videoId, pageNum, pageSize, sort) =>
-ajax(
-  BASE_URL +
-    "/videos/" +
-    videoId +
-    "/evaluates?pagenum=" +
-    pageNum +
-    "&sort=" +
-    sort +
-    "&pagesize=" +
-    pageSize
-);
+  ajax(
+    BASE_URL +
+      "/videos/" +
+      videoId +
+      "/evaluates?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
 
-
-  /**
+/**
  * 获取指定用户评论列表
  * @param {*} userId
  * @param {*} pageNum
@@ -327,14 +337,14 @@ ajax(
  * @param {*} sort
  */
 export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
-ajax(
-  BASE_URL +
-    "/users/" +
-    userId +
-    "/evaluates?pagenum=" +
-    pageNum +
-    "&sort=" +
-    sort +
-    "&pagesize=" +
-    pageSize
-);
+  ajax(
+    BASE_URL +
+      "/users/" +
+      userId +
+      "/evaluates?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );

@@ -2,8 +2,8 @@
 <div class="container text-center">
 <el-tabs type="border-card">
   <el-tab-pane>
-    <span slot="label"><i class="el-icon-date"></i> 评价</span>
-    <evaluate :videoId="videoId"/>
+    <span slot="label"><i class="el-icon-date"></i> 评价({{evaluationCount}})</span>
+    <evaluate :videoId="videoId" @getEvaluationCount="getEvaluationCount"/>
   </el-tab-pane>
 
   <el-tab-pane>
@@ -26,10 +26,20 @@ export default {
     videoId: String,
     attachment:Array
   },
+  data(){
+    return{
+      evaluationCount:0
+    }
+  },
   components: {
     evaluate,
     question,
     attachment
+  },
+  methods:{
+    getEvaluationCount(count){
+this.evaluationCount=count;
+    }
   }
 }
 </script>

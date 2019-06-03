@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import { videoPlayer } from "vue-video-player";
 export default {
   mounted() {
@@ -23,7 +24,8 @@ export default {
     }
   },
   props: {
-    videoSrc: String
+    videoSrc: String,
+    videoId: String
   },
   watch: {
     videoSrc(videosrc) {
@@ -34,11 +36,16 @@ export default {
     return {
       playerOptions: {}
     };
-  },
+  }
+  ,
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo})},
   components: {
     videoPlayer
   },
   methods: {
+    ...mapActions(["increaseVideoWatchRecord"]),
     onLive(videoSrc) {
       var that = this;
 
