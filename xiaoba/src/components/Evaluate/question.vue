@@ -2,11 +2,15 @@
   <div>
     <div class="container" v-if="questionWindowDisply">
       <form>
-        <el-input v-model="input" placeholder="请输入问题标题"></el-input>
+        <el-input v-model="postForm.name" placeholder="请输入问题标题"></el-input>
         <div style="margin: 20px 0;"></div>
-        <el-input type="textarea" :rows="6" placeholder="请输入问题内容" v-model="textarea"></el-input>
+        <el-input type="textarea"
+        maxlength="100"
+        show-word-limit
+         :rows="6"
+         placeholder="请输入问题内容" v-model="postForm.issue"></el-input>
         <div style="margin: 20px 0;"></div>
-        <button type="submit" class="btn btn-primary">提交问题</button>
+        <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitIssue">提交问题</el-button>
       </form>
     </div>
     <div>
@@ -19,28 +23,22 @@
             v-if="questionSubmitButtonDisplay"
           >我要提问</el-button>
         </small>
-        <div>
+        <div v-for="issue in issueList" :key="issue.id">
           <div class="media">
-            <img
-              data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1"
-              alt="32x32"
-              class="mr-2 rounded"
-              style="width: 64px; height: 64px;"
-              src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_168f682cf52%20text%20%7B%20fill%3A%23007bff%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A2pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_168f682cf52%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20fill%3D%22%23007bff%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2211.546875%22%20y%3D%2216.9%22%3E32x32%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
-              data-holder-rendered="true"
-            >
+            <el-button type="warning" circle>{{issue.index}}楼</el-button>&nbsp;&nbsp;
             <p class="media-body text-left">
-              <strong class="d-block">问题标题</strong>
-              <strong class="d-block">username</strong>
-              超级赞，看到项目组里用这个，我这个新手完全摸不着头脑，看不懂。现在虽然还没看底层代码，但是对Quartz有了一个比较清晰的概念了，谢谢老师的点点滴滴多多多多多
+              <strong class="d-block">{{issue.name}}</strong>
+              <strong class="d-block">{{issue.questioner.name}}</strong>
+              {{issue.content}}
             </p>
           </div>
           <div class="border-bottom">
             <div class="d-flex justify-content-between">
-              <small class="text-muted">
-                <span class="iconfont ai-iconshangxianjieda" @click="toQuestionList"></span>100个解答
+              <small class="text-muted" @click="toQuestionList">
+                <span class="iconfont ai-iconshangxianjieda"></span>
+                解答
               </small>
-              <small class="text-muted">2019/03/08 22:53:22</small>
+              <small class="text-muted">{{issue.createDateTime}}</small>
             </div>
           </div>
         </div>
@@ -50,23 +48,90 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
+  mounted() {
+    this.getIssueList();
+    this.getIssueCount();
+  },
+  watch: {
+    totalCount(count) {
+      this.getIssueCount();
+    }
+  },
+  props: {
+    videoId: String
+  },
   data() {
     return {
+      currentPageNum: 1,
+      pagesizes: [20, 40, 60, 80, 100],
+      pageSize: 10000,
       questionWindowDisply: false,
       questionSubmitButtonDisplay: true,
-
+      postForm: {
+        name: null,
+        issue: null
+      },
       input: "",
       textarea: ""
     };
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo,
+      issue: state => state.issue.issue,
+      issueList: state => state.issue.issueList.data,
+      result: state => state.issue.result,
+      totalCount: state => {
+        return state.issue.issueList.totalCount;
+      },
+      canBeSubmit: function() {
+        return (
+          this.postForm.name != null &&
+          this.postForm.issue != null &&
+          (this.postForm.issue.length >= 5 && this.postForm.issue.length<=100)
+        );
+      }
+    })
+  },
   methods: {
+    ...mapActions(["addIssue", "getAllIssueList"]),
+    getIssueCount(){
+      this.$emit('getIssueCount',this.totalCount);
+    },
+    getIssueList() {
+      this.getAllIssueList({
+        videoId: this.$route.query.id,
+        pageNum: this.currentPageNum,
+        pagesize: this.pageSize
+      });
+    },
     toQuestionList() {
       this.$router.push({ path: "/questionlist" });
     },
     displayQuestionWindow() {
       this.questionWindowDisply = true;
       this.questionSubmitButtonDisplay = false;
+    },
+    async submitIssue() {
+       await this.addIssue({
+        videoId: this.$route.query.id,
+        name: this.postForm.name,
+        content: this.postForm.issue,
+        questionerId: this.userInfo.id
+      });
+
+       if (this.result.code != 0) {
+        this.$message.error(this.result.message);
+      } else {
+        this.$message({
+          message: "提问成功",
+          type: "success"
+        });
+        this.getIssueList();
+      }
+      this.questionWindowDisply = false;
     }
   }
 };

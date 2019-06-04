@@ -28,7 +28,7 @@
               <strong
                 class="d-block text-gray-dark"
                 style="font-size:15px"
-              >{{ video.index }} . {{video.name}}&nbsp;&nbsp;({{video.duration}}分钟/{{video.viewCount}}人观看)d</strong>
+              >{{ video.index }} . {{video.name}}&nbsp;&nbsp;({{video.duration}}分钟/{{video.viewCount}}人观看)</strong>
             </p>
           </div>
           <div @click="goto('/coursevideo?id='+video.id)">

@@ -359,7 +359,7 @@ export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
 export const reqAddIssues = (videoId, name, content, questionerId) =>
   ajax(
     BASE_URL + "/videos/issues",
-    { videoId, content, stars, questionerId },
+    { videoId, name, content, questionerId },
     "POST"
   );
 

@@ -31,6 +31,12 @@
  export const REQUEST_ADD_EVALUATION='request_add_evaluation'
  export const REQUEST_RECEIVE_EVALUATIONALLLIST='request_receive_evaluationalllist'
 
+ 
+ export const REQUEST_ADD_ISSUE='request_add_issue'
+ export const REQUEST_RECEIVE_ISSUEALLLIST='request_receive_issuealllist'
+ export const REQUEST_ANSWER_ISSUE='request_answer_issue'
+ export const REQUEST_RECEIVE_ANSWERALLLIST='request_receive_answeralllist'
+
  export default {
   REQUEST_RECEIVE_USERALLLIST,
    REQUEST_RECEIVE_USERINFO,
@@ -53,5 +59,9 @@
    REQUEST_RECEIVE_ROLEALLLIST,
    REQUEST_UPDATE_USERINFO,
    REQUEST_ADD_EVALUATION,
-   REQUEST_RECEIVE_EVALUATIONALLLIST
+   REQUEST_RECEIVE_EVALUATIONALLLIST,
+   REQUEST_ADD_ISSUE,
+   REQUEST_RECEIVE_ISSUEALLLIST,
+   REQUEST_ANSWER_ISSUE,
+   REQUEST_RECEIVE_ANSWERALLLIST
  }
