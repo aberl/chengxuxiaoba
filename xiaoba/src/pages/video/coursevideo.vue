@@ -45,7 +45,6 @@ import comment from "../../components/Evaluate/comment.vue";
 import videoPlay from "../../components/Video/videoPlay.vue";
 export default {
   mounted() {
-    console.log(this.$route.query.id + "ddddd" + this.userInfo.id);
     this.increaseVideoWatchRecord({
       videoId: this.$route.query.id,
       watchAccountId: this.userInfo.id

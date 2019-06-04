@@ -106,22 +106,37 @@
         <button type="submit" class="btn btn-primary">提交问题</button>
       </form>
     </div>
+    {{issue}}
     <footerGuide/>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
 import MPages from "../../components/Pages/Pages.vue";
 export default {
+  mounted() {
+    this.getIssue(1);
+  },
   data() {
     return {
       input: "",
       textarea: ""
     };
   },
-  methods: {},
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo,
+      issue: state => state.issue.issue,
+      answerList: state => state.issue.answerList,
+      result: state => state.issue.result,
+    })
+  },
+  methods: {
+    ...mapActions(["getIssue", "answerIssue", "getAllAnswerList"])
+  },
   components: {
     headerTop,
     footerGuide,

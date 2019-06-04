@@ -418,3 +418,10 @@ export const reqAnswerIssue = (issueId, content, answererId) =>
    */
 export const reqGetAllAnswerList = issueId =>
   ajax(BASE_URL + "/issues/" + issueId + "/answers");
+
+
+  
+/**
+ * 获取问题
+ */
+export const reqGetIssue = issueId => ajax(BASE_URL + "/video/issues/" + issueId);

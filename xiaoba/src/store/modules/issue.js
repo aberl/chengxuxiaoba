@@ -4,6 +4,7 @@
 
 import {
   REQUEST_ADD_ISSUE,
+  REQUEST_RECEIVE_ISSUEDETAILS,
   REQUEST_RECEIVE_ISSUEALLLIST,
   REQUEST_ANSWER_ISSUE,
   REQUEST_RECEIVE_ANSWERALLLIST
@@ -11,6 +12,7 @@ import {
 
 import {
   reqAddIssues,
+  reqGetIssue,
   reqGetAllIssueList,
   reqGetUserAllIssueList,
   reqAnswerIssue,
@@ -19,7 +21,7 @@ import {
 
 const state = {
   issue: {},
-  issueList: {currentNum:1,data:[],totalCount:0},
+  issueList: { currentNum: 1, data: [], totalCount: 0 },
   answerList: [],
   result: {}
 };
@@ -33,6 +35,13 @@ const actions = {
       issue.questionerId
     );
     commit(REQUEST_ADD_ISSUE, { result: result });
+  },
+
+  async getIssue({ commit }, issueId) {
+    const result = await reqGetIssue(issueId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_ISSUEDETAILS, { issue: result.data });
+    }
   },
 
   async getAllIssueList({ commit }, { videoId, pageNum, pagesize }) {
@@ -75,11 +84,14 @@ const mutations = {
   [REQUEST_ADD_ISSUE](state, { result }) {
     state.result = result;
   },
+  [REQUEST_RECEIVE_ISSUEDETAILS](state, { issue }) {
+    state.issue = issue;
+  },
   [REQUEST_RECEIVE_ISSUEALLLIST](state, { issueList }) {
     var _data = [];
-    if (issueList.data != null && issueList.data.length>0) {
+    if (issueList.data != null && issueList.data.length > 0) {
       for (var index in issueList.data) {
-          var _item=issueList.data[index];
+        var _item = issueList.data[index];
         _data.push({
           index: Number(index) + 1,
           id: _item.id,
@@ -93,9 +105,9 @@ const mutations = {
         });
       }
     }
-    state.issueList.data=_data;
-    state.issueList.totalCount=issueList.totalCount
-    state.issueList.currentNum=issueList.currentNum
+    state.issueList.data = _data;
+    state.issueList.totalCount = issueList.totalCount;
+    state.issueList.currentNum = issueList.currentNum;
   },
   [REQUEST_ANSWER_ISSUE](state, { result }) {
     state.result = result;

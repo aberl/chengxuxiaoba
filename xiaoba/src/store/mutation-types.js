@@ -33,6 +33,7 @@
 
  
  export const REQUEST_ADD_ISSUE='request_add_issue'
+ export const REQUEST_RECEIVE_ISSUEDETAILS='request_receive_issuedetails'
  export const REQUEST_RECEIVE_ISSUEALLLIST='request_receive_issuealllist'
  export const REQUEST_ANSWER_ISSUE='request_answer_issue'
  export const REQUEST_RECEIVE_ANSWERALLLIST='request_receive_answeralllist'
@@ -61,6 +62,7 @@
    REQUEST_ADD_EVALUATION,
    REQUEST_RECEIVE_EVALUATIONALLLIST,
    REQUEST_ADD_ISSUE,
+   REQUEST_RECEIVE_ISSUEDETAILS,
    REQUEST_RECEIVE_ISSUEALLLIST,
    REQUEST_ANSWER_ISSUE,
    REQUEST_RECEIVE_ANSWERALLLIST
