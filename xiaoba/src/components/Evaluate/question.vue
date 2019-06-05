@@ -2,12 +2,11 @@
   <div>
     <div class="container" v-if="questionWindowDisply">
       <form>
-        <el-input v-model="postForm.name" placeholder="请输入问题标题"></el-input>
         <div style="margin: 20px 0;"></div>
         <el-input type="textarea"
-        maxlength="100"
+        maxlength="20"
         show-word-limit
-         :rows="6"
+         :rows="2"
          placeholder="请输入问题内容" v-model="postForm.issue"></el-input>
         <div style="margin: 20px 0;"></div>
         <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitIssue">提交问题</el-button>
@@ -27,7 +26,6 @@
           <div class="media">
             <el-button type="warning" circle>{{issue.index}}楼</el-button>&nbsp;&nbsp;
             <p class="media-body text-left">
-              <strong class="d-block">{{issue.name}}</strong>
               <strong class="d-block">{{issue.questioner.name}}</strong>
               {{issue.content}}
             </p>
@@ -70,7 +68,7 @@ export default {
       questionWindowDisply: false,
       questionSubmitButtonDisplay: true,
       postForm: {
-        name: null,
+        name: "",
         issue: null
       },
       input: "",
@@ -88,9 +86,8 @@ export default {
       },
       canBeSubmit: function() {
         return (
-          this.postForm.name != null &&
           this.postForm.issue != null &&
-          (this.postForm.issue.length >= 5 && this.postForm.issue.length<=100)
+          (this.postForm.issue.length >= 5 && this.postForm.issue.length<=20)
         );
       }
     })

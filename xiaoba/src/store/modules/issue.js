@@ -66,7 +66,7 @@ const actions = {
   async answerIssue({ commit }, answer) {
     const result = await reqAnswerIssue(
       answer.issueId,
-      answer.name,
+      answer.content,
       answer.answererId
     );
     commit(REQUEST_ANSWER_ISSUE, { result: result });
@@ -85,7 +85,17 @@ const mutations = {
     state.result = result;
   },
   [REQUEST_RECEIVE_ISSUEDETAILS](state, { issue }) {
-    state.issue = issue;
+    var _issue = {
+      id: issue.id,
+      videoId: issue.videoId,
+      name: issue.name,
+      content: issue.content,
+      status: issue.status,
+      answerCount: issue.answerCount,
+      questioner: issue.userResponseVo,
+      createDateTime: issue.createDateTime
+    };
+    state.issue = _issue;
   },
   [REQUEST_RECEIVE_ISSUEALLLIST](state, { issueList }) {
     var _data = [];
@@ -114,7 +124,7 @@ const mutations = {
   },
   [REQUEST_RECEIVE_ANSWERALLLIST](state, { answerList }) {
     var _data = [];
-    if (issueList != null) {
+    if (answerList != null) {
       for (var index in answerList) {
         _data.push({
           index: Number(index) + 1,
