@@ -3,11 +3,14 @@
     <div class="container" v-if="questionWindowDisply">
       <form>
         <div style="margin: 20px 0;"></div>
-        <el-input type="textarea"
-        maxlength="20"
-        show-word-limit
-         :rows="2"
-         placeholder="请输入问题内容" v-model="postForm.issue"></el-input>
+        <el-input
+          type="textarea"
+          maxlength="20"
+          show-word-limit
+          :rows="2"
+          placeholder="请输入向老师提问的内容"
+          v-model="postForm.issue"
+        ></el-input>
         <div style="margin: 20px 0;"></div>
         <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitIssue">提交问题</el-button>
       </form>
@@ -32,11 +35,31 @@
           </div>
           <div class="border-bottom">
             <div class="d-flex justify-content-between">
-              <small class="text-muted" @click="toQuestionList">
-                <span class="iconfont ai-iconshangxianjieda"></span>
-                解答
+              <small class="text-muted">
+                <!-- <el-badge :value="issue.answerCount" class="item" v-if="issue.answerCount>0">
+                  <span class="iconfont ai-icondayihuifu" @click="getAnswerList(issue.id)"></span>
+                </el-badge> 
+                <span class="iconfont ai-icondayihuifu" v-else></span>-->
               </small>
               <small class="text-muted">{{issue.createDateTime}}</small>
+            </div>
+            <div v-if="issue.answerList.length>0">
+              <el-divider content-position="center">老师答复</el-divider>
+              <div v-for="answer in issue.answerList" :key="answer.id">
+                <el-row>
+                  <el-col :span="4">
+                    <el-badge :value="answer.index" class="item">
+                      <span class="iconfont ai-icondayihuifu"></span>
+                    </el-badge>
+                  </el-col>
+                  <el-col :span="20">{{answer.content}}</el-col>
+                </el-row>
+                <div class="d-flex justify-content-between">
+                  <small class="text-muted"></small>
+                  <small class="text-muted">{{answer.createDateTime}}</small>
+                </div>
+                <br/>
+              </div>
             </div>
           </div>
         </div>
@@ -87,15 +110,15 @@ export default {
       canBeSubmit: function() {
         return (
           this.postForm.issue != null &&
-          (this.postForm.issue.length >= 5 && this.postForm.issue.length<=20)
+          (this.postForm.issue.length >= 5 && this.postForm.issue.length <= 20)
         );
       }
     })
   },
   methods: {
-    ...mapActions(["addIssue", "getAllIssueList"]),
-    getIssueCount(){
-      this.$emit('getIssueCount',this.totalCount);
+    ...mapActions(["addIssue", "getAllIssueList", "getAllAnswerList"]),
+    getIssueCount() {
+      this.$emit("getIssueCount", this.totalCount);
     },
     getIssueList() {
       this.getAllIssueList({
@@ -104,22 +127,22 @@ export default {
         pagesize: this.pageSize
       });
     },
-    toQuestionList() {
-      this.$router.push({ path: "/questionlist" });
-    },
     displayQuestionWindow() {
       this.questionWindowDisply = true;
       this.questionSubmitButtonDisplay = false;
     },
+    getAnswerList(issueId) {
+      this.getAllAnswerList(issueId);
+    },
     async submitIssue() {
-       await this.addIssue({
+      await this.addIssue({
         videoId: this.$route.query.id,
         name: this.postForm.name,
         content: this.postForm.issue,
         questionerId: this.userInfo.id
       });
 
-       if (this.result.code != 0) {
+      if (this.result.code != 0) {
         this.$message.error(this.result.message);
       } else {
         this.$message({

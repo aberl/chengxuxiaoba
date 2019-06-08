@@ -102,6 +102,21 @@ const mutations = {
     if (issueList.data != null && issueList.data.length > 0) {
       for (var index in issueList.data) {
         var _item = issueList.data[index];
+        var _answerList=[]
+        if (_item.answerResponseVoList != null) {
+            for (var index in _item.answerResponseVoList) {
+                _answerList.push({
+                index: Number(index) + 1,
+                id: _item.answerResponseVoList[index].id,
+                issueId: _item.answerResponseVoList[index].issueId,
+                content: _item.answerResponseVoList[index].content,
+                status: _item.answerResponseVoList[index].status,
+                createDateTime: _item.answerResponseVoList[index].createDateTime,
+                answerner: _item.answerResponseVoList[index].userResponseVo
+              });
+            }
+          }
+
         _data.push({
           index: Number(index) + 1,
           id: _item.id,
@@ -111,7 +126,8 @@ const mutations = {
           status: _item.status,
           answerCount: _item.answerCount,
           questioner: _item.userResponseVo,
-          createDateTime: _item.createDateTime
+          createDateTime: _item.createDateTime,
+          answerList:_answerList
         });
       }
     }
