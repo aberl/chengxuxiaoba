@@ -29,7 +29,9 @@
  export const REQUEST_RECEIVE_VIDEOALLLIST = 'request_receive_videoalllist'
 
  export const REQUEST_ADD_EVALUATION='request_add_evaluation'
+ export const REQUEST_DELETE_EVALUATION='request_delete_evaluation'
  export const REQUEST_RECEIVE_EVALUATIONALLLIST='request_receive_evaluationalllist'
+ export const REQUEST_RECEIVE_EFFECTIVEEVALUATIONLIST='request_receive_effectiveevaluationlist'
 
  
  export const REQUEST_ADD_ISSUE='request_add_issue'
@@ -60,7 +62,9 @@
    REQUEST_RECEIVE_ROLEALLLIST,
    REQUEST_UPDATE_USERINFO,
    REQUEST_ADD_EVALUATION,
+   REQUEST_DELETE_EVALUATION,
    REQUEST_RECEIVE_EVALUATIONALLLIST,
+   REQUEST_RECEIVE_EFFECTIVEEVALUATIONLIST,
    REQUEST_ADD_ISSUE,
    REQUEST_RECEIVE_ISSUEDETAILS,
    REQUEST_RECEIVE_ISSUEALLLIST,

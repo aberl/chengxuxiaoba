@@ -308,6 +308,13 @@ export const reqAddEvaluate = (videoId, content, stars, accountId) =>
     { videoId, content, stars, accountId },
     "POST"
   );
+  
+/**
+ * 删除评论
+ * @param {*} filename
+ */
+export const reqRemoveEvaluate = evaluateId =>
+ajax(BASE_URL + "/videos/evaluate/" + evaluateId, null, "DELETE");
 
 /**
  * 获取评论列表
@@ -348,6 +355,27 @@ export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
       "&pagesize=" +
       pageSize
   );
+
+  /**
+ * 获取有效的评论列表
+ * @param {*} userId
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
+ */
+export const reqGetEffectiveEvaluatesList = (userId, pageNum, pageSize, sort) =>
+ajax(
+  BASE_URL +
+    "/users/" +
+    userId +
+    "/evaluates/effective?pagenum=" +
+    pageNum +
+    "&sort=" +
+    sort +
+    "&pagesize=" +
+    pageSize
+);
+
 
 /**
  * 创建问题

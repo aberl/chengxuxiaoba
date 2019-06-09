@@ -37,8 +37,8 @@
             type="text"
             size="small"
           >查看</el-button>
-          <el-button
-            @click="showContent(evaluationlist[scope.$index].content)"
+          <el-button v-if="evaluationlist[scope.$index].status != -1"
+            @click="inActiveEvaluation(evaluationlist[scope.$index].id)"
             type="text"
             size="small"
           >注销</el-button>
@@ -121,7 +121,8 @@ export default {
       "getAllEffectCourseList",
       "getAllCourseModuleList",
       "getAllVideoList",
-      "getAllEvaluationList"
+      "getAllEvaluationList",
+      "removeEvaluation"
     ]),
     showContent(content) {
       this.$alert(content, "", {
@@ -139,6 +140,10 @@ export default {
     },
     courseVideoSelected(val) {
       this.getAllEvaluationList({ videoId: val, pageNum: 1, pagesize: 1000 });
+    },
+    inActiveEvaluation(id) {
+      this.removeEvaluation(id);
+      this.getAllEvaluationList({ videoId: this.videoId, pageNum: 1, pagesize: 1000 });
     }
   },
   components: {}
