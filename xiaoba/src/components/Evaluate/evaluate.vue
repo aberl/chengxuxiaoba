@@ -100,7 +100,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getAllEvaluationList", "addEvaluation"]),
+    ...mapActions(["getEffectiveEvaluationList", "addEvaluation"]),
     getEvaluationCount(){
       this.$emit('getEvaluationCount',this.totalCount);
     },
@@ -112,7 +112,7 @@ export default {
       this.evaluateSubmitButtonDisplay = false;
     },
     getEvaluationList() {
-      this.getAllEvaluationList({
+      this.getEffectiveEvaluationList({
         videoId: this.$route.query.id,
         pageNum: this.currentPageNum,
         pagesize: this.pageSize

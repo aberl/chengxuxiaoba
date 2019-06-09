@@ -358,16 +358,16 @@ export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
 
   /**
  * 获取有效的评论列表
- * @param {*} userId
+ * @param {*} videoId
  * @param {*} pageNum
  * @param {*} pageSize
  * @param {*} sort
  */
-export const reqGetEffectiveEvaluatesList = (userId, pageNum, pageSize, sort) =>
+export const reqGetEffectiveEvaluatesList = (videoId, pageNum, pageSize, sort) =>
 ajax(
   BASE_URL +
-    "/users/" +
-    userId +
+    "/videos/" +
+    videoId +
     "/evaluates/effective?pagenum=" +
     pageNum +
     "&sort=" +
