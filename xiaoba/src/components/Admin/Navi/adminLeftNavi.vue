@@ -37,6 +37,22 @@
             <el-menu-item index="/op/modifyvideo">视频修改</el-menu-item>
             <el-menu-item index="/op/videolist">视频列表</el-menu-item>
           </el-submenu>
+          <el-submenu index="2-2">
+            <template slot="title">评论</template>
+            <el-menu-item index="/op/evaluationlist">评论列表</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2-3">
+            <template slot="title">问题</template>
+            <el-menu-item index="/op/addvideo">新增视频</el-menu-item>
+            <el-menu-item index="/op/modifyvideo">视频修改</el-menu-item>
+            <el-menu-item index="/op/videolist">视频列表</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2-4">
+            <template slot="title">消息</template>
+            <el-menu-item index="/op/addvideo">新增视频</el-menu-item>
+            <el-menu-item index="/op/modifyvideo">视频修改</el-menu-item>
+            <el-menu-item index="/op/videolist">视频列表</el-menu-item>
+          </el-submenu>
         </el-submenu>
 
         <el-submenu index="3">

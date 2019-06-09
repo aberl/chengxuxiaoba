@@ -24,6 +24,7 @@ import Admin_modifycoursemodule from "../pages/admin/course/modifycoursemodule.v
 import Admin_addvideo from "../pages/admin/video/addvideo.vue";
 import Admin_videolist from "../pages/admin/video/videolist.vue";
 import Admin_modifyvideo from "../pages/admin/video/modifyvideo.vue";
+import Admin_evaluationlist from "../pages/admin/evaluation/evaluationlist.vue";
 
 import Admin_userlist from "../pages/admin/user/userlist.vue";
 import Admin_user from "../pages/admin/user/user.vue";
@@ -96,6 +97,11 @@ export default new VueRouter({
           path: "/op/user",
           name: "user",
           component: Admin_user
+        },
+        {
+          path: "/op/evaluationlist",
+          name: "evaluationlist",
+          component: Admin_evaluationlist
         }
       ]
     },

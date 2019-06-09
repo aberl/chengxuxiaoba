@@ -62,6 +62,7 @@ const mutations = {
                 accountName:evaluationList.data[index].accountName,
                 accountId:evaluationList.data[index].accountId,
                 praiseCount:evaluationList.data[index].praiseCount,
+                statusDesc:evaluationList.data[index].statusDesc,
                 createDateTime:evaluationList.data[index].createDateTime
             });
           }
