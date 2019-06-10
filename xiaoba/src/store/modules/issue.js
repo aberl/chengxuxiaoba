@@ -127,7 +127,8 @@ const mutations = {
           answerCount: _item.answerCount,
           questioner: _item.userResponseVo,
           createDateTime: _item.createDateTime,
-          answerList:_answerList
+          answerList:_answerList,
+          statusDesc:_item.statusDesc
         });
       }
     }

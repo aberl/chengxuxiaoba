@@ -24,59 +24,56 @@
         :value="item.value"
       ></el-option>
     </el-select>
-    <el-table :data="evaluationlist" style="width: 100%">
+    <el-table :data="issueList" style="width: 100%">
       <el-table-column prop="createDateTime" label="创建日期"></el-table-column>
-      <el-table-column fixed prop="accountName" label="评论人"></el-table-column>
-      <el-table-column prop="stars" label="星级"></el-table-column>
+      <el-table-column fixed prop="questioner.name" label="提问人"></el-table-column>
+      <el-table-column prop="answerCount" label="回复数"></el-table-column>
       <el-table-column prop="simpleContent" label="内容"></el-table-column>
       <el-table-column prop="statusDesc" label="状态"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button
-            @click="showContent(evaluationlist[scope.$index].content)"
+            @click="showContent(issueList[scope.$index].content, issueList[scope.$index].answerList)"
             type="text"
             size="small"
           >查看</el-button>
-          <el-button v-if="evaluationlist[scope.$index].status != -1"
-            @click="inActiveEvaluation(evaluationlist[scope.$index].id)"
-            type="text"
-            size="small"
-          >注销</el-button>
+          <el-button @click="answerissueprompt(issueList[scope.$index].id)" type="text" size="small">答复</el-button>
         </template>
       </el-table-column>
     </el-table>
+    {{videoId}}
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-  mounted() {
-    this.getAllEffectCourseList();
-  },
   computed: {
     ...mapState({
-      evaluationlist: state => {
+      userInfo: state => state.user.userInfo,
+      issueList: state => {
         var _data = [];
-        for (var index in state.evaluation.evaluationList.data) {
-          var _temp = state.evaluation.evaluationList.data[index];
+        for (var index in state.issue.issueList.data) {
+          var _temp = state.issue.issueList.data[index];
           var _simpleContent = _temp.content;
           if (_simpleContent.length > 10)
             _simpleContent = _simpleContent.substr(0, 10) + "...";
           _data.push({
             id: _temp.id,
-            accountName: _temp.accountName,
+            questioner: _temp.questioner,
             courseName: _temp.courseName,
-            stars: _temp.stars,
+            statusDesc: _temp.statusDesc,
             content: _temp.content,
             simpleContent: _simpleContent,
             createDateTime: _temp.createDateTime,
-            statusDesc: _temp.statusDesc,
-            status: _temp.status
+            answerList: _temp.answerList,
+            answerCount: _temp.answerCount
           });
         }
         return _data;
       },
+      answerList: state => state.issue.answerList,
+      result: state => state.issue.result,
       courseoptions: state => {
         var _options = [];
         for (var index in state.course.courseList) {
@@ -122,12 +119,14 @@ export default {
       "getAllEffectCourseList",
       "getAllCourseModuleList",
       "getAllVideoList",
-      "getAllEvaluationList",
-      "removeEvaluation"
+      "getAllIssueList",
+      "answerIssue",
+      "getAllAnswerList"
     ]),
-    showContent(content) {
+    showContent(content, answerList) {
       this.$alert(content, "", {
-        confirmButtonText: "确定"
+        confirmButtonText: "确定",
+        callback: action => {}
       });
     },
     courseSelected(val) {
@@ -140,11 +139,40 @@ export default {
       this.videoId = "";
     },
     courseVideoSelected(val) {
-      this.getAllEvaluationList({ videoId: val, pageNum: 1, pagesize: 1000 });
+      this.getAllIssueList({ videoId: val, pageNum: 1, pagesize: 1000 });
     },
-    inActiveEvaluation(id) {
-      this.removeEvaluation(id);
-      this.getAllEvaluationList({ videoId: this.videoId, pageNum: 1, pagesize: 1000 });
+   async answerissueprompt(id) {
+      this.$prompt("请输入答复", "", {
+        showClose: false,
+        inputType: "textarea",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /^\S{1,10}$/,
+        inputErrorMessage: "答复必须为1-10位"
+      })
+        .then(async ({ value }) => {
+        await  answerissue(id,value)
+        })
+        .catch(() => {});
+    },
+    async answerissue(id, content) {
+            console.log(id+"||"+value)
+     await this.answerIssue({
+            issueId: id,
+            content: value,
+            answererId: this.userInfo.id
+          });
+
+      if (this.result.code != 0) {
+        this.$message.error(this.result.message);
+        return;
+      } else {
+        this.$message({
+          message: "回答成功",
+          type: "success"
+        });
+        this.reload();
+      }
     }
   },
   components: {}

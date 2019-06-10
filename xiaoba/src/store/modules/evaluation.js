@@ -95,6 +95,7 @@ const mutations = {
           videoId: evaluationList.data[index].videoId,
           content: evaluationList.data[index].content,
           stars: evaluationList.data[index].stars,
+          status: evaluationList.data[index].status,
           accountName: evaluationList.data[index].accountName,
           accountId: evaluationList.data[index].accountId,
           praiseCount: evaluationList.data[index].praiseCount,
