@@ -37,11 +37,20 @@
             type="text"
             size="small"
           >查看</el-button>
-          <el-button @click="answerissueprompt(issueList[scope.$index].id)" type="text" size="small">答复</el-button>
+          <el-button
+            @click="answerissueprompt(issueList[scope.$index].id)"
+            type="text"
+            size="small"
+          >答复</el-button>
         </template>
       </el-table-column>
     </el-table>
-    {{videoId}}
+    <el-dialog :title="currentIssueContent" :visible.sync="dialogTableVisible">
+      <el-table :data="answerList">
+        <el-table-column property="createDateTime" label="回复时间" width="150"></el-table-column>
+        <el-table-column property="content" label="回复内容"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -72,7 +81,6 @@ export default {
         }
         return _data;
       },
-      answerList: state => state.issue.answerList,
       result: state => state.issue.result,
       courseoptions: state => {
         var _options = [];
@@ -108,12 +116,16 @@ export default {
   },
   data() {
     return {
+      dialogTableVisible: false,
+      answerList: null,
+      currentIssueContent: null,
       courseId: "",
       courseModuleId: "",
       courseModuleName: "",
       videoId: ""
     };
   },
+  inject: ["reload"],
   methods: {
     ...mapActions([
       "getAllEffectCourseList",
@@ -124,10 +136,9 @@ export default {
       "getAllAnswerList"
     ]),
     showContent(content, answerList) {
-      this.$alert(content, "", {
-        confirmButtonText: "确定",
-        callback: action => {}
-      });
+      this.currentIssueContent = content;
+      this.answerList = answerList;
+      this.dialogTableVisible = true;
     },
     courseSelected(val) {
       this.getAllCourseModuleList(val);
@@ -141,7 +152,8 @@ export default {
     courseVideoSelected(val) {
       this.getAllIssueList({ videoId: val, pageNum: 1, pagesize: 1000 });
     },
-   async answerissueprompt(id) {
+
+    answerissueprompt(id) {
       this.$prompt("请输入答复", "", {
         showClose: false,
         inputType: "textarea",
@@ -151,28 +163,28 @@ export default {
         inputErrorMessage: "答复必须为1-10位"
       })
         .then(async ({ value }) => {
-        await  answerissue(id,value)
-        })
-        .catch(() => {});
-    },
-    async answerissue(id, content) {
-            console.log(id+"||"+value)
-     await this.answerIssue({
+          console.log(id + "|!>" + value);
+          await this.answerIssue({
             issueId: id,
             content: value,
             answererId: this.userInfo.id
           });
-
-      if (this.result.code != 0) {
-        this.$message.error(this.result.message);
-        return;
-      } else {
-        this.$message({
-          message: "回答成功",
-          type: "success"
-        });
-        this.reload();
-      }
+          if (this.result.code != 0) {
+            this.$message.error(this.result.message);
+            return;
+          } else {
+            this.$message({
+              message: "回答成功",
+              type: "success"
+            });
+            this.getAllIssueList({
+              videoId: this.videoId,
+              pageNum: 1,
+              pagesize: 1000
+            });
+          }
+        })
+        .catch(() => {});
     }
   },
   components: {}
