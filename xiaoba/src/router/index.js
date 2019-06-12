@@ -12,6 +12,7 @@ import Ownerevaluatelist from "../pages/evaluate/ownerevaluatelist.vue";
 import Ownerquestionlist from "../pages/question/ownerquestionlist.vue";
 import Resource from "../pages/resource/resource.vue";
 import Forgetpwd from "../pages/login/forgetpwd.vue";
+import Userinfo from "../pages/user/userinfo.vue";
 
 import Admin_Mindex from "../pages/admin/adminIndex.vue";
 import Admin_courselist from "../pages/admin/course/courselist.vue";
@@ -175,6 +176,11 @@ export default new VueRouter({
       path: "/forgetpwd",
       name: "Forgetpwd",
       component: Forgetpwd
+    },
+    {
+      path: "/userinfo",
+      name: "Userinfo",
+      component: Userinfo
     }
   ]
 });

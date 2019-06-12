@@ -32,6 +32,7 @@
             <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a>
             <a class="dropdown-item" href="#" @click="goTo('/ownerquestionlist')">个人提问</a>
             <a class="dropdown-item" href="#" @click="goTo('/resource')">资料下载</a>
+            <a class="dropdown-item" href="#" @click="goTo('/userinfo')">个人信息</a>
             <a class="dropdown-item" href="#" @click="logout">退出</a>
           </div>
         </li>
