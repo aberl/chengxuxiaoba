@@ -46,16 +46,17 @@ export default {
   methods: {
     ...mapActions(["getuserlist"]),
     search(){
-        getUserList();
+      this.currentPageNum=1;
+        this.getUserList();
     },
     handleSizeChange(val) {
       this.pageSize = val;
-      getUserList();
+      this.getUserList();
     },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPageNum = val;
-      getUserList();
+      this.getUserList();
     },
     getUserList() {
       this.getuserlist({
@@ -81,8 +82,8 @@ export default {
   data() {
     return {
       currentPageNum: 1,
-      pagesizes: [2, 4, 6, 8],
-      pageSize: 2,
+      pagesizes: [20, 40, 60, 80,100],
+      pageSize: 20,
       searchcontent: ""
     };
   },

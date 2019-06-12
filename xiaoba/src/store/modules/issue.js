@@ -104,15 +104,15 @@ const mutations = {
         var _item = issueList.data[index];
         var _answerList=[]
         if (_item.answerResponseVoList != null) {
-            for (var index in _item.answerResponseVoList) {
+            for (var __index in _item.answerResponseVoList) {
                 _answerList.push({
-                index: Number(index) + 1,
-                id: _item.answerResponseVoList[index].id,
-                issueId: _item.answerResponseVoList[index].issueId,
-                content: _item.answerResponseVoList[index].content,
-                status: _item.answerResponseVoList[index].status,
-                createDateTime: _item.answerResponseVoList[index].createDateTime,
-                answerner: _item.answerResponseVoList[index].userResponseVo
+                index: Number(__index) + 1,
+                id: _item.answerResponseVoList[__index].id,
+                issueId: _item.answerResponseVoList[__index].issueId,
+                content: _item.answerResponseVoList[__index].content,
+                status: _item.answerResponseVoList[__index].status,
+                createDateTime: _item.answerResponseVoList[__index].createDateTime,
+                answerner: _item.answerResponseVoList[__index].userResponseVo
               });
             }
           }
