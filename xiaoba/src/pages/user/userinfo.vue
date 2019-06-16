@@ -12,10 +12,13 @@
           <el-divider></el-divider>
           <el-form-item label="手机号">&#8195;&#8195;15001112627</el-form-item>
           <el-divider></el-divider>
-          <el-form-item label="会员等级">
-            &#8195;&#8195;当前身份&#8195;&#8195; <el-button type="success">游&#8195;客</el-button>
+          <el-form-item label="会员详情">
+            &#8195;&#8195;当前等级&#8195;&#8195; <el-tag type="success">游&#8195;客</el-tag>
             <div class="padding-top"></div>
-            &#8195;&#8195;升级身份&#8195;&#8195;
+            &#8195;&#8195;会员到期时间&#8195;&#8195; 
+            <el-tag type="success">2019-01-01</el-tag>
+            <div class="padding-top"></div>
+            &#8195;&#8195;升级会员&#8195;&#8195;
             <el-radio-group fill="red"  v-model="sizeForm.resource" size="medium">
               <el-radio border label="游 客"></el-radio>
               <el-radio border label="普通会员"></el-radio>
