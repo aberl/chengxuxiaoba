@@ -82,7 +82,12 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
 /**
  * 获取角色集合
  */
-export const reqGetRoleList = () => ajax(BASE_URL + "/users/roles");
+export const reqGetRoleList = () => ajax(BASE_URL + "/role/roles");
+
+/**
+ * 获取角色
+ */
+export const reqGetRole = (id) => ajax(BASE_URL + "/role/"+id);
 
 /**
  * 上传文件

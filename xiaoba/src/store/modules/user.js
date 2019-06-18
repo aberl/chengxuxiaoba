@@ -1,7 +1,13 @@
 /**
  * 用户模块
  */
-import { reqGetUserList,reqGetUserInfo,reqGetRoleList,reqModifyUser } from "../../api";
+import {
+  reqGetUserList,
+  reqGetUserInfo,
+  reqGetRoleList,
+  reqModifyUser,
+  reqGetRole
+} from "../../api";
 
 import {
   REQUEST_RECEIVE_USERALLLIST,
@@ -9,41 +15,47 @@ import {
   REQUEST_CONSERVE_USERINFO,
   REQUEST_REMOVE_USERINFO,
   REQUEST_RECEIVE_ROLEALLLIST,
-  REQUEST_UPDATE_USERINFO
+  REQUEST_UPDATE_USERINFO,
+  REQUEST_RECEIVE_ROLE
 } from "../mutation-types.js";
 
 const state = {
-  usercount:0,
-  userlist:{currentNum:1,data:[],totalCount:0},
+  usercount: 0,
+  userlist: { currentNum: 1, data: [], totalCount: 0 },
   userInfo: {}, //|| JSON.parse(localStorage.getItem("userInfo"))
-  roles:[],
-  result:{}
+  roles: [],
+  result: {},
+  role: {}
 };
 
 const actions = {
-  async getrolelist({commit}){
+  async getrole({ commit}, id ) {
+    const result = await reqGetRole(id);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_ROLE, { role: result.data });
+    }
+  },
+  async getrolelist({ commit }) {
     const result = await reqGetRoleList();
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_ROLEALLLIST, { roles: result.data });
     }
   },
-  async getuserlist({commit},{pageNum,pagesize,query}){
-    const result = await reqGetUserList(pageNum, pagesize, "-id",query);
+  async getuserlist({ commit }, { pageNum, pagesize, query }) {
+    const result = await reqGetUserList(pageNum, pagesize, "-id", query);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_USERALLLIST, { userlist: result.data });
     }
   },
-  async getuserinfo({commit},id){
+  async getuserinfo({ commit }, id) {
     const result = await reqGetUserInfo(id);
     if (result.code == 0) {
-    
       result.data["status"] = String(result.data.status);
-      console.log(result.data.status)
-      commit(REQUEST_RECEIVE_USERINFO, { userInfo:result.data });
+      console.log(result.data.status);
+      commit(REQUEST_RECEIVE_USERINFO, { userInfo: result.data });
     }
   },
   async updateUserInfo({ commit }, userInfo) {
- 
     const result = await reqModifyUser(userInfo);
     commit(REQUEST_UPDATE_USERINFO, { result });
   },
@@ -58,7 +70,7 @@ const actions = {
     if (userInfo == null) {
       return;
     }
-    
+
     commit(REQUEST_RECEIVE_USERINFO, { userInfo });
   },
   removeUserInfo({ commit }) {
@@ -67,26 +79,32 @@ const actions = {
 };
 
 const mutations = {
-  
-  [REQUEST_RECEIVE_ROLEALLLIST](state,{roles}){
-    state.roles=roles;
+  [REQUEST_RECEIVE_ROLE](state, { role }) {
+    state.role = role;
     // for(var val in roles)
     // {
     //   state.roles.push({name:roles[val], value:val});
     // }
   },
-  [REQUEST_UPDATE_USERINFO](state,{result})
-  {
-    state.result=result;
-  }
-  ,
-  [REQUEST_RECEIVE_USERALLLIST](state,{userlist}){
-    state.userlist.data=userlist.data
-    state.userlist.totalCount=userlist.totalCount
-    state.userlist.currentNum=userlist.currentNum
+  [REQUEST_RECEIVE_ROLEALLLIST](state, { roles }) {
+    state.roles = roles;
+    // for(var val in roles)
+    // {
+    //   state.roles.push({name:roles[val], value:val});
+    // }
+  },
+  [REQUEST_UPDATE_USERINFO](state, { result }) {
+    state.result = result;
+  },
+  [REQUEST_RECEIVE_USERALLLIST](state, { userlist }) {
+    state.userlist.data = userlist.data;
+    state.userlist.totalCount = userlist.totalCount;
+    state.userlist.currentNum = userlist.currentNum;
   },
   [REQUEST_RECEIVE_USERINFO](state, { userInfo }) {
-    state.userInfo =userInfo;
+    console.log("==========="+userInfo.id)
+    userInfo[isOverDue]=true;
+    //state.userInfo = userInfo;
     // state.userInfo = {
     //   name:userInfo.name,
     //   headerImg:userInfo.headerImg,
@@ -99,6 +117,8 @@ const mutations = {
     // }
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
+    console.log(userInfo.vipEndDate)
+    userInfo.isOverDue=true;
     state.userInfo = userInfo;
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
