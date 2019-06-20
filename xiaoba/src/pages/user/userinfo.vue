@@ -4,10 +4,8 @@
     <div class="container">
       <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         个人信息&nbsp;&nbsp;
+        {{this.role}}
         <img src="./images/driver64.png">
-        {{userInfo}}
-        ............
-        {{role}}
         <div style="margin: 20px;"></div>
         <el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
           <el-form-item class="title_font" label="用户名">&#8195;&#8195;{{this.userInfo.name}}</el-form-item>
@@ -18,30 +16,40 @@
             &#8195;&#8195;当前等级&#8195;&#8195;
             <el-tag type="success">{{role.description}}</el-tag>
             <div class="padding-top"></div>
-            <div v-if="this.userInfo.vipEndDate">
-              &#8195;&#8195;会员到期时间&#8195;&#8195;
+            <div v-if="this.userInfo.isOverDue">
+              &#8195;&#8195;到期时间&#8195;&#8195;
               <el-tag type="success">{{this.userInfo.vipEndDate}}</el-tag>
             </div>
-            <div class="padding-top"></div>&#8195;&#8195;升级会员&#8195;&#8195;
-            <el-radio-group fill="red" v-model="sizeForm.resource" size="medium">
-              <el-radio border label="游 客"></el-radio>
-              <el-radio border label="普通会员"></el-radio>
-              <el-radio border label="VIP会员"></el-radio>
-            </el-radio-group>
+            <div v-if="this.role.needUpgrade">
+              <div class="padding-top"></div>&#8195;&#8195;升级会员&#8195;&#8195;
+              <el-radio-group fill="red" v-model="sizeForm.resource" size="medium">
+                <el-radio
+                  v-for="roleItem in this.role.upgradeRoleList"
+                  :key="roleItem.id"
+                  border
+                  :label="roleItem.description"
+                  @change="showRolePermission(roleItem.permissionList)"
+                ></el-radio>
+              </el-radio-group>
+            </div>
           </el-form-item>
           <el-divider></el-divider>
           <el-form-item label="当前特权">
-            &#8195;&#8195;每日免费观看3段视频
-            <div class="padding-top"></div>&#8195;&#8195;无限制观看视频
-            <div class="padding-top"></div>&#8195;&#8195;无限制下载视频
-            <div class="padding-top"></div>&#8195;&#8195;视频快进播放
-            <div class="padding-top"></div>&#8195;&#8195;在线提交评论
-            <div class="padding-top"></div>&#8195;&#8195;在线向老师提问
+            <div v-for="permission in this.role.permissionList" :key="permission.id">
+              <div class="padding-top"></div>
+              &#8195;&#8195;{{permission.description}}
+            </div>
           </el-form-item>
         </el-form>
       </div>
     </div>
     <footerGuide/>
+
+<el-dialog title="升级会员" :visible.sync="this.dialogTableVisible">
+  <el-table :data="selectPermissionList">
+    <el-table-column property="description" label="权限" width="150"></el-table-column>
+  </el-table>
+</el-dialog>
   </div>
 </template>
 
@@ -73,6 +81,9 @@ export default {
     return {
       radioSelectedColor: "#67C23A",
       labelPosition: "top",
+      dialogTableVisible: false,
+      innerVisible: false,
+      selectPermissionList:[],
       formLabelAlign: {
         name: "",
         region: "",
@@ -91,7 +102,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getrole", "getuserinfo"])
+    ...mapActions(["getrole", "getuserinfo"]),
+    showRolePermission(permissionList) {
+        this.dialogTableVisible=true;
+        this.selectPermissionList=permissionList;
+    }
   },
   components: {
     headerTop,

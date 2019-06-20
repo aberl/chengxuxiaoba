@@ -102,23 +102,13 @@ const mutations = {
     state.userlist.currentNum = userlist.currentNum;
   },
   [REQUEST_RECEIVE_USERINFO](state, { userInfo }) {
-    console.log("==========="+userInfo.id)
-    userInfo[isOverDue]=true;
-    //state.userInfo = userInfo;
-    // state.userInfo = {
-    //   name:userInfo.name,
-    //   headerImg:userInfo.headerImg,
-    //   mobilePhoneNo:userInfo.mobilePhoneNo,
-    //   wechatAccount:userInfo.wechatAccount,
-    //   wechatHeaderImg:userInfo.wechatHeaderImg,
-    //   status:userInfo.status,
-    //   statusDesc:userInfo.statusDesc,
-    //   createDateTime:userInfo.createDateTime
-    // }
+
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
-    console.log(userInfo.vipEndDate)
-    userInfo.isOverDue=true;
+    if(userInfo.vipEndDate != null)
+    {
+      userInfo.vipEndDate=userInfo.vipEndDate.substring(0,10);
+    }
     state.userInfo = userInfo;
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
