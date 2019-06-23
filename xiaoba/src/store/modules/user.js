@@ -22,14 +22,18 @@ import {
 const state = {
   usercount: 0,
   userlist: { currentNum: 1, data: [], totalCount: 0 },
-  userInfo: {}, //|| JSON.parse(localStorage.getItem("userInfo"))
+  userInfo: {}, 
   roles: [],
   result: {},
   role: {}
 };
 
 const actions = {
-  async getrole({ commit}, id ) {
+  async loginWithPhonePassword({ commit },{mobilephone,password})
+  {
+    
+  },
+  async getrole({ commit }, id) {
     const result = await reqGetRole(id);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_ROLE, { role: result.data });
@@ -105,9 +109,8 @@ const mutations = {
 
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
-    if(userInfo.vipEndDate != null)
-    {
-      userInfo.vipEndDate=userInfo.vipEndDate.substring(0,10);
+    if (userInfo.vipEndDate != null) {
+      userInfo.vipEndDate = userInfo.vipEndDate.substring(0, 10);
     }
     state.userInfo = userInfo;
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
