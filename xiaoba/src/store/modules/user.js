@@ -6,7 +6,8 @@ import {
   reqGetUserInfo,
   reqGetRoleList,
   reqModifyUser,
-  reqGetRole
+  reqGetRole,
+  reqGetRolePaymentList
 } from "../../api";
 
 import {
@@ -16,7 +17,8 @@ import {
   REQUEST_REMOVE_USERINFO,
   REQUEST_RECEIVE_ROLEALLLIST,
   REQUEST_UPDATE_USERINFO,
-  REQUEST_RECEIVE_ROLE
+  REQUEST_RECEIVE_ROLE,
+  REQUEST_RECEIVE_ROLEPAYMENTLIST
 } from "../mutation-types.js";
 
 const state = {
@@ -25,13 +27,14 @@ const state = {
   userInfo: {}, 
   roles: [],
   result: {},
-  role: {}
+  role: {},
+  rolePaymentList:[]
 };
 
 const actions = {
   async loginWithPhonePassword({ commit },{mobilephone,password})
   {
-    
+
   },
   async getrole({ commit }, id) {
     const result = await reqGetRole(id);
@@ -43,6 +46,12 @@ const actions = {
     const result = await reqGetRoleList();
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_ROLEALLLIST, { roles: result.data });
+    }
+  },
+  async getrolepaymentlist({ commit }, roleId) {
+    const result = await reqGetRolePaymentList(roleId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_ROLEPAYMENTLIST, { rolePaymentList: result.data });
     }
   },
   async getuserlist({ commit }, { pageNum, pagesize, query }) {
@@ -85,17 +94,9 @@ const actions = {
 const mutations = {
   [REQUEST_RECEIVE_ROLE](state, { role }) {
     state.role = role;
-    // for(var val in roles)
-    // {
-    //   state.roles.push({name:roles[val], value:val});
-    // }
   },
   [REQUEST_RECEIVE_ROLEALLLIST](state, { roles }) {
     state.roles = roles;
-    // for(var val in roles)
-    // {
-    //   state.roles.push({name:roles[val], value:val});
-    // }
   },
   [REQUEST_UPDATE_USERINFO](state, { result }) {
     state.result = result;
@@ -119,6 +120,11 @@ const mutations = {
     state.userInfo = {};
     localStorage.removeItem("userInfo");
   }
+  ,
+  [REQUEST_RECEIVE_ROLEPAYMENTLIST](state, { rolePaymentList }) {
+    state.rolePaymentList=rolePaymentList;
+  }
+  
 };
 
 export default {

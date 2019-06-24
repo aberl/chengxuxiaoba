@@ -80,6 +80,18 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
   );
 
 /**
+ *  更新用户角色
+ * @param {*} userId 
+ * @param {*} roleIdArray 
+ */
+export const reqUpdateUserRoleRelationship = (userId, roleIdArray) =>
+ajax(
+  BASE_URL + "/users/password",
+  { "id":userId,"roles":roleIdArray },
+  "PUT"
+);
+
+/**
  * 获取角色集合
  */
 export const reqGetRoleList = () => ajax(BASE_URL + "/role/roles");
@@ -88,6 +100,11 @@ export const reqGetRoleList = () => ajax(BASE_URL + "/role/roles");
  * 获取角色
  */
 export const reqGetRole = (id) => ajax(BASE_URL + "/role/"+id);
+
+/**
+ * 获取角色支付列表
+ */
+export const reqGetRolePaymentList = (id) => ajax(BASE_URL + "/role/"+id+"/rolepaymentlist");
 
 /**
  * 上传文件

@@ -27,7 +27,7 @@
                   :key="roleItem.id"
                   border
                   :label="roleItem.id"
-                  @change="showRolePermission(roleItem.description, roleItem.permissionList)"
+                  @change="showRolePermission(roleItem.id,roleItem.description, roleItem.permissionList)"
                 >{{roleItem.description}}</el-radio>
               </el-radio-group>
             </div>
@@ -53,15 +53,16 @@
         </el-col>
         <el-col :span="12">
           <el-radio-group v-model="roleTypeSelect">
-            <el-radio-button label="1">月会员</el-radio-button>
-            <el-radio-button label="2">季会员</el-radio-button>
-            <el-radio-button label="3">年会员</el-radio-button>
+            <el-radio-button v-for="rolePayment in this.rolePaymentList" :key="rolePayment.id" 
+            :label="rolePayment.id">
+            {{rolePayment.description}}
+            </el-radio-button>
           </el-radio-group>
           <br>
           <el-form label-position="left" label-width="80px" size="mini">
             <el-form-item class="padding-top" label="价格" prop="delivery">
               <span class="iconfont ai-iconfl-renminbi"></span>
-              <el-button type="text">39</el-button>
+              <el-button type="text" >{{selectRolePrice}}</el-button>
             </el-form-item>
 
             <el-form-item class="padding-top" label="会员时间">
@@ -81,7 +82,7 @@
               <el-checkbox-group>
                 <el-checkbox label="微信" name="type"></el-checkbox>
                 <img src="../../common/images/pay/wxpay.png"/>
-                <div class="padding-top"></div>
+                 <el-divider></el-divider>
                 <el-checkbox label="支付宝" name="type"></el-checkbox>
                 <img src="../../common/images/pay/alipay.png"/>
               </el-checkbox-group>
@@ -90,6 +91,7 @@
         </el-col>
       </el-row>
     </el-dialog>
+    {{rolePaymentList}}
   </div>
 </template>
 
@@ -115,7 +117,8 @@ export default {
         }
         return _roleId;
       },
-      role: state => state.user.role
+      role: state => state.user.role,
+      rolePaymentList:state => state.user.rolePaymentList,
     })
   },
   data() {
@@ -123,16 +126,21 @@ export default {
       QRSRC:
         "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       updateRoleSelect: -1,
-      roleTypeSelect: 1,
+      roleTypeSelect: 2,
       labelPosition: "top",
       dialogTableVisible: false,
       selectPermissionList: [],
-      selectRoleName: null
+      selectRoleName: null,
+      selectRolePrice:0,
+      selectRoleDescription:"",
+      selectRoleStartDate:"",
+      selecRoleEndDate:""
     };
   },
   methods: {
-    ...mapActions(["getrole", "getUserInfo"]),
-    showRolePermission(roleName, permissionList) {
+    ...mapActions(["getrole", "getUserInfo","getrolepaymentlist"]),
+    showRolePermission(id,roleName, permissionList) {
+      this.getrolepaymentlist(id);
       this.selectRoleName = roleName + "权限";
       this.dialogTableVisible = true;
       this.selectPermissionList = permissionList;
