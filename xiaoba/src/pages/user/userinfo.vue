@@ -46,45 +46,56 @@
 
     <el-dialog center title="升级会员" :visible.sync="dialogTableVisible" @closed="roleSelectClosed">
       <el-row>
-        <el-col :span="12">
+        <el-col :span="10">
           <el-table :data="selectPermissionList">
-            <el-table-column property="description" :label="selectRoleName" width="340"></el-table-column>
+            <el-table-column property="description" :label="selectRoleName" width="240"></el-table-column>
           </el-table>
         </el-col>
-        <el-col :span="12">
-          <el-radio-group v-model="roleTypeSelect">
-            <el-radio-button v-for="rolePayment in this.rolePaymentList" :key="rolePayment.id" 
-            :label="rolePayment.id">
-            {{rolePayment.description}}
-            </el-radio-button>
+        <el-col :span="14">
+          <el-radio-group v-model="selectRolePayment.selectRolePaymentType">
+            <el-radio-button
+              v-for="rolePayment in this.rolePaymentList"
+              :key="rolePayment.id"
+              :label="rolePayment.id"
+            >{{rolePayment.description}}</el-radio-button>
           </el-radio-group>
           <br>
           <el-form label-position="left" label-width="80px" size="mini">
             <el-form-item class="padding-top" label="价格" prop="delivery">
               <span class="iconfont ai-iconfl-renminbi"></span>
-              <el-button type="text" >{{selectRolePrice}}</el-button>
+              <el-button type="text">{{selectRolePayment.selectRolePrice}}</el-button>
             </el-form-item>
 
             <el-form-item class="padding-top" label="会员时间">
               <el-col :span="11">
                 <el-form-item prop="date1">
-                  <el-date-picker type="date" placeholder="选择日期" style="width: 100%;"></el-date-picker>
+                  <el-date-picker readonly
+                    type="date"
+                    v-model="selectRolePayment.selectRoleStartDate"
+                    placeholder="选择日期"
+                    style="width: 100%;"
+                  ></el-date-picker>
                 </el-form-item>
               </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="11">
-                <el-form-item prop="date2">
-                  <el-time-picker placeholder="选择时间" style="width: 100%;"></el-time-picker>
+              <el-col class="line" :span="2">至</el-col>
+          <el-col :span="11">
+                <el-form-item prop="date1">
+                  <el-date-picker readonly
+                    type="date"
+                    v-model="selectRolePayment.selectRoleEndDate"
+                    placeholder="选择日期"
+                    style="width: 100%;"
+                  ></el-date-picker>
                 </el-form-item>
               </el-col>
             </el-form-item>
             <el-form-item label="支付方式">
               <el-checkbox-group>
                 <el-checkbox label="微信" name="type"></el-checkbox>
-                <img src="../../common/images/pay/wxpay.png"/>
-                 <el-divider></el-divider>
+                <img src="../../common/images/pay/wxpay.png">
+                <el-divider></el-divider>
                 <el-checkbox label="支付宝" name="type"></el-checkbox>
-                <img src="../../common/images/pay/alipay.png"/>
+                <img src="../../common/images/pay/alipay.png">
               </el-checkbox-group>
             </el-form-item>
           </el-form>
@@ -118,7 +129,27 @@ export default {
         return _roleId;
       },
       role: state => state.user.role,
-      rolePaymentList:state => state.user.rolePaymentList,
+      rolePaymentList: state => state.user.rolePaymentList,
+      selectRolePayment: state => {
+        if (state.user.rolePaymentList) {
+          var rolePaymentItem = state.user.rolePaymentList[0];
+          return {
+            selectRolePaymentType: rolePaymentItem.id,
+            selectRolePrice: rolePaymentItem.price,
+            selectRoleDescription: rolePaymentItem.description,
+            selectRoleStartDate: rolePaymentItem.startDate,
+            selectRoleEndDate: rolePaymentItem.endDate
+          };
+        } else {
+          return {
+            selectRolePaymentType: 1,
+            selectRolePrice: 0,
+            selectRoleDescription: "",
+            selectRoleStartDate: "",
+            selectRoleEndDate: ""
+          };
+        }
+      }
     })
   },
   data() {
@@ -126,20 +157,16 @@ export default {
       QRSRC:
         "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       updateRoleSelect: -1,
-      roleTypeSelect: 2,
+      roleTypeSelect: 1,
       labelPosition: "top",
       dialogTableVisible: false,
       selectPermissionList: [],
-      selectRoleName: null,
-      selectRolePrice:0,
-      selectRoleDescription:"",
-      selectRoleStartDate:"",
-      selecRoleEndDate:""
+      selectRoleName: null
     };
   },
   methods: {
-    ...mapActions(["getrole", "getUserInfo","getrolepaymentlist"]),
-    showRolePermission(id,roleName, permissionList) {
+    ...mapActions(["getrole", "getUserInfo", "getrolepaymentlist"]),
+    showRolePermission(id, roleName, permissionList) {
       this.getrolepaymentlist(id);
       this.selectRoleName = roleName + "权限";
       this.dialogTableVisible = true;
