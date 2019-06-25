@@ -52,7 +52,7 @@
           </el-table>
         </el-col>
         <el-col :span="14">
-          <el-radio-group v-model="selectRolePayment.selectRolePaymentType">
+          <el-radio-group v-model="selectRolePayment.selectRolePaymentType" @change="changeRolePayment(2)">
             <el-radio-button
               v-for="rolePayment in this.rolePaymentList"
               :key="rolePayment.id"
@@ -135,7 +135,7 @@ export default {
       role: state => state.user.role,
       rolePaymentList: state => state.user.rolePaymentList,
       selectRolePayment: state => {
-        if (state.user.rolePaymentList) {
+        if (state.user.rolePaymentList != null && state.user.rolePaymentList.length>0) {
           var rolePaymentItem = state.user.rolePaymentList[0];
           return {
             selectRolePaymentType: rolePaymentItem.id,
@@ -179,10 +179,28 @@ export default {
     roleSelectClosed() {
       this.updateRoleSelect = -1;
     },
-    changeRolePayment(rolePaymentId){
-      if(rolePaymentList)
-      {
-        
+    changeRolePayment(rolePaymentId) {
+      console.log(rolePaymentId)
+      if (this.rolePaymentList != null) {
+        var rolePaymentItem = null;
+        for (var index in this.rolePaymentList) {
+          if (this.rolePaymentList[index].id == rolePaymentId) {
+            rolePaymentItem = this.rolePaymentList[index];
+            break;
+          }
+        }
+
+        if (rolePaymentItem != null) {
+          (this.selectRolePayment.selectRolePaymentType = rolePaymentItem.id),
+            (this.selectRolePayment.selectRolePrice = rolePaymentItem.price),
+            (this.selectRolePayment.selectRoleDescription =
+              rolePaymentItem.description),
+            (this.selectRolePayment.selectRoleStartDate =
+              rolePaymentItem.startDate),
+            (this.selectRolePayment.selectRoleEndDate =
+              rolePaymentItem.endDate);
+        }
+      console.log(this.selectRolePayment)
       }
     }
   },
