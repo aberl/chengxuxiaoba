@@ -69,7 +69,9 @@
             <el-form-item class="padding-top" label="会员时间">
               <el-col :span="11">
                 <el-form-item prop="date1">
-                  <el-date-picker readonly
+                  <el-date-picker
+                    readonly
+                    disabled
                     type="date"
                     v-model="selectRolePayment.selectRoleStartDate"
                     placeholder="选择日期"
@@ -78,9 +80,11 @@
                 </el-form-item>
               </el-col>
               <el-col class="line" :span="2">至</el-col>
-          <el-col :span="11">
+              <el-col :span="11">
                 <el-form-item prop="date1">
-                  <el-date-picker readonly
+                  <el-date-picker
+                    readonly
+                    disabled
                     type="date"
                     v-model="selectRolePayment.selectRoleEndDate"
                     placeholder="选择日期"
@@ -174,6 +178,12 @@ export default {
     },
     roleSelectClosed() {
       this.updateRoleSelect = -1;
+    },
+    changeRolePayment(rolePaymentId){
+      if(rolePaymentList)
+      {
+        
+      }
     }
   },
   components: {
