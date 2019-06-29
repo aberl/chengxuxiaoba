@@ -60,9 +60,7 @@
                 :key="rolePayment.id"
                 @change="changeRolePayment"
               >
-                <el-radio-button
-                  :label="rolePayment.id"
-                >{{rolePayment.description}}</el-radio-button>
+                <el-radio-button :label="rolePayment.id">{{rolePayment.description}}</el-radio-button>
               </el-radio-group>
             </el-form-item>
             <el-form-item class="padding-top" label="会员价格" prop="delivery">
@@ -98,17 +96,47 @@
               </el-col>
             </el-form-item>
             <el-form-item label="支付方式">
-              <el-checkbox-group>
-                <el-checkbox label="微信" name="type"></el-checkbox>
-                <img src="../../common/images/pay/wxpay.png">
-                <el-divider></el-divider>
-                <el-checkbox label="支付宝" name="type"></el-checkbox>
-                <img src="../../common/images/pay/alipay.png">
-              </el-checkbox-group>
+              <el-radio-group v-model="selectRolePayment.selectPayType" @change="rolePayChange">
+                <el-radio :label="1">
+                  <img src="../../common/images/pay/wxpay.png">
+                </el-radio>
+                <el-radio :label="2">
+                  <img src="../../common/images/pay/alipay.png">
+                </el-radio>
+              </el-radio-group>
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
+      <el-dialog
+        width="30%"
+        title
+        :visible.sync="innerVisible"
+        append-to-body
+        center
+        @closed="rolePaySelectClosed"
+      >
+        <el-row>
+          <el-col :span="24">
+            扫一扫付款:
+            <span class="pay_font">{{selectRolePayment.selectRolePrice}}</span>元
+          </el-col>
+        </el-row>
+        <div class="padding-top"></div>
+        <el-row>
+          <el-col :span="12">
+            <div class="padding-top"></div>
+            <div class="grid-content bg-purple">
+              <img src="../../common/images/pay/qr-ali.png">
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <div class="grid-content bg-purple-light">
+              <img src="../../common/images/pay/ali-pay.png">
+            </div>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </el-dialog>
   </div>
 </template>
@@ -147,6 +175,7 @@ export default {
       roleTypeSelect: 1,
       labelPosition: "top",
       dialogTableVisible: false,
+      innerVisible: false,
       selectPermissionList: [],
       selectRoleName: null,
       selectRolePayment: {
@@ -154,7 +183,8 @@ export default {
         selectRolePrice: 0,
         selectRoleDescription: "",
         selectRoleStartDate: "",
-        selectRoleEndDate: ""
+        selectRoleEndDate: "",
+        selectPayType: 0
       }
     };
   },
@@ -166,11 +196,13 @@ export default {
       this.dialogTableVisible = true;
       this.selectPermissionList = permissionList;
     },
+    rolePaySelectClosed() {
+      this.selectRolePayment.selectPayType = -1;
+    },
     roleSelectClosed() {
       this.updateRoleSelect = -1;
     },
     changeRolePayment(rolePaymentId) {
-      console.log(rolePaymentId);
       if (this.rolePaymentList != null) {
         var rolePaymentItem = null;
         for (var index in this.rolePaymentList) {
@@ -192,6 +224,9 @@ export default {
         }
         console.log(this.selectRolePayment);
       }
+    },
+    rolePayChange(type) {
+      this.innerVisible = true;
     }
   },
   components: {
@@ -206,6 +241,10 @@ export default {
   font-family: "微软雅黑";
   font-size: 30px;
 }
+.pay_font {
+  font-family: "Helvetica Neue";
+  font-size: 20px;
+  color:crimson}
 .padding-top {
   padding-top: 20px;
 }
