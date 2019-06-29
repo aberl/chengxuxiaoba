@@ -52,16 +52,20 @@
           </el-table>
         </el-col>
         <el-col :span="14">
-          <el-radio-group v-model="selectRolePayment.selectRolePaymentType" @change="changeRolePayment(2)">
-            <el-radio-button
-              v-for="rolePayment in this.rolePaymentList"
-              :key="rolePayment.id"
-              :label="rolePayment.id"
-            >{{rolePayment.description}}</el-radio-button>
-          </el-radio-group>
-          <br>
           <el-form label-position="left" label-width="80px" size="mini">
-            <el-form-item class="padding-top" label="价格" prop="delivery">
+            <el-form-item class="padding-top" label="会员类型" prop="delivery">
+              <el-radio-group
+                v-model="selectRolePayment.selectRolePaymentType"
+                v-for="rolePayment in this.rolePaymentList"
+                :key="rolePayment.id"
+                @change="changeRolePayment"
+              >
+                <el-radio-button
+                  :label="rolePayment.id"
+                >{{rolePayment.description}}</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item class="padding-top" label="会员价格" prop="delivery">
               <span class="iconfont ai-iconfl-renminbi"></span>
               <el-button type="text">{{selectRolePayment.selectRolePrice}}</el-button>
             </el-form-item>
@@ -106,7 +110,6 @@
         </el-col>
       </el-row>
     </el-dialog>
-    {{rolePaymentList}}
   </div>
 </template>
 
@@ -133,27 +136,7 @@ export default {
         return _roleId;
       },
       role: state => state.user.role,
-      rolePaymentList: state => state.user.rolePaymentList,
-      selectRolePayment: state => {
-        if (state.user.rolePaymentList != null && state.user.rolePaymentList.length>0) {
-          var rolePaymentItem = state.user.rolePaymentList[0];
-          return {
-            selectRolePaymentType: rolePaymentItem.id,
-            selectRolePrice: rolePaymentItem.price,
-            selectRoleDescription: rolePaymentItem.description,
-            selectRoleStartDate: rolePaymentItem.startDate,
-            selectRoleEndDate: rolePaymentItem.endDate
-          };
-        } else {
-          return {
-            selectRolePaymentType: 1,
-            selectRolePrice: 0,
-            selectRoleDescription: "",
-            selectRoleStartDate: "",
-            selectRoleEndDate: ""
-          };
-        }
-      }
+      rolePaymentList: state => state.user.rolePaymentList
     })
   },
   data() {
@@ -165,7 +148,14 @@ export default {
       labelPosition: "top",
       dialogTableVisible: false,
       selectPermissionList: [],
-      selectRoleName: null
+      selectRoleName: null,
+      selectRolePayment: {
+        selectRolePaymentType: 0,
+        selectRolePrice: 0,
+        selectRoleDescription: "",
+        selectRoleStartDate: "",
+        selectRoleEndDate: ""
+      }
     };
   },
   methods: {
@@ -180,7 +170,7 @@ export default {
       this.updateRoleSelect = -1;
     },
     changeRolePayment(rolePaymentId) {
-      console.log(rolePaymentId)
+      console.log(rolePaymentId);
       if (this.rolePaymentList != null) {
         var rolePaymentItem = null;
         for (var index in this.rolePaymentList) {
@@ -200,7 +190,7 @@ export default {
             (this.selectRolePayment.selectRoleEndDate =
               rolePaymentItem.endDate);
         }
-      console.log(this.selectRolePayment)
+        console.log(this.selectRolePayment);
       }
     }
   },
