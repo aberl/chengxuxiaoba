@@ -3,7 +3,7 @@
     class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow"
   >
     <div class="my-0 mr-md-auto font-weight-normal" @click="goTo('/')">
-      <img src="./images/bus.png">
+      <img src="./images/bus.png" />
       <h5>程序小巴</h5>
     </div>
     <nav class="my-2 my-md-0 mr-md-3">
@@ -11,9 +11,13 @@
         <li>
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">课程</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" v-for="course in courseList" @click="goTo('/coursedetail?id='+course.id)" :key="course.id">
-              {{course.name}}
-              </a>
+            <a
+              class="dropdown-item"
+              href="#"
+              v-for="course in courseList"
+              @click="goTo('/coursedetail?id='+course.id)"
+              :key="course.id"
+            >{{course.name}}</a>
           </div>
         </li>
         <li>
@@ -42,10 +46,10 @@
       </ul>
     </nav>
     <div v-if="!userInfo.name">
-      <img src="./images/busflag.png">
+      <img src="./images/busflag.png" />
     </div>
     <div v-if="userInfo.name">
-      <img src="./images/busheader2.png">
+      <img src="./images/busheader2.png" />
     </div>
   </div>
 </template>
@@ -57,16 +61,16 @@ export default {
     this.getAllEffectCourseList();
   },
   computed: mapState({
-      courseList: state => state.course.courseList,
-    userInfo: state => state.user.userInfo
+    courseList: state => state.course.courseList,
+    userInfo: state => state.user.currentLoginUser
   }),
   methods: {
-    ...mapActions(["removeUserInfo","getAllEffectCourseList"]),
+    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList"]),
     goTo(path) {
       this.$router.push(path);
     },
     logout() {
-      this.removeUserInfo();
+      this.removeCurrentUserInfo();
       this.goTo("/login");
     }
   },

@@ -41,7 +41,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["receiveUserInfo", "conserveUserInfo"]),
+    ...mapActions(["receiveUserInfo", "conserveCurrentUserInfo"]),
     goTo(path) {
       this.$router.replace(path);
     },
@@ -69,8 +69,8 @@ export default {
         return;
       }
 
-      this.receiveUserInfo(result.data);
-      this.conserveUserInfo(result.data);
+     // this.receiveUserInfo(result.data);
+      this.conserveCurrentUserInfo(result.data);
 
       //去首页
       this.$router.replace("/");

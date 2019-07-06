@@ -147,22 +147,13 @@ import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
 export default {
   mounted() {
-    this.getUserInfo();
+    this.getCurrentLoginUserInfo();
     this.getrole(this.roleId);
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
-      roleId: state => {
-        var _roleId = -1;
-        if (
-          state.user.userInfo.roles != null &&
-          state.user.userInfo.roles.length > 0
-        ) {
-          _roleId = state.user.userInfo.roles[0];
-        }
-        return _roleId;
-      },
+      userInfo: state => state.user.currentLoginUser,
+      roleId: state => state.user.currentLoginUser.role,
       role: state => state.user.role,
       rolePaymentList: state => state.user.rolePaymentList
     })
@@ -189,7 +180,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getrole", "getUserInfo", "getrolepaymentlist"]),
+    ...mapActions(["getrole", "getCurrentLoginUserInfo", "getrolepaymentlist","updateUserRoleRelationship"]),
     showRolePermission(id, roleName, permissionList) {
       this.getrolepaymentlist(id);
       this.selectRoleName = roleName + "权限";

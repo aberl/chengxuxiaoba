@@ -32,17 +32,13 @@
 import { mapState, mapActions } from "vuex";
 export default {
   mounted: function() {
-    if(!this.userInfo.roles){
-        this.goTo("/");
-        return;
-    }
-    if (this.userInfo.roles.indexOf("1") < 0) {
+    if (this.userInfo.role != 3) {
       this.goTo("/");
     }
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo
+      userInfo: state => state.user.currentLoginUser
     })
   },
   methods: {

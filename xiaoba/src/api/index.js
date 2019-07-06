@@ -84,10 +84,10 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
  * @param {*} userId 
  * @param {*} roleIdArray 
  */
-export const reqUpdateUserRoleRelationship = (userId, roleIdArray) =>
+export const reqUpdateUserRoleRelationship = (userId, roleId) =>
 ajax(
-  BASE_URL + "/users/password",
-  { "id":userId,"roles":roleIdArray },
+  BASE_URL + "/users/updaterole",
+  { "id":userId,"role":roleId },
   "PUT"
 );
 

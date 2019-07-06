@@ -8,7 +8,7 @@
 import { mapActions } from "vuex";
 export default {
   mounted() {
-    this.getUserInfo();
+    this.getCurrentLoginUserInfo();
   },
   provide(){
     return {
@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getUserInfo"]),
+    ...mapActions(["getCurrentLoginUserInfo"]),
     reload(){
       this.isRouterAlive = false;
       this.$nextTick(function(){

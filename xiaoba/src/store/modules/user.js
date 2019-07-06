@@ -7,7 +7,8 @@ import {
   reqGetRoleList,
   reqModifyUser,
   reqGetRole,
-  reqGetRolePaymentList
+  reqGetRolePaymentList,
+  reqUpdateUserRoleRelationship
 } from "../../api";
 
 import {
@@ -15,6 +16,7 @@ import {
   REQUEST_RECEIVE_USERINFO,
   REQUEST_CONSERVE_USERINFO,
   REQUEST_REMOVE_USERINFO,
+  REQUEST_RECEIVE_CURRENT_LOGIN_USERINFO,
   REQUEST_RECEIVE_ROLEALLLIST,
   REQUEST_UPDATE_USERINFO,
   REQUEST_RECEIVE_ROLE,
@@ -24,17 +26,29 @@ import {
 const state = {
   usercount: 0,
   userlist: { currentNum: 1, data: [], totalCount: 0 },
-  userInfo: {}, 
+  userInfo: {},
+  currentLoginUser: {},
   roles: [],
   result: {},
   role: {},
-  rolePaymentList:[]
+  rolePaymentList: []
 };
 
 const actions = {
-  async loginWithPhonePassword({ commit },{mobilephone,password})
-  {
+  async loginWithPhonePassword({ commit }, { mobilephone, password }) {
 
+  },
+
+  async refreshCurrentUserInfo({ commit }) {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo == null) {
+      return;
+    }
+    var userId = userInfo.id;
+    const result = await reqGetUserInfo(userId);
+    if (result.code == 0) {
+      commit(REQUEST_CONSERVE_USERINFO, { userInfo: result.data });
+    }
   },
   async getrole({ commit }, id) {
     const result = await reqGetRole(id);
@@ -54,6 +68,11 @@ const actions = {
       commit(REQUEST_RECEIVE_ROLEPAYMENTLIST, { rolePaymentList: result.data });
     }
   },
+  async updateUserRoleRelationship({ commit }, { userId, roleId }) {
+    const result = await reqUpdateUserRoleRelationship(userId, roleId);
+    commit(REQUEST_UPDATE_USERINFO, { result });
+  }
+  ,
   async getuserlist({ commit }, { pageNum, pagesize, query }) {
     const result = await reqGetUserList(pageNum, pagesize, "-id", query);
     if (result.code == 0) {
@@ -61,10 +80,9 @@ const actions = {
     }
   },
   async getuserinfo({ commit }, id) {
+
     const result = await reqGetUserInfo(id);
     if (result.code == 0) {
-      result.data["status"] = String(result.data.status);
-      console.log(result.data.status);
       commit(REQUEST_RECEIVE_USERINFO, { userInfo: result.data });
     }
   },
@@ -75,18 +93,18 @@ const actions = {
   receiveUserInfo({ commit }, userInfo) {
     commit(REQUEST_RECEIVE_USERINFO, { userInfo });
   },
-  conserveUserInfo({ commit }, userInfo) {
+  conserveCurrentUserInfo({ commit }, userInfo) {
     commit(REQUEST_CONSERVE_USERINFO, { userInfo });
   },
-  getUserInfo({ commit }) {
+  getCurrentLoginUserInfo({ commit }) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo == null) {
       return;
     }
 
-    commit(REQUEST_RECEIVE_USERINFO, { userInfo });
+    commit(REQUEST_RECEIVE_CURRENT_LOGIN_USERINFO, { userInfo });
   },
-  removeUserInfo({ commit }) {
+  removeCurrentUserInfo({ commit }) {
     commit(REQUEST_REMOVE_USERINFO);
   }
 };
@@ -107,24 +125,24 @@ const mutations = {
     state.userlist.currentNum = userlist.currentNum;
   },
   [REQUEST_RECEIVE_USERINFO](state, { userInfo }) {
-
+    state.userInfo = userInfo;
+  },
+  [REQUEST_RECEIVE_CURRENT_LOGIN_USERINFO](state, { userInfo }) {
+    state.currentLoginUser = userInfo;
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
-    if (userInfo.vipEndDate != null) {
-      userInfo.vipEndDate = userInfo.vipEndDate.substring(0, 10);
-    }
-    state.userInfo = userInfo;
+    state.currentLoginUser =userInfo;
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
   [REQUEST_REMOVE_USERINFO](state) {
-    state.userInfo = {};
+    state.currentLoginUser = {};
     localStorage.removeItem("userInfo");
   }
   ,
   [REQUEST_RECEIVE_ROLEPAYMENTLIST](state, { rolePaymentList }) {
-    state.rolePaymentList=rolePaymentList;
+    state.rolePaymentList = rolePaymentList;
   }
-  
+
 };
 
 export default {
