@@ -58,6 +58,7 @@
 import { mapState, mapActions } from "vuex";
 export default {
   mounted() {
+    this.getCurrentLoginUserInfo();
     this.getAllEffectCourseList();
   },
   computed: mapState({
@@ -65,7 +66,7 @@ export default {
     userInfo: state => state.user.currentLoginUser
   }),
   methods: {
-    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList"]),
+    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo"]),
     goTo(path) {
       this.$router.push(path);
     },

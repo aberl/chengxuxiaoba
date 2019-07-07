@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
+      userInfo: state => state.user.currentLoginUser,
       videoDetail: state => state.video.videoDetail,
       courseModuleDetail: state => state.video.videoCourseModule,
       videoSrc: state => {
