@@ -100,7 +100,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
+      userInfo: state => state.user.currentLoginUser,
       issue: state => state.issue.issue,
       issueList: state => state.issue.issueList.data,
       result: state => state.issue.result,

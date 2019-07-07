@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
+      userInfo: state => state.user.currentLoginUser,
       evaluationList: state => state.evaluation.evaluationList.data,
       totalCount: state => {
         return state.evaluation.evaluationList.totalCount;
