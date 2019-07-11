@@ -481,3 +481,9 @@ export const reqGetIssue = issueId => ajax(BASE_URL + "/video/issues/" + issueId
  * 获取视频观看统计
  */
 export const reqVideoWatchingRecordStatistic = accountId => ajax(BASE_URL + "/videos/recordstatistic/" + accountId);
+
+/**
+ * 获取视频观看列表
+ */
+export const reqVideoRecordList = 
+(accountId, courseModuleId) => ajax(BASE_URL + "/videos/record/" + accountId+"/"+courseModuleId);

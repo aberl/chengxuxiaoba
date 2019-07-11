@@ -7,7 +7,8 @@ import {
   REQUEST_RECEIVE_VIDEOALLLIST,
   REQUEST_RECEIVE_VIDEODETAILS,
   REQUEST_MODIFY_VIDEO,
-  REQUEST_RECEIVE_RECORDSTATISTIC
+  REQUEST_RECEIVE_RECORDSTATISTIC,
+  REQUEST_RECEIVE_VIDEORECORDLIST
 } from "../mutation-types.js";
 
 import {
@@ -17,7 +18,8 @@ import {
   reqGetCourseModuleDetails,
   reqModifyVideo,
   reqIncreaseVideoWatchRecord,
-  reqVideoWatchingRecordStatistic
+  reqVideoWatchingRecordStatistic,
+  reqVideoRecordList
 } from "../../api";
 
 const state = {
@@ -25,7 +27,8 @@ const state = {
   videoDetail: { video: [] },
   videoList: { currentNum: 1, data: [], totalCount: 0 },
   result: {},
-  recordStatistic:[]
+  recordStatistic:[],
+  videoRecordList: []
 };
 
 const actions = {
@@ -91,11 +94,19 @@ const actions = {
       commit(REQUEST_RECEIVE_VIDEOALLLIST, { videoList: result.data });
     }
   },
-  async getrRecordStatistic({ commit }, watchAccountId) {
+  async getRecordStatistic({ commit }, watchAccountId) {
     const result = await reqVideoWatchingRecordStatistic(watchAccountId);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_RECORDSTATISTIC, {
         statistic: result.data
+      });
+    }
+  },
+  async getVideoRecordList({ commit }, {accountId, courseModuleId}) {
+    const result = await reqVideoRecordList(accountId, courseModuleId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_VIDEORECORDLIST, {
+        recordList: result.data
       });
     }
   }
@@ -148,6 +159,9 @@ const mutations = {
   },
   [REQUEST_RECEIVE_RECORDSTATISTIC](state, { statistic }) {
     state.recordStatistic = statistic;
+  },
+  [REQUEST_RECEIVE_VIDEORECORDLIST](state, { recordList }) {
+    state.videoRecordList = recordList;
   }
 };
 
