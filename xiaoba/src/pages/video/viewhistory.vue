@@ -12,45 +12,27 @@
           @change="spread(record.courseModuleId)"
           v-for="record in this.videoWatchingRecord"
           :key="record.courseModuleId"
+          v-model="courseModuleId"
         >
           <el-collapse-item
+            :name="record.courseModuleId"
             :title="record.courseModuleName + ' (' +record.videoStatisticCount+'/'+record.totalcourseModuleVideoCount+')'"
           >
             <div
               class="media text-muted pt-3"
-              v-for="video in this.videoRecordList"
-              :key="video.id"
               @click="watchCourseVideo(video.id)"
+              v-for="video in videoRecordList"
+              :key="video.id"
             >
               <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                 <strong class="d-block text-gray-dark">{{video.name}}</strong>
-                {{video.description}}
-              </p>
-            </div>
-
-            <div class="media text-muted pt-3" @click="watchCourseVideo(1)">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">Hello JAVA</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-            </div>
-            <div class="media text-muted pt-3" @click="watchCourseVideo(1)">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">Hello JAVA</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-            </div>
-            <div class="media text-muted pt-3" @click="watchCourseVideo(1)">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">Hello JAVA</strong>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                {{video.description.length>110?(video.description.substr(0, 110) + "..."):video.description}}
               </p>
             </div>
           </el-collapse-item>
         </el-collapse>
       </div>
     </div>
-    {{videoWatchingRecord}}||{{videoRecordList}}
     <footerGuide/>
   </div>
 </template>
@@ -64,6 +46,11 @@ import { mapState, mapActions } from "vuex";
 export default {
   mounted() {
     this.getRecordStatistic(this.userInfo.id);
+  },
+  data() {
+    return {
+      courseModuleId: -1
+    };
   },
   computed: mapState({
     userInfo: state => state.user.currentLoginUser,
@@ -80,8 +67,8 @@ export default {
         });
       }
     },
-    watchCourseVideo(id) {
-      this.$router.replace("/coursevideo");
+    watchCourseVideo(videoId) {
+      this.$router.replace("/coursevideo?id="+videoId);
     }
   },
   components: {

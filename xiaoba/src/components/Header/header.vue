@@ -33,7 +33,7 @@
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">{{userInfo.name}}</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="#" @click="goTo('/viewhistory')">学习的课程</a>
-            <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a>
+            <!-- <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a> -->
             <a class="dropdown-item" href="#" @click="goTo('/ownerquestionlist')">个人提问</a>
             <a class="dropdown-item" href="#" @click="goTo('/resource')">资料下载</a>
             <a class="dropdown-item" href="#" @click="goTo('/userinfo')">个人信息</a>
