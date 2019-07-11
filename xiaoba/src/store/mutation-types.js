@@ -17,6 +17,7 @@ export const REQUEST_RECEIVE_COURSEDETAILS = 'request_receive_coursedetails'
 export const REQUEST_ADD_COURSEDETAILS = 'request_add_coursedetails'
 export const REQUEST_MODIFY_COURSEDETAILS = 'request_modify_coursedetails'
 export const REQUEST_RECEIVE_COURSEMODULEDETAILS = 'request_receive_coursemoduledetails'
+export const REQUEST_RECEIVE_RECORDSTATISTIC = 'request_receive_recordstatistic'
 
 export const REQUEST_ADD_COURSEMODULE = 'request_add_coursemodule'
 export const REQUEST_RECEIVE_COURSEMODULEALLLIST = 'request_receive_coursemodulealllist'

@@ -6,7 +6,8 @@ import {
   REQUEST_ADD_VIDEO,
   REQUEST_RECEIVE_VIDEOALLLIST,
   REQUEST_RECEIVE_VIDEODETAILS,
-  REQUEST_MODIFY_VIDEO
+  REQUEST_MODIFY_VIDEO,
+  REQUEST_RECEIVE_RECORDSTATISTIC
 } from "../mutation-types.js";
 
 import {
@@ -15,14 +16,16 @@ import {
   reqGetVideo,
   reqGetCourseModuleDetails,
   reqModifyVideo,
-  reqIncreaseVideoWatchRecord
+  reqIncreaseVideoWatchRecord,
+  reqVideoWatchingRecordStatistic
 } from "../../api";
 
 const state = {
   videoCourseModule: {},
   videoDetail: { video: [] },
   videoList: { currentNum: 1, data: [], totalCount: 0 },
-  result: {}
+  result: {},
+  recordStatistic:[]
 };
 
 const actions = {
@@ -87,6 +90,14 @@ const actions = {
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_VIDEOALLLIST, { videoList: result.data });
     }
+  },
+  async getrRecordStatistic({ commit }, watchAccountId) {
+    const result = await reqVideoWatchingRecordStatistic(watchAccountId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_RECORDSTATISTIC, {
+        statistic: result.data
+      });
+    }
   }
 };
 
@@ -134,6 +145,9 @@ const mutations = {
   },
   [REQUEST_MODIFY_VIDEO](state, { video }) {
     state.result = video;
+  },
+  [REQUEST_RECEIVE_RECORDSTATISTIC](state, { statistic }) {
+    state.recordStatistic = statistic;
   }
 };
 
