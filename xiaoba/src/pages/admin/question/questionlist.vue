@@ -59,7 +59,7 @@ import { mapState, mapActions } from "vuex";
 export default {
   computed: {
     ...mapState({
-      userInfo: state => state.user.userInfo,
+      userInfo: state => state.user.currentLoginUser,
       issueList: state => {
         var _data = [];
         for (var index in state.issue.issueList.data) {

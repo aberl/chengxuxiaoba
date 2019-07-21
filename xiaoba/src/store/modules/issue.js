@@ -121,6 +121,7 @@ const mutations = {
           index: Number(index) + 1,
           id: _item.id,
           videoId: _item.videoId,
+          videoName: _item.videoName,
           name: _item.name,
           content: _item.content,
           status: _item.status,

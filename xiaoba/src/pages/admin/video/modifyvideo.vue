@@ -208,7 +208,8 @@ export default {
         }
       });
       if (!flag) return false;
-
+      
+      this.ruleForm.video=this.ruleForm.video[0].newname;
       await this.modifyVideo(this.ruleForm);
       if (eval(this.modifyResult.data)) {
         this.$router.replace("/op/videolist");

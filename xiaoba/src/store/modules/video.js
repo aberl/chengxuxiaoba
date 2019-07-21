@@ -59,7 +59,7 @@ const actions = {
     console.log(video);
     const result = await reqModifyVideo(
       video.id,
-      video.video.newname,
+      video.video,
       video.name,
       JSON.stringify(_attachments),
       video.duration,
