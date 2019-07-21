@@ -16,7 +16,7 @@
         >
           <el-collapse-item
             :name="record.courseModuleId"
-            :title="record.courseModuleName + ' (' +record.videoStatisticCount+'/'+record.totalcourseModuleVideoCount+')'"
+            :title="record.courseName+'-'+ record.courseModuleName + ' (' +record.videoStatisticCount+'/'+record.totalcourseModuleVideoCount+')'"
           >
             <div
               class="media text-muted pt-3"
