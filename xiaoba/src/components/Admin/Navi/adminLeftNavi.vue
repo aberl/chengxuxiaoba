@@ -64,6 +64,17 @@
             <el-menu-item index="/op/userlist">用户列表</el-menu-item>
           </el-submenu>
         </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">
+            <i class="el-icon-message"></i>
+            材料管理
+          </template>
+          <el-submenu index="3-1">
+            <template slot="title">下载材料</template>
+            <el-menu-item index="/op/user">材料修改</el-menu-item>
+            <el-menu-item index="/op/userlist">材料列表</el-menu-item>
+          </el-submenu>
+        </el-submenu>
       </el-menu>
     </el-col>
   </el-row>

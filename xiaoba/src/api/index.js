@@ -81,15 +81,11 @@ export const reResetPassword = (mobilePhoneNo, validationCode, password) =>
 
 /**
  *  更新用户角色
- * @param {*} userId 
- * @param {*} roleIdArray 
+ * @param {*} userId
+ * @param {*} roleIdArray
  */
 export const reqUpdateUserRoleRelationship = (userId, roleId) =>
-ajax(
-  BASE_URL + "/users/updaterole",
-  { "id":userId,"role":roleId },
-  "PUT"
-);
+  ajax(BASE_URL + "/users/updaterole", { id: userId, role: roleId }, "PUT");
 
 /**
  * 获取角色集合
@@ -99,12 +95,13 @@ export const reqGetRoleList = () => ajax(BASE_URL + "/role/roles");
 /**
  * 获取角色
  */
-export const reqGetRole = (id) => ajax(BASE_URL + "/role/"+id);
+export const reqGetRole = id => ajax(BASE_URL + "/role/" + id);
 
 /**
  * 获取角色支付列表
  */
-export const reqGetRolePaymentList = (id) => ajax(BASE_URL + "/role/"+id+"/rolepaymentlist");
+export const reqGetRolePaymentList = id =>
+  ajax(BASE_URL + "/role/" + id + "/rolepaymentlist");
 
 /**
  * 上传文件
@@ -330,13 +327,13 @@ export const reqAddEvaluate = (videoId, content, stars, accountId) =>
     { videoId, content, stars, accountId },
     "POST"
   );
-  
+
 /**
  * 删除评论
  * @param {*} filename
  */
 export const reqRemoveEvaluate = evaluateId =>
-ajax(BASE_URL + "/videos/evaluate/" + evaluateId, null, "DELETE");
+  ajax(BASE_URL + "/videos/evaluate/" + evaluateId, null, "DELETE");
 
 /**
  * 获取评论列表
@@ -378,26 +375,30 @@ export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
       pageSize
   );
 
-  /**
+/**
  * 获取有效的评论列表
  * @param {*} videoId
  * @param {*} pageNum
  * @param {*} pageSize
  * @param {*} sort
  */
-export const reqGetEffectiveEvaluatesList = (videoId, pageNum, pageSize, sort) =>
-ajax(
-  BASE_URL +
-    "/videos/" +
-    videoId +
-    "/evaluates/effective?pagenum=" +
-    pageNum +
-    "&sort=" +
-    sort +
-    "&pagesize=" +
-    pageSize
-);
-
+export const reqGetEffectiveEvaluatesList = (
+  videoId,
+  pageNum,
+  pageSize,
+  sort
+) =>
+  ajax(
+    BASE_URL +
+      "/videos/" +
+      videoId +
+      "/evaluates/effective?pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
 
 /**
  * 创建问题
@@ -462,28 +463,67 @@ export const reqGetUserAllIssueList = (userId, pageNum, pageSize, sort) =>
 export const reqAnswerIssue = (issueId, content, answererId) =>
   ajax(BASE_URL + "/answer", { issueId, content, answererId }, "POST");
 
-  /**
-   * 获取问题回答列表
-   * @param {*} issueId 
-   */
+/**
+ * 获取问题回答列表
+ * @param {*} issueId
+ */
 export const reqGetAllAnswerList = issueId =>
   ajax(BASE_URL + "/issues/" + issueId + "/answers");
 
-
-  
 /**
  * 获取问题
  */
-export const reqGetIssue = issueId => ajax(BASE_URL + "/video/issues/" + issueId);
-
+export const reqGetIssue = issueId =>
+  ajax(BASE_URL + "/video/issues/" + issueId);
 
 /**
  * 获取视频观看统计
  */
-export const reqVideoWatchingRecordStatistic = accountId => ajax(BASE_URL + "/videos/recordstatistic/" + accountId);
+export const reqVideoWatchingRecordStatistic = accountId =>
+  ajax(BASE_URL + "/videos/recordstatistic/" + accountId);
 
 /**
  * 获取视频观看列表
  */
-export const reqVideoRecordList = 
-(accountId, courseModuleId) => ajax(BASE_URL + "/videos/record/" + accountId+"/"+courseModuleId);
+export const reqVideoRecordList = (accountId, courseModuleId) =>
+  ajax(BASE_URL + "/videos/record/" + accountId + "/" + courseModuleId);
+
+/**
+ * 创建下载材料
+ * @param {*} name
+ * @param {*} description
+ */
+export const reqAddMaterial = (name, description) =>
+  ajax(BASE_URL + "/material", { name, description }, "POST");
+
+/**
+ * 更新下载材料
+ * @param {*} id
+ * @param {*} name
+ * @param {*} description
+ */
+export const reqModifyMaterial = (id, name, description) =>
+  ajax(BASE_URL + "/material", { id, name, description }, "PUT");
+
+/**
+ * 获取下载材料
+ * @param {*} id
+ */
+export const reqGetMaterial = id => ajax(BASE_URL + "/material/" + id);
+
+/**
+ * 获取所有下载材料
+ */
+export const reqGetAllMaterialList = () => ajax(BASE_URL + "/material/all");
+
+/**
+ * 获取所有有效下载材料
+ */
+export const reqGetEffectiveMaterialList = () =>
+  ajax(BASE_URL + "/material/effective");
+
+/**
+ * 注销下载材料
+ */
+export const reqInactiveMaterial = id =>
+  ajax(BASE_URL + "/material/inactive", { id }, "PUT");
