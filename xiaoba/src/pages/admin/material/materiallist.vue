@@ -14,7 +14,6 @@
         </template>
       </el-table-column>
     </el-table>
-    {{tableData}}
   </div>
 </template>
 
