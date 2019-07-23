@@ -69,6 +69,14 @@ const mutations = {
     state.result = result;
   },
   [REQUEST_RECEIVE_MATERIAL](state, { material }) {
+    let _material = [
+        {
+          name: material.fileDetail.originName,
+          newname: material.fileDetail.name,
+          url: material.fileDetail.url
+        }
+      ];
+      material.file=_material;
     state.material = material;
   },
   [REQUEST_RECEIVE_MATERIALLIST](state, { materialList }) {
