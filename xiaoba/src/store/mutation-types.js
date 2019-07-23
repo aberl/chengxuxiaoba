@@ -45,6 +45,11 @@ export const REQUEST_RECEIVE_ISSUEALLLIST = 'request_receive_issuealllist'
 export const REQUEST_ANSWER_ISSUE = 'request_answer_issue'
 export const REQUEST_RECEIVE_ANSWERALLLIST = 'request_receive_answeralllist'
 
+export const REQUEST_ADD_MATERIAL = 'request_add_material'
+export const REQUEST_MODIFY_MATERIAL = 'request_modify_material'
+export const REQUEST_RECEIVE_MATERIAL = 'request_receive_material'
+export const REQUEST_RECEIVE_MATERIALLIST = 'request_receive_materiallist'
+
 export default {
   REQUEST_RECEIVE_USERALLLIST,
   REQUEST_RECEIVE_USERINFO,
@@ -77,5 +82,9 @@ export default {
   REQUEST_RECEIVE_ISSUEDETAILS,
   REQUEST_RECEIVE_ISSUEALLLIST,
   REQUEST_ANSWER_ISSUE,
-  REQUEST_RECEIVE_ANSWERALLLIST
+  REQUEST_RECEIVE_ANSWERALLLIST,
+  REQUEST_ADD_MATERIAL,
+  REQUEST_MODIFY_MATERIAL,
+  REQUEST_RECEIVE_MATERIAL,
+  REQUEST_RECEIVE_MATERIALLIST
 }

@@ -493,8 +493,8 @@ export const reqVideoRecordList = (accountId, courseModuleId) =>
  * @param {*} name
  * @param {*} description
  */
-export const reqAddMaterial = (name, description) =>
-  ajax(BASE_URL + "/material", { name, description }, "POST");
+export const reqAddMaterial = (name, file, description) =>
+  ajax(BASE_URL + "/material", { name, file, description }, "POST");
 
 /**
  * 更新下载材料
@@ -502,8 +502,8 @@ export const reqAddMaterial = (name, description) =>
  * @param {*} name
  * @param {*} description
  */
-export const reqModifyMaterial = (id, name, description) =>
-  ajax(BASE_URL + "/material", { id, name, description }, "PUT");
+export const reqModifyMaterial = (id, name, file, description) =>
+  ajax(BASE_URL + "/material", { id, name, file, description }, "PUT");
 
 /**
  * 获取下载材料

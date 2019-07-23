@@ -31,6 +31,10 @@ import Admin_questionlist from "../pages/admin/question/questionlist.vue";
 import Admin_userlist from "../pages/admin/user/userlist.vue";
 import Admin_user from "../pages/admin/user/user.vue";
 
+import Admin_addmaterial from "../pages/admin/material/addmaterial.vue";
+import Admin_modifymaterial from "../pages/admin/material/modifymaterial.vue";
+import Admin_materiallist from "../pages/admin/material/materiallist.vue";
+
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -109,6 +113,21 @@ export default new VueRouter({
           path: "/op/questionlist",
           name: "questionlist",
           component: Admin_questionlist
+        },
+        {
+          path: "/op/addmaterial",
+          name: "addmaterial",
+          component: Admin_addmaterial
+        },
+        {
+          path: "/op/modifymaterial",
+          name: "modifymaterial",
+          component: Admin_modifymaterial
+        },
+        {
+          path: "/op/materiallist",
+          name: "materiallist",
+          component: Admin_materiallist
         }
       ]
     },

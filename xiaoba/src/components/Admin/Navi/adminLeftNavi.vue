@@ -71,8 +71,9 @@
           </template>
           <el-submenu index="3-1">
             <template slot="title">下载材料</template>
-            <el-menu-item index="/op/user">材料修改</el-menu-item>
-            <el-menu-item index="/op/userlist">材料列表</el-menu-item>
+            <el-menu-item index="/op/addmaterial">新增修改</el-menu-item>
+            <el-menu-item index="/op/modifymaterial">材料修改</el-menu-item>
+            <el-menu-item index="/op/materiallist">材料列表</el-menu-item>
           </el-submenu>
         </el-submenu>
       </el-menu>
