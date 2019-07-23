@@ -44,19 +44,19 @@ const actions = {
   async getMaterial({ commit }, materialId) {
     const result = await reqGetMaterial(materialId);
     if (result.code == 0) {
-      commit(REQUEST_RECEIVE_MATERIAL, { result: result.data });
+      commit(REQUEST_RECEIVE_MATERIAL, { material: result.data });
     }
   },
   async getMaterialAllList({ commit }) {
     const result = await reqGetAllMaterialList();
     if (result.code == 0) {
-      commit(REQUEST_RECEIVE_MATERIALLIST, { result: result.data });
+      commit(REQUEST_RECEIVE_MATERIALLIST, { materialList: result.data });
     }
   },
   async getMaterialEffectiveList({ commit }) {
     const result = await reqGetEffectiveMaterialList();
     if (result.code == 0) {
-      commit(REQUEST_RECEIVE_MATERIALLIST, { result: result.data });
+      commit(REQUEST_RECEIVE_MATERIALLIST, { materialList: result.data });
     }
   }
 };

@@ -1,20 +1,20 @@
 <template>
   <div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="createdatetime" label="创建日期"></el-table-column>
-      <el-table-column fixed prop="courseName" label="所属课程"></el-table-column>
-      <el-table-column fixed prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="材料名称"></el-table-column>
+      <el-table-column prop="createdatetime" label="上传时间"></el-table-column>
       <el-table-column prop="status" label="状态"></el-table-column>
       <el-table-column fixed="right" label="操作">
         <template slot-scope="scope">
           <el-button
-            @click="goToDetail('/op/modifycoursemodule', tableData[scope.$index].id)"
+            @click="goToDetail('/op/modifymaterial', tableData[scope.$index].id)"
             type="text"
             size="small"
           >编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
+    {{tableData}}
   </div>
 </template>
 
@@ -23,19 +23,18 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   mounted() {
-    this.getAllCourseModuleList(-1);
+    this.getMaterialAllList();
   },
   computed: {
     ...mapState({
       tableData: state => {
         var _data = [];
-        for (var index in state.course.courseModuleList) {
+        for (var index in state.material.materialList) {
           _data.push({
-            id:state.course.courseModuleList[index].id,
-            name: state.course.courseModuleList[index].name,
-            courseName: state.course.courseModuleList[index].courseName,
-            createdatetime: state.course.courseModuleList[index].createDateTime,
-            status: state.course.courseModuleList[index].statusDesc
+            id:state.material.materialList[index].id,
+            name: state.material.materialList[index].name,
+            createdatetime: state.material.materialList[index].createDateTime,
+            status: state.material.materialList[index].statusDesc
           });
         }
         return _data;
@@ -43,7 +42,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getAllCourseModuleList"]),
+    ...mapActions(["getMaterialAllList"]),
     goToDetail(path, id) {
       console.log(id)
       this.$router.replace({ path: path, query: { id: id } });
