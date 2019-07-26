@@ -81,7 +81,6 @@
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
     </el-form-item>
-    {{ruleForm}}
   </el-form>
 </template>
 

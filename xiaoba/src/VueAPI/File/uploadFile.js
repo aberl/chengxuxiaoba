@@ -62,7 +62,6 @@ export function removeFile(file, fileList)
 {
   var _removeIndex=getIndex(file, fileList);
 
-  console.log(_removeIndex)
   if (_removeIndex != -1) {
     var newname=fileList[_removeIndex].newname;
     const result = reqRemoveUploadFile(newname);

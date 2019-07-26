@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     download(url) {
-      window.open('http://localhost:7080/chengxuxiaoba/VIDEO_ATTACHMENTS/08836f45-b53e-47e4-b613-62e30a3dc061.txt', "_blank");
+      window.open(url, "_blank");
     }
   }
 };

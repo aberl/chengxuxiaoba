@@ -502,8 +502,8 @@ export const reqAddMaterial = (name, file, description) =>
  * @param {*} name
  * @param {*} description
  */
-export const reqModifyMaterial = (id, name, file, description) =>
-  ajax(BASE_URL + "/material", { id, name, file, description }, "PUT");
+export const reqModifyMaterial = (id, name, file, description,status) =>
+  ajax(BASE_URL + "/material", { id, name, file, description,status }, "PUT");
 
 /**
  * 获取下载材料

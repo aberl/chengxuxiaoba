@@ -21,7 +21,7 @@
         :http-request="httprequest"
         :file-list="ruleForm.file"
         list-type="picture"
-        accept=".png, .jpg"
+        accept="*"
       >
         <el-button size="small" type="primary">点击上传</el-button>
       </el-upload>
@@ -29,11 +29,15 @@
     <el-form-item label="描述" prop="description">
       <el-input type="textarea" v-model="ruleForm.description"></el-input>
     </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
+    <el-form-item label="状态">
+      <el-radio-group v-model="ruleForm.status">
+        <el-radio class="radio" label="1">激活</el-radio>
+        <el-radio class="radio" label="-1">注销</el-radio>
+      </el-radio-group>
     </el-form-item>
-    {{ruleForm}}
+    <el-form-item>
+      <el-button type="primary" @click="submitForm('ruleForm')">立即更新</el-button>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -66,7 +70,9 @@ export default {
           { required: true, message: "请输入材料名称", trigger: "blur" },
           { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
-        description: [{ required: true, message: "请填写描述", trigger: "blur" }],
+        description: [
+          { required: true, message: "请填写描述", trigger: "blur" }
+        ],
         file: [
           {
             required: true,
@@ -78,9 +84,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getMaterial","modifyMaterial"]),
+    ...mapActions(["getMaterial", "modifyMaterial"]),
     beforeUpload(file) {
-      if (this.ruleForm.file) {
+      if (this.ruleForm.file && this.ruleForm.file.length > 0) {
         this.$message.error("材料已上传，请删除后再上传");
         return false;
       }
@@ -91,11 +97,11 @@ export default {
     async handleRemove(file, fileList) {
       if (file.status != "success") return false;
 
-      var fileList = [];
-      fileList.push(this.ruleForm.file);
+      var fileList = this.ruleForm.file;
       var result = await removeFile(file, fileList);
+
       if (result.code == 0) {
-        this.ruleForm.file = "";
+        this.ruleForm.file = [];
       }
     },
     handlePreview(file) {
@@ -104,10 +110,12 @@ export default {
     async httprequest(uploader) {
       const result = await uploadFile(uploader, "MATERIAL_DOWNLOAD");
       if (result.code == 0) {
-        this.ruleForm.file = {
-          name: uploader.file.name,
-          newname: result.data.name
-        };
+        this.ruleForm.file = [
+          {
+            name: uploader.file.name,
+            newname: result.data.name
+          }
+        ];
       }
     },
 
@@ -119,18 +127,12 @@ export default {
         }
       });
       if (!flag) return false;
-        
-      this.ruleForm.file=this.ruleForm.file.newname;
-      await this.addMaterial(this.ruleForm);
 
-      if (eval(this.addResult.data)) {
+      await this.modifyMaterial(this.ruleForm);
+
+      if (eval(this.modifyResult.data)) {
         this.$router.replace("/op/materiallist");
       }
-    },
-    resetForm(formName) {
-      this.ruleForm.name = "";
-      this.ruleForm.desc = "";
-      this.ruleForm.status = "1";
     }
   }
 };
