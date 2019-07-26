@@ -11,13 +11,8 @@
         <li>
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">课程</a>
           <div class="dropdown-menu">
-            <a
-              class="dropdown-item"
-              href="#"
-              v-for="course in courseList"
-              @click="goTo('/coursedetail?id='+course.id)"
-              :key="course.id"
-            >{{course.name}}</a>
+            <router-link v-for="course in courseList" :key="course.id" 
+            class="dropdown-item" :to="'/coursedetail?id='+course.id">{{course.name}}</router-link>
           </div>
         </li>
         <li>
@@ -32,11 +27,11 @@
         <li v-if="userInfo.name">
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">{{userInfo.name}}</a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" @click="goTo('/viewhistory')">学习的课程</a>
             <!-- <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a> -->
-            <a class="dropdown-item" href="#" @click="goTo('/ownerquestionlist')">个人提问</a>
-            <a class="dropdown-item" href="#" @click="goTo('/resource')">资料下载</a>
-            <a class="dropdown-item" href="#" @click="goTo('/userinfo')">个人信息</a>
+            <router-link class="dropdown-item" to="/viewhistory">学习的课程</router-link>
+            <router-link class="dropdown-item" to="/ownerquestionlist">个人提问</router-link>
+            <router-link class="dropdown-item" to="/resource">资料下载</router-link>
+            <router-link class="dropdown-item" to="/userinfo">个人信息</router-link>
             <a class="dropdown-item" href="#" @click="logout">退出</a>
           </div>
         </li>
