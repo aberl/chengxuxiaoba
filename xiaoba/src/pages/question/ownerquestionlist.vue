@@ -2,9 +2,10 @@
   <div>
     <headerTop />
     <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow">
+      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         个人提问&nbsp;&nbsp;
         <img src="./images/question64.png" />
+        <div style="margin: 20px 0;"></div>
 
         <el-collapse v-model="activeNames" v-for="issue in issueList" :key="issue.id">
           <el-collapse-item :name="issue.index">
@@ -127,6 +128,10 @@ export default {
 </script>
 
 <style>
+.title_font {
+  font-family: "微软雅黑";
+  font-size: 30px;
+}
 .item {
   margin-top: 10px;
   margin-right: 40px;

@@ -1,37 +1,26 @@
 <template>
   <div>
-    <headerTop/>
+    <headerTop />
     <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow">消息列表&nbsp;&nbsp;
-          <img src="./images/message64.png">
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">JAVA 课程更新啦</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">数据库课程更新啊</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">数据库课程更新啊</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
-        <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">数据库课程更新啊</strong>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-          </p>
-        </div>
+      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
+        消息列表&nbsp;&nbsp;
+        <img src="./images/message64.png" />
+        <div style="margin: 20px;"></div>
+        <el-row class="border-gray message">
+          <el-col :span="8" class="message">
+             系统消息
+          </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple-light">数据库课程更新啊</div>
+          </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple">2017-06-15 23:09:54</div>
+          </el-col>
+        </el-row>
       </div>
     </div>
-    <MPages/>
-    <footerGuide/>
+    <MPages />
+    <footerGuide />
   </div>
 </template>
 
@@ -55,4 +44,13 @@ export default {
 </script>
 
 <style>
+.title_font {
+  font-family: "微软雅黑";
+  font-size: 30px;
+}
+.message {
+  font-family: "Helvetica Neue";
+  font-size: 18px;
+  color: 909399, blod;
+}
 </style>

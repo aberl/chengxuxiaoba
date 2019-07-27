@@ -2,11 +2,10 @@
   <div>
     <headerTop/>
     <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow">
+      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         学习的课程&nbsp;&nbsp;
         <img src="./images/history64.png">
         <div style="margin: 20px 0;"></div>
-
         <el-collapse
           accordion
           @change="spread(record.courseModuleId)"
@@ -79,4 +78,8 @@ export default {
 </script>
 
 <style>
+.title_font {
+  font-family: "微软雅黑";
+  font-size: 30px;
+}
 </style>

@@ -2,9 +2,10 @@
   <div>
     <headerTop />
     <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow">
+      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         资料下载&nbsp;&nbsp;
         <img src="./images/resource64.png" />
+        <div style="margin: 20px 0;"></div>
         <el-collapse v-model="activeNames" v-for="resource in resourceList" :key="resource.id">
           <el-collapse-item :title="resource.name" :name="resource.index">
             <div>描述：{{resource.description}}</div>
@@ -54,4 +55,8 @@ export default {
 </script>
 
 <style>
+.title_font {
+  font-family: "微软雅黑";
+  font-size: 30px;
+}
 </style>
