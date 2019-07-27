@@ -16,13 +16,12 @@
           </div>
         </li>
         <li>
-          <a class="p-2 text-dark" href="#">小巴</a>
+          <router-link class="p-2 text-dark" to="/userinfo">小巴</router-link>
         </li>
-        <li @click="goTo('/messagelist')" v-if="userInfo.name">
-          <a class="p-2 text-dark" href="#">
-            消息
-            <span class="badge badge-danger">4</span>
-          </a>
+        <li v-if="userInfo.name">
+          <router-link class="p-2 text-dark" to="/messagelist">
+          小巴<span class="badge badge-danger">4</span>
+          </router-link>
         </li>
         <li v-if="userInfo.name">
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">{{userInfo.name}}</a>
