@@ -20,13 +20,12 @@
         </li>
         <li v-if="userInfo.name">
           <router-link class="p-2 text-dark" to="/messagelist">
-          小巴<span class="badge badge-danger">4</span>
+          消息<span class="badge badge-danger">4</span>
           </router-link>
         </li>
         <li v-if="userInfo.name">
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">{{userInfo.name}}</a>
           <div class="dropdown-menu">
-            <!-- <a class="dropdown-item" href="#" @click="goTo('/ownerevaluatelist')">个人评价</a> -->
             <router-link class="dropdown-item" to="/viewhistory">学习的课程</router-link>
             <router-link class="dropdown-item" to="/ownerquestionlist">个人提问</router-link>
             <router-link class="dropdown-item" to="/resource">资料下载</router-link>
