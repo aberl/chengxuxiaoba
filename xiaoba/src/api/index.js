@@ -502,8 +502,8 @@ export const reqAddMaterial = (name, file, description) =>
  * @param {*} name
  * @param {*} description
  */
-export const reqModifyMaterial = (id, name, file, description,status) =>
-  ajax(BASE_URL + "/material", { id, name, file, description,status }, "PUT");
+export const reqModifyMaterial = (id, name, file, description, status) =>
+  ajax(BASE_URL + "/material", { id, name, file, description, status }, "PUT");
 
 /**
  * 获取下载材料
@@ -527,3 +527,49 @@ export const reqGetEffectiveMaterialList = () =>
  */
 export const reqInactiveMaterial = id =>
   ajax(BASE_URL + "/material/inactive", { id }, "PUT");
+
+/**
+ * 获取用户消息列表
+ * @param {*} userId 
+ * @param {*} isRead 0:未读，1:已读
+ * @param {*} pageNum 
+ * @param {*} pageSize 
+ * @param {*} sort 
+ */
+export const reqGetAllMessageList = (
+  userId,
+  isRead,
+  pageNum,
+  pageSize,
+  sort
+) =>
+  ajax(
+    BASE_URL +
+      "/users/" +
+      userId +
+      "/messages?isread=" +
+      isRead +
+      "&pagenum=" +
+      pageNum +
+      "&sort=" +
+      sort +
+      "&pagesize=" +
+      pageSize
+  );
+
+/**
+ * 读消息（批量）
+ * @param {*} accountId 
+ * @param {*} messageIdList 
+ */
+export const reqReadMessage = (accountId, messageIdList) =>
+ajax(BASE_URL + "/messages", { accountId, messageIdList}, "PUT");
+
+
+/**
+ * 读删除消息（批量）
+ * @param {*} accountId 
+ * @param {*} messageIdList 
+ */
+export const reqDeleteMessage = (accountId, messageIdList) =>
+ajax(BASE_URL + "/messages", { accountId, messageIdList}, "DELETE");
