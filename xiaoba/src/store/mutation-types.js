@@ -52,8 +52,10 @@ export const REQUEST_RECEIVE_MATERIALLIST = 'request_receive_materiallist'
 
 export const REQUEST_RECEIVE_ALLMESSAGELIST = 'request_receive_allmessagelist'
 export const REQUEST_RECEIVE_UNREADMESSAGELIST = 'request_receive_unreadmessagelist'
+export const REQUEST_RECEIVE_READMESSAGELIST = 'request_receive_readmessagelist'
+export const REQUEST_RECEIVE_UNREADMESSAGECOUNT = 'request_receive_unreadmessagecount'
 export const REQUEST_READ_MESSAGE = 'request_read_message'
-export const REQUEST_DELETE_MESSAGE = 'REQUEST_delete_MESSAGE'
+export const REQUEST_DELETE_MESSAGE = 'request_delete_message'
 
 export default {
   REQUEST_RECEIVE_USERALLLIST,
@@ -94,6 +96,8 @@ export default {
   REQUEST_RECEIVE_MATERIALLIST,
   REQUEST_RECEIVE_ALLMESSAGELIST,
   REQUEST_RECEIVE_UNREADMESSAGELIST,
+  REQUEST_RECEIVE_READMESSAGELIST,
+  REQUEST_RECEIVE_UNREADMESSAGECOUNT,
   REQUEST_READ_MESSAGE,
   REQUEST_DELETE_MESSAGE
 }

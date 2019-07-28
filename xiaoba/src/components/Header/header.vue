@@ -20,7 +20,9 @@
         </li>
         <li v-if="userInfo.name">
           <router-link class="p-2 text-dark" to="/messagelist">
-          消息<span class="badge badge-danger">4</span>
+          消息<span class="badge badge-danger" v-if="unReadMessageCount > 0">
+            {{unReadMessageCount}}
+          </span>
           </router-link>
         </li>
         <li v-if="userInfo.name">
@@ -53,13 +55,15 @@ export default {
   mounted() {
     this.getCurrentLoginUserInfo();
     this.getAllEffectCourseList();
+    this.reqGetUnReadMessageCount(this.userInfo.id);
   },
   computed: mapState({
     courseList: state => state.course.courseList,
-    userInfo: state => state.user.currentLoginUser
+    userInfo: state => state.user.currentLoginUser,
+    unReadMessageCount: state => state.message.unReadMessageCount
   }),
   methods: {
-    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo"]),
+    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo","reqGetUnReadMessageCount"]),
     goTo(path) {
       this.$router.push(path);
     },

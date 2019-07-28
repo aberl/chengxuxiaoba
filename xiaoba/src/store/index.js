@@ -12,11 +12,12 @@ import video from './modules/video.js'
 import evaluation from './modules/evaluation.js'
 import issue from './modules/issue.js'
 import material from './modules/material.js'
+import message from './modules/message.js'
 
 export default new Vuex.Store({
 	getters,
 	actions,
 	modules:{
-		user,course,file,video,evaluation,issue,material
+		user,course,file,video,evaluation,issue,material,message
 	}
 });

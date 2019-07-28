@@ -5,6 +5,7 @@ import {
   REQUEST_RECEIVE_ALLMESSAGELIST,
   REQUEST_RECEIVE_UNREADMESSAGELIST,
   REQUEST_RECEIVE_READMESSAGELIST,
+  REQUEST_RECEIVE_UNREADMESSAGECOUNT,
   REQUEST_READ_MESSAGE,
   REQUEST_DELETE_MESSAGE
 } from "../mutation-types.js";
@@ -12,13 +13,14 @@ import {
 import {
   reqGetAllMessageList,
   reqReadMessage,
-  reqDeleteMessage
+  reqDeleteMessage,
+  reqGetUnReadMessageCount
 } from "../../api";
 
 const state = {
   message: {},
   messageList: { currentNum: 1, data: [], totalCount: 0 },
-  unReadMessageList: { currentNum: 1, data: [], totalCount: 0 },
+  unReadMessageCount:0,
   result: {}
 };
 
@@ -59,6 +61,12 @@ const actions = {
       commit(REQUEST_RECEIVE_READMESSAGELIST, { messageList: result.data });
     }
   },
+  async reqGetUnReadMessageCount({ commit }, userId) {
+    const result = await reqGetUnReadMessageCount(userId);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_UNREADMESSAGECOUNT, { unReadMessageCount: result.data });
+    }
+  },
   async readMessage({ commit }, {userId, messageIdList}) {
     const result = await reqReadMessage(
         userId,
@@ -67,6 +75,8 @@ const actions = {
     commit(REQUEST_READ_MESSAGE, { result: result });
   },
   async deleteMessage({ commit }, {userId, messageIdList}) {
+      console.log(userId);
+      console.log(messageIdList);
     const result = await reqDeleteMessage(
         userId,
         messageIdList
@@ -82,7 +92,7 @@ const mutations = {
     state.messageList.totalCount = messageList.totalCount;
     state.messageList.currentNum = messageList.currentNum;
   },
-  [REQUEST_RECEIVE_ALLMESSAGELIST](state, { messageList }) {
+  [REQUEST_RECEIVE_UNREADMESSAGELIST](state, { messageList }) {
     var _data=generateNewMessageList(messageList);
     state.messageList.data = _data;
     state.messageList.totalCount = messageList.totalCount;
@@ -93,6 +103,9 @@ const mutations = {
     state.messageList.data = _data;
     state.messageList.totalCount = messageList.totalCount;
     state.messageList.currentNum = messageList.currentNum;
+  },
+  [REQUEST_RECEIVE_UNREADMESSAGECOUNT](state, { unReadMessageCount }) {
+    state.unReadMessageCount = unReadMessageCount;
   },
   [REQUEST_READ_MESSAGE](state, { result }) {
     state.result = result;
@@ -114,6 +127,7 @@ function generateNewMessageList(messageList){
                 content: _item.content,
                 status: _item.status,
                 category: _item.category,
+                categoryDesc: _item.categoryDesc,
                 createDateTime: _item.createDateTime
             });
           }

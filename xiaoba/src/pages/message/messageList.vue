@@ -18,40 +18,84 @@
                 ></el-option>
               </el-select>
               <el-button type="info" plain>删除</el-button>
-              <el-button type="info" plain>清空消息</el-button>
+              <el-button type="info" plain @click="clearUpAllMessage">清空消息</el-button>
             </div>
           </el-col>
           <el-col :span="12">
             <div class="grid-content bg-purple"></div>
-            <el-button type="info" plain>只看已读</el-button>
-            <el-button type="info" plain>只看未读</el-button>
+            <el-button type="info" plain @click="filterMessageList(1)">只看已读</el-button>
+            <el-button type="info" plain @click="filterMessageList(-1)">只看未读</el-button>
           </el-col>
         </el-row>
         <el-divider></el-divider>
         <el-row class="border-gray message">
-          <el-col :span="8" class="message">系统消息</el-col>
+          <el-col :span="8" class="message">类型</el-col>
           <el-col :span="8">
-            <div class="grid-content bg-purple-light">数据库课程更新啊</div>
+            <div class="grid-content bg-purple-light">名称</div>
           </el-col>
           <el-col :span="8">
-            <div class="grid-content bg-purple">2017-06-15 23:09:54</div>
+            <div class="grid-content bg-purple">创建时间</div>
+          </el-col>
+        </el-row>
+
+        <el-row class="border-gray message" v-for="message in messageList" :key="message.id">
+          <el-col :span="8" class="message">{{message.categoryDesc}}</el-col>
+          <el-col :span="8">
+            <el-link @click="showMessageContent(message)" target="_blank">{{message.name}}</el-link>
+          </el-col>
+          <el-col :span="8">
+            <div class="grid-content bg-purple">{{message.createDateTime}}</div>
           </el-col>
         </el-row>
       </div>
     </div>
-    <MPages />
+    <el-row :gutter="20">
+      <el-col :span="12" :offset="8">
+        <div class="block">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pager.currentPageNum"
+            :page-sizes="pager.pagesizes"
+            :page-size="pager.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalCount"
+          ></el-pagination>
+        </div>
+      </el-col>
+    </el-row>
+    {{messageList}}||{{pager.pageSize}}||{{readMessageIdList}}||{{this.filteType}}
     <footerGuide />
+    <el-dialog title="消息内容" :visible.sync="centerDialogVisible" width="30%" center>
+      <span>{{messageContent}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
-import MPages from "../../components/Pages/Pages.vue";
 
 export default {
+  mounted() {
+    this.getMessageList();
+  },
   data() {
     return {
+      messageContent: "",
+      centerDialogVisible: false,
+      readMessageIdList: [],
+      //-1:未读，1：已读，0:全部
+      filteType: 0,
+      pager: {
+        currentPageNum: 1,
+        pagesizes: [20, 40, 60, 80, 100],
+        pageSize: 20
+      },
       options: [
         {
           value: "选项1",
@@ -65,15 +109,101 @@ export default {
       value: ""
     };
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.currentLoginUser,
+      userId: state => state.user.currentLoginUser.id,
+      messageList: state => state.message.messageList.data,
+      unReadMessageCount: state => state.message.unReadMessageCount,
+      result: state => state.message.result,
+      totalCount: state => {
+        return state.message.messageList.totalCount;
+      }
+    })
+  },
   methods: {
+    ...mapActions([
+      "getAllMessageList",
+      "getAllUnReadMessageList",
+      "getAllReadMessageList",
+      "readMessage",
+      "deleteMessage"
+    ]),
+    showMessageContent(message) {
+      this.messageContent = message.content;
+      this.centerDialogVisible = true;
+      var index = this.readMessageIdList.indexOf(message.id);
+
+      if (index >= 0) return;
+
+      this.readMessageIdList.push(message.id);
+      this.readMessage({
+        userId: this.userId,
+        messageIdList: this.readMessageIdList
+      });
+    },
+    filterMessageList(filteType) {
+      this.filteType = filteType;
+      this.getMessageList();
+    },
+    clearUpAllMessage() {
+      this.$confirm("您确定要清空所有消息吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.deleteMessage({
+            userId: this.userId,
+            messageIdList: null
+          });
+          this.$message({
+            type: "success",
+            message: "清空消息成功!"
+          });
+        })
+        .catch(() => {});
+    },
+    getMessageList() {
+      if (this.filteType == 0) {
+        this.getAllMessageList({
+          userId: this.userId,
+          pageNum: this.pager.currentPageNum,
+          pagesize: this.pager.pageSize
+        });
+      }
+      if (this.filteType == 1) {
+        this.getAllReadMessageList({
+          userId: this.userId,
+          pageNum: this.pager.currentPageNum,
+          pagesize: this.pager.pageSize
+        });
+      }
+      if (this.filteType == -1) {
+        this.getAllUnReadMessageList({
+          userId: this.userId,
+          pageNum: this.pager.currentPageNum,
+          pagesize: this.pager.pageSize
+        });
+      }
+    },
+
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getMessageList();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPageNum = val;
+      this.getMessageList();
+    },
     watchCourseVideo(id) {
       this.$router.replace("/coursevideo");
     }
   },
   components: {
     headerTop,
-    footerGuide,
-    MPages
+    footerGuide
   }
 };
 </script>
