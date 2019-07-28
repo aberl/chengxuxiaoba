@@ -6,17 +6,10 @@
         消息列表&nbsp;&nbsp;
         <img src="./images/message64.png" />
         <div style="margin: 20px;"></div>
+
         <el-row>
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              <el-select v-model="value" placeholder="请勾选">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
               <el-button type="info" plain>删除</el-button>
               <el-button type="info" plain @click="clearUpAllMessage">清空消息</el-button>
             </div>
@@ -29,28 +22,22 @@
           </el-col>
         </el-row>
         <el-divider></el-divider>
-        <el-row class="border-gray title_message">
-          <el-col :span="4">类型</el-col>
-          <el-col :span="10">
-            <div class="grid-content bg-purple-light">名称</div>
-          </el-col>
-          <el-col :span="10">
-            <div class="grid-content bg-purple">创建时间</div>
-          </el-col>
-        </el-row>
-
-        <el-row class="border-gray message" v-for="message in messageList" :key="message.id">
-          <el-col :span="4" class="message">
-            <el-checkbox v-bind="message.id" @change="selectedMessage"/>
-            &nbsp;{{message.categoryDesc}}
-          </el-col>
-          <el-col :span="10">
-            <el-link @click="showMessageContent(message)" target="_blank">{{message.name}}</el-link>
-          </el-col>
-          <el-col :span="10">
-            <div class="grid-content bg-purple">{{message.createDateTime}}</div>
-          </el-col>
-        </el-row>
+        <el-table
+          ref="multipleTable"
+          :data="messageList"
+          tooltip-effect="dark"
+          style="width: 100%"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column label="类型" width="350">
+            <template slot-scope="scope">{{ scope.row.categoryDesc }}</template>
+          </el-table-column>
+          <el-table-column prop="name" label="名称" width="350"></el-table-column>
+          <el-table-column prop="createDateTime" label="创建时间" @cell-click="showMessageContent(message)"  show-overflow-tooltip>
+            
+          </el-table-column>
+        </el-table>
       </div>
     </div>
     <el-row :gutter="20">
@@ -75,7 +62,7 @@
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
-    {{array}}
+    {{array}}||{{multipleSelection}}
   </div>
 </template>
 
@@ -90,7 +77,7 @@ export default {
   },
   data() {
     return {
-      array:[],
+      array: [],
       messageContent: "",
       centerDialogVisible: false,
       readMessageIdList: [],
@@ -100,18 +87,7 @@ export default {
         currentPageNum: 1,
         pagesizes: [20, 40, 60, 80, 100],
         pageSize: 20
-      },
-      options: [
-        {
-          value: "选项1",
-          label: "全选"
-        },
-        {
-          value: "选项2",
-          label: "全不选"
-        }
-      ],
-      value: ""
+      }
     };
   },
   computed: {
@@ -134,6 +110,18 @@ export default {
       "readMessage",
       "deleteMessage"
     ]),
+          toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
     selectedMessage(val) {
       alert(val);
     },
