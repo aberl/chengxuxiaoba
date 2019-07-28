@@ -27,16 +27,21 @@
           :data="messageList"
           tooltip-effect="dark"
           style="width: 100%"
-          @selection-change="handleSelectionChange"
+          @select="selectOne"
+          @select-all="selectAll"
+          @row-click="showMessageContent"
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column label="类型" width="350">
             <template slot-scope="scope">{{ scope.row.categoryDesc }}</template>
           </el-table-column>
           <el-table-column prop="name" label="名称" width="350"></el-table-column>
-          <el-table-column prop="createDateTime" label="创建时间" @cell-click="showMessageContent(message)"  show-overflow-tooltip>
-            
-          </el-table-column>
+          <el-table-column
+            prop="createDateTime"
+            label="创建时间"
+            @cell-click="showMessageContent(message)"
+            show-overflow-tooltip
+          ></el-table-column>
         </el-table>
       </div>
     </div>
@@ -62,7 +67,7 @@
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
-    {{array}}||{{multipleSelection}}
+    {{array}}
   </div>
 </template>
 
@@ -110,29 +115,30 @@ export default {
       "readMessage",
       "deleteMessage"
     ]),
-          toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
-    selectedMessage(val) {
-      alert(val);
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
     },
-    showMessageContent(message) {
-      this.messageContent = message.content;
+    selectAll(selection) {
+      alert(selection);
+    },
+    selectOne(selection, row) {
+      alert(selection);
+      alert(row);
+    },
+    showMessageContent(row) {
+      this.messageContent = row.content;
       this.centerDialogVisible = true;
-      var index = this.readMessageIdList.indexOf(message.id);
+      var index = this.readMessageIdList.indexOf(row.id);
 
       if (index >= 0) return;
 
-      this.readMessageIdList.push(message.id);
+      this.readMessageIdList.push(row.id);
       this.readMessage({
         userId: this.userId,
         messageIdList: this.readMessageIdList
