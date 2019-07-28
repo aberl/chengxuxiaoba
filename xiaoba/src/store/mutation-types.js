@@ -50,6 +50,11 @@ export const REQUEST_MODIFY_MATERIAL = 'request_modify_material'
 export const REQUEST_RECEIVE_MATERIAL = 'request_receive_material'
 export const REQUEST_RECEIVE_MATERIALLIST = 'request_receive_materiallist'
 
+export const REQUEST_RECEIVE_ALLMESSAGELIST = 'request_receive_allmessagelist'
+export const REQUEST_RECEIVE_UNREADMESSAGELIST = 'request_receive_unreadmessagelist'
+export const REQUEST_READ_MESSAGE = 'request_read_message'
+export const REQUEST_DELETE_MESSAGE = 'REQUEST_delete_MESSAGE'
+
 export default {
   REQUEST_RECEIVE_USERALLLIST,
   REQUEST_RECEIVE_USERINFO,
@@ -86,5 +91,9 @@ export default {
   REQUEST_ADD_MATERIAL,
   REQUEST_MODIFY_MATERIAL,
   REQUEST_RECEIVE_MATERIAL,
-  REQUEST_RECEIVE_MATERIALLIST
+  REQUEST_RECEIVE_MATERIALLIST,
+  REQUEST_RECEIVE_ALLMESSAGELIST,
+  REQUEST_RECEIVE_UNREADMESSAGELIST,
+  REQUEST_READ_MESSAGE,
+  REQUEST_DELETE_MESSAGE
 }
