@@ -22,28 +22,32 @@
             </div>
           </el-col>
           <el-col :span="12">
-            <div class="grid-content bg-purple"></div>
-            <el-button type="info" plain @click="filterMessageList(1)">只看已读</el-button>
-            <el-button type="info" plain @click="filterMessageList(-1)">只看未读</el-button>
+            <div class="grid-content bg-purple div-right">
+              <el-button type="info" plain @click="filterMessageList(1)">只看已读</el-button>
+              <el-button type="info" plain @click="filterMessageList(-1)">只看未读</el-button>
+            </div>
           </el-col>
         </el-row>
         <el-divider></el-divider>
-        <el-row class="border-gray message">
-          <el-col :span="8" class="message">类型</el-col>
-          <el-col :span="8">
+        <el-row class="border-gray title_message">
+          <el-col :span="4">类型</el-col>
+          <el-col :span="10">
             <div class="grid-content bg-purple-light">名称</div>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="10">
             <div class="grid-content bg-purple">创建时间</div>
           </el-col>
         </el-row>
 
         <el-row class="border-gray message" v-for="message in messageList" :key="message.id">
-          <el-col :span="8" class="message">{{message.categoryDesc}}</el-col>
-          <el-col :span="8">
+          <el-col :span="4" class="message">
+            <el-checkbox v-bind="message.id" @change="selectedMessage"/>
+            &nbsp;{{message.categoryDesc}}
+          </el-col>
+          <el-col :span="10">
             <el-link @click="showMessageContent(message)" target="_blank">{{message.name}}</el-link>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="10">
             <div class="grid-content bg-purple">{{message.createDateTime}}</div>
           </el-col>
         </el-row>
@@ -64,7 +68,6 @@
         </div>
       </el-col>
     </el-row>
-    {{messageList}}||{{pager.pageSize}}||{{readMessageIdList}}||{{this.filteType}}
     <footerGuide />
     <el-dialog title="消息内容" :visible.sync="centerDialogVisible" width="30%" center>
       <span>{{messageContent}}</span>
@@ -72,6 +75,7 @@
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+    {{array}}
   </div>
 </template>
 
@@ -86,6 +90,7 @@ export default {
   },
   data() {
     return {
+      array:[],
       messageContent: "",
       centerDialogVisible: false,
       readMessageIdList: [],
@@ -129,6 +134,9 @@ export default {
       "readMessage",
       "deleteMessage"
     ]),
+    selectedMessage(val) {
+      alert(val);
+    },
     showMessageContent(message) {
       this.messageContent = message.content;
       this.centerDialogVisible = true;
@@ -213,9 +221,19 @@ export default {
   font-family: "微软雅黑";
   font-size: 30px;
 }
-.message {
+.title_message {
+  text-align: center;
   font-family: "Helvetica Neue";
   font-size: 18px;
   color: 909399, blod;
+}
+.message {
+  text-align: center;
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  color: 909399, blod;
+}
+.div-right {
+  float: right;
 }
 </style>

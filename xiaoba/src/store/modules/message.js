@@ -75,8 +75,6 @@ const actions = {
     commit(REQUEST_READ_MESSAGE, { result: result });
   },
   async deleteMessage({ commit }, {userId, messageIdList}) {
-      console.log(userId);
-      console.log(messageIdList);
     const result = await reqDeleteMessage(
         userId,
         messageIdList

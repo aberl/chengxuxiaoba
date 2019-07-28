@@ -572,7 +572,7 @@ ajax(BASE_URL + "/messages", { accountId, messageIdList}, "PUT");
  * @param {*} messageIdList 
  */
 export const reqDeleteMessage = (accountId, messageIdList) =>
-ajax(BASE_URL + "/messages", { accountId:accountId, messageIdList:messageIdList}, "PUT");
+ajax(BASE_URL + "/messages", { accountId, messageIdList}, "DELETE");
 
 /**
  * 获取用户的未读消息数量

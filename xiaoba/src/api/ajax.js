@@ -27,7 +27,7 @@ export default function ajax(url = '', data = {}, type = 'GET', config) {
     }
     else if (type === 'DELETE') {
       // 发送post请求
-      promise = axios.delete(url)
+      promise = axios.delete(url, {data})
     }
     promise.then(response => {
       resolve(response.data)
