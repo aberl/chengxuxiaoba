@@ -16,7 +16,7 @@
           </div>
         </li>
         <li>
-          <router-link class="p-2 text-dark" to="/userinfo">小巴</router-link>
+          <router-link class="p-2 text-dark" to="/xiaoba">小巴</router-link>
         </li>
         <li v-if="userInfo.name">
           <router-link class="p-2 text-dark" to="/messagelist">

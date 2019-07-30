@@ -13,6 +13,7 @@ import Ownerquestionlist from "../pages/question/ownerquestionlist.vue";
 import Resource from "../pages/resource/resource.vue";
 import Forgetpwd from "../pages/login/forgetpwd.vue";
 import Userinfo from "../pages/user/userinfo.vue";
+import Xiaoba from "../pages/home/xiaoba.vue";
 
 import Admin_Mindex from "../pages/admin/adminIndex.vue";
 import Admin_courselist from "../pages/admin/course/courselist.vue";
@@ -140,6 +141,11 @@ export default new VueRouter({
       path: "/index",
       name: "index",
       component: Mindex
+    },
+    {
+      path: "/xiaoba",
+      name: "xiaoba",
+      component: Xiaoba
     },
     {
       path: "/",
