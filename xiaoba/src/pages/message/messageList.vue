@@ -10,7 +10,7 @@
         <el-row>
           <el-col :span="12">
             <div class="grid-content bg-purple">
-              <el-button type="info" plain>删除</el-button>
+              <el-button type="info" plain @click="removeSelectedMessage">删除</el-button>
               <el-button type="info" plain @click="clearUpAllMessage">清空消息</el-button>
             </div>
           </el-col>
@@ -60,6 +60,7 @@
         </div>
       </el-col>
     </el-row>
+    {{selectedMessageItems}}
     <footerGuide />
     <el-dialog title="消息内容" :visible.sync="centerDialogVisible" width="30%" center>
       <span>{{messageContent}}</span>
@@ -67,7 +68,6 @@
         <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
-    {{array}}
   </div>
 </template>
 
@@ -82,7 +82,8 @@ export default {
   },
   data() {
     return {
-      array: [],
+      //选中到message的id集合
+      selectedMessageItems: [],
       messageContent: "",
       centerDialogVisible: false,
       readMessageIdList: [],
@@ -90,8 +91,8 @@ export default {
       filteType: 0,
       pager: {
         currentPageNum: 1,
-        pagesizes: [20, 40, 60, 80, 100],
-        pageSize: 20
+        pagesizes: [2, 4, 6, 8, 10],
+        pageSize: 2
       }
     };
   },
@@ -107,6 +108,7 @@ export default {
       }
     })
   },
+  inject: ["reload"],
   methods: {
     ...mapActions([
       "getAllMessageList",
@@ -125,11 +127,26 @@ export default {
       }
     },
     selectAll(selection) {
-      alert(selection);
+      if (!selection || selection.length == 0) {
+        this.selectedMessageItems = [];
+        return;
+      }
+      var item = null;
+      var index = -1;
+      for (var _index in selection) {
+        item = selection[_index];
+        index = this.selectedMessageItems.indexOf(item.id);
+        if (index < 0) this.selectedMessageItems.push(item.id);
+      }
     },
     selectOne(selection, row) {
-      alert(selection);
-      alert(row);
+      var selectMessageId = row.id;
+      var index = this.selectedMessageItems.indexOf(selectMessageId);
+      if (index < 0) {
+        this.selectedMessageItems.push(selectMessageId);
+      } else {
+        this.selectedMessageItems.splice(index, 1);
+      }
     },
     showMessageContent(row) {
       this.messageContent = row.content;
@@ -148,6 +165,30 @@ export default {
       this.filteType = filteType;
       this.getMessageList();
     },
+    removeSelectedMessage() {
+      if (!this.selectedMessageItems || this.selectedMessageItems.length == 0) {
+        this.$message.error("请选择需要删除的消息");
+        return;
+      }
+
+      this.$confirm("您确定要删除选中的消息吗?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.deleteMessage({
+            userId: this.userId,
+            messageIdList: this.selectedMessageItems
+          });
+          this.$message({
+            type: "success",
+            message: "删除消息成功!"
+          });
+          this.reload();
+        })
+        .catch(() => {});
+    },
     clearUpAllMessage() {
       this.$confirm("您确定要清空所有消息吗?", "提示", {
         confirmButtonText: "确定",
@@ -163,10 +204,12 @@ export default {
             type: "success",
             message: "清空消息成功!"
           });
+          this.reload();
         })
         .catch(() => {});
     },
     getMessageList() {
+      this.selectedMessageItems = [];
       if (this.filteType == 0) {
         this.getAllMessageList({
           userId: this.userId,
