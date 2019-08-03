@@ -35,9 +35,7 @@ const state = {
 };
 
 const actions = {
-  async loginWithPhonePassword({ commit }, { mobilephone, password }) {
-
-  },
+  async loginWithPhonePassword({ commit }, { mobilephone, password }) {},
 
   async refreshCurrentUserInfo({ commit }) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -71,8 +69,7 @@ const actions = {
   async updateUserRoleRelationship({ commit }, { userId, roleId }) {
     const result = await reqUpdateUserRoleRelationship(userId, roleId);
     commit(REQUEST_UPDATE_USERINFO, { result });
-  }
-  ,
+  },
   async getuserlist({ commit }, { pageNum, pagesize, query }) {
     const result = await reqGetUserList(pageNum, pagesize, "-id", query);
     if (result.code == 0) {
@@ -80,7 +77,6 @@ const actions = {
     }
   },
   async getuserinfo({ commit }, id) {
-
     const result = await reqGetUserInfo(id);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_USERINFO, { userInfo: result.data });
@@ -131,18 +127,16 @@ const mutations = {
     state.currentLoginUser = userInfo;
   },
   [REQUEST_CONSERVE_USERINFO](state, { userInfo }) {
-    state.currentLoginUser =userInfo;
+    state.currentLoginUser = userInfo;
     localStorage.setItem("userInfo", JSON.stringify(userInfo));
   },
   [REQUEST_REMOVE_USERINFO](state) {
     state.currentLoginUser = {};
     localStorage.removeItem("userInfo");
-  }
-  ,
+  },
   [REQUEST_RECEIVE_ROLEPAYMENTLIST](state, { rolePaymentList }) {
     state.rolePaymentList = rolePaymentList;
   }
-
 };
 
 export default {

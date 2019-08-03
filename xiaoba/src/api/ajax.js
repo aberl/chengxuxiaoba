@@ -2,13 +2,26 @@ import axios from "axios";
 
 axios.interceptors.request.use(
   config => {
-    config.headers.AuthorizationToken = "xxxxxx";
+    var tokenStr = getAuthorizationToken();
+
+    config.headers.AuthorizationToken = tokenStr;
+    
     return config;
   },
   err => {
     return Promise.reject(err);
   }
 );
+
+function getAuthorizationToken()
+{
+  if(localStorage.getItem("userInfo") == null)
+  return;
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  return userInfo.token;
+}
 
 export default function ajax(url = "", data = {}, type = "GET", config) {
   return new Promise(function(resolve, reject) {
