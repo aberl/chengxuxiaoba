@@ -65,8 +65,7 @@ const actions = {
   async answerIssue({ commit }, answer) {
     const result = await reqAnswerIssue(
       answer.issueId,
-      answer.content,
-      answer.answererId
+      answer.content
     );
     commit(REQUEST_ANSWER_ISSUE, { result: result });
   },

@@ -122,8 +122,7 @@ export default {
     async submitAnswer() {
       await this.answerIssue({
         issueId: this.$route.query.id,
-        content: this.postForm.answer,
-        answererId: this.userInfo.id
+        content: this.postForm.answer
       });
 
       if (this.result.code != 0) {

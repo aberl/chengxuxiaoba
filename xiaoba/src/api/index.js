@@ -460,8 +460,8 @@ export const reqGetUserAllIssueList = (userId, pageNum, pageSize, sort) =>
  * @param {*} content
  * @param {*} answererId
  */
-export const reqAnswerIssue = (issueId, content, answererId) =>
-  ajax(BASE_URL + "/answer", { issueId, content, answererId }, "POST");
+export const reqAnswerIssue = (issueId, content) =>
+  ajax(BASE_URL + "/answer", { issueId, content }, "POST");
 
 /**
  * 获取问题回答列表

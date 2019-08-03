@@ -166,8 +166,7 @@ export default {
           console.log(id + "|!>" + value);
           await this.answerIssue({
             issueId: id,
-            content: value,
-            answererId: this.userInfo.id
+            content: value
           });
           if (this.result.code != 0) {
             this.$message.error(this.result.message);
