@@ -50,9 +50,8 @@ const actions = {
     }
   },
 
-  async getUserAllIssueList({ commit }, { userId, pageNum, pagesize }) {
+  async getUserAllIssueList({ commit }, { pageNum, pagesize }) {
     const result = await reqGetUserAllIssueList(
-      userId,
       pageNum,
       pagesize,
       "id"

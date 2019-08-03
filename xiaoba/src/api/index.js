@@ -362,11 +362,9 @@ export const reqGetAllEvaluatesList = (videoId, pageNum, pageSize, sort) =>
  * @param {*} pageSize
  * @param {*} sort
  */
-export const reqGetUserAllEvaluatesList = (userId, pageNum, pageSize, sort) =>
+export const reqGetUserAllEvaluatesList = (pageNum, pageSize, sort) =>
   ajax(
     BASE_URL +
-      "/users/" +
-      userId +
       "/evaluates?pagenum=" +
       pageNum +
       "&sort=" +
@@ -441,11 +439,9 @@ export const reqGetAllIssueList = (videoId, pageNum, pageSize, sort) =>
  * @param {*} pageSize
  * @param {*} sort
  */
-export const reqGetUserAllIssueList = (userId, pageNum, pageSize, sort) =>
+export const reqGetUserAllIssueList = (pageNum, pageSize, sort) =>
   ajax(
     BASE_URL +
-      "/users/" +
-      userId +
       "/issues?pagenum=" +
       pageNum +
       "&sort=" +

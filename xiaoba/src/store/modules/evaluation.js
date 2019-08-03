@@ -62,9 +62,8 @@ const actions = {
       });
     }
   },
-  async getAllUserEvaluationList({ commit }, { userId, pageNum, pagesize }) {
+  async getAllUserEvaluationList({ commit }, { pageNum, pagesize }) {
     const result = await reqGetUserAllEvaluatesList(
-      userId,
       pageNum,
       pagesize,
       "id"
