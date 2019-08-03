@@ -94,16 +94,16 @@ const actions = {
       commit(REQUEST_RECEIVE_VIDEOALLLIST, { videoList: result.data });
     }
   },
-  async getRecordStatistic({ commit }, watchAccountId) {
-    const result = await reqVideoWatchingRecordStatistic(watchAccountId);
+  async getRecordStatistic({ commit }) {
+    const result = await reqVideoWatchingRecordStatistic();
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_RECORDSTATISTIC, {
         statistic: result.data
       });
     }
   },
-  async getVideoRecordList({ commit }, {accountId, courseModuleId}) {
-    const result = await reqVideoRecordList(accountId, courseModuleId);
+  async getVideoRecordList({ commit }, {courseModuleId}) {
+    const result = await reqVideoRecordList(courseModuleId);
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_VIDEORECORDLIST, {
         recordList: result.data

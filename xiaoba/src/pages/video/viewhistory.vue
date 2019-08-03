@@ -44,7 +44,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   mounted() {
-    this.getRecordStatistic(this.userInfo.id);
+    this.getRecordStatistic();
   },
   data() {
     return {
@@ -61,7 +61,6 @@ export default {
     spread(courseModuleId) {
       if (courseModuleId) {
         this.getVideoRecordList({
-          accountId: this.userInfo.id,
           courseModuleId
         });
       }

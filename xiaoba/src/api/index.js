@@ -475,14 +475,14 @@ export const reqGetIssue = issueId =>
 /**
  * 获取视频观看统计
  */
-export const reqVideoWatchingRecordStatistic = accountId =>
-  ajax(BASE_URL + "/videos/recordstatistic/" + accountId);
+export const reqVideoWatchingRecordStatistic = () =>
+  ajax(BASE_URL + "/videos/recordstatistic");
 
 /**
  * 获取视频观看列表
  */
-export const reqVideoRecordList = (accountId, courseModuleId) =>
-  ajax(BASE_URL + "/videos/record/" + accountId + "/" + courseModuleId);
+export const reqVideoRecordList = (courseModuleId) =>
+  ajax(BASE_URL + "/videos/record/" + courseModuleId);
 
 /**
  * 创建下载材料
