@@ -407,10 +407,10 @@ export const reqGetEffectiveEvaluatesList = (
  * @param {*} content
  * @param {*} questionerId
  */
-export const reqAddIssues = (videoId, name, content, questionerId) =>
+export const reqAddIssues = (videoId, name, content) =>
   ajax(
     BASE_URL + "/videos/issues",
-    { videoId, name, content, questionerId },
+    { videoId, name, content },
     "POST"
   );
 

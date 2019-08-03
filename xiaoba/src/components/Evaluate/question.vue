@@ -138,8 +138,7 @@ export default {
       await this.addIssue({
         videoId: this.$route.query.id,
         name: this.postForm.name,
-        content: this.postForm.issue,
-        questionerId: this.userInfo.id
+        content: this.postForm.issue
       });
 
       if (this.result.code != 0) {

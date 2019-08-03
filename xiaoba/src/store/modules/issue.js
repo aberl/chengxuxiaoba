@@ -31,8 +31,7 @@ const actions = {
     const result = await reqAddIssues(
       issue.videoId,
       issue.name,
-      issue.content,
-      issue.questionerId
+      issue.content
     );
     commit(REQUEST_ADD_ISSUE, { result: result });
   },
