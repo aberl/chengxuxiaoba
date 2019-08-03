@@ -91,8 +91,8 @@ export default {
       filteType: 0,
       pager: {
         currentPageNum: 1,
-        pagesizes: [2, 4, 6, 8, 10],
-        pageSize: 2
+        pagesizes: [20, 40, 60, 80, 100],
+        pageSize: 20
       }
     };
   },
@@ -157,7 +157,6 @@ export default {
 
       this.readMessageIdList.push(row.id);
       this.readMessage({
-        userId: this.userId,
         messageIdList: this.readMessageIdList
       });
     },
@@ -178,7 +177,6 @@ export default {
       })
         .then(() => {
           this.deleteMessage({
-            userId: this.userId,
             messageIdList: this.selectedMessageItems
           });
           this.$message({
@@ -197,7 +195,6 @@ export default {
       })
         .then(() => {
           this.deleteMessage({
-            userId: this.userId,
             messageIdList: null
           });
           this.$message({
@@ -212,21 +209,18 @@ export default {
       this.selectedMessageItems = [];
       if (this.filteType == 0) {
         this.getAllMessageList({
-          userId: this.userId,
           pageNum: this.pager.currentPageNum,
           pagesize: this.pager.pageSize
         });
       }
       if (this.filteType == 1) {
         this.getAllReadMessageList({
-          userId: this.userId,
           pageNum: this.pager.currentPageNum,
           pagesize: this.pager.pageSize
         });
       }
       if (this.filteType == -1) {
         this.getAllUnReadMessageList({
-          userId: this.userId,
           pageNum: this.pager.currentPageNum,
           pagesize: this.pager.pageSize
         });

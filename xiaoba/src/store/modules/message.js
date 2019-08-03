@@ -25,9 +25,8 @@ const state = {
 };
 
 const actions = {
-  async getAllMessageList({ commit }, { userId, pageNum, pagesize }) {
+  async getAllMessageList({ commit }, {pageNum, pagesize }) {
     const result = await reqGetAllMessageList(
-      userId,
       "",
       pageNum,
       pagesize,
@@ -37,9 +36,8 @@ const actions = {
       commit(REQUEST_RECEIVE_ALLMESSAGELIST, { messageList: result.data });
     }
   },
-  async getAllUnReadMessageList({ commit }, { userId, pageNum, pagesize }) {
+  async getAllUnReadMessageList({ commit }, {pageNum, pagesize }) {
     const result = await reqGetAllMessageList(
-      userId,
       0,
       pageNum,
       pagesize,
@@ -49,9 +47,8 @@ const actions = {
       commit(REQUEST_RECEIVE_UNREADMESSAGELIST, { messageList: result.data });
     }
   },
-  async getAllReadMessageList({ commit }, { userId, pageNum, pagesize }) {
+  async getAllReadMessageList({ commit }, {pageNum, pagesize }) {
     const result = await reqGetAllMessageList(
-      userId,
       1,
       pageNum,
       pagesize,
@@ -61,22 +58,20 @@ const actions = {
       commit(REQUEST_RECEIVE_READMESSAGELIST, { messageList: result.data });
     }
   },
-  async reqGetUnReadMessageCount({ commit }, userId) {
-    const result = await reqGetUnReadMessageCount(userId);
+  async getUnReadMessageCount({ commit }) {
+    const result = await reqGetUnReadMessageCount();
     if (result.code == 0) {
       commit(REQUEST_RECEIVE_UNREADMESSAGECOUNT, { unReadMessageCount: result.data });
     }
   },
-  async readMessage({ commit }, {userId, messageIdList}) {
+  async readMessage({ commit }, {messageIdList}) {
     const result = await reqReadMessage(
-        userId,
         messageIdList
     );
     commit(REQUEST_READ_MESSAGE, { result: result });
   },
-  async deleteMessage({ commit }, {userId, messageIdList}) {
+  async deleteMessage({ commit }, {messageIdList}) {
     const result = await reqDeleteMessage(
-        userId,
         messageIdList
     );
     commit(REQUEST_DELETE_MESSAGE, { result: result });

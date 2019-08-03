@@ -533,7 +533,6 @@ export const reqInactiveMaterial = id =>
  * @param {*} sort 
  */
 export const reqGetAllMessageList = (
-  userId,
   isRead,
   pageNum,
   pageSize,
@@ -541,8 +540,6 @@ export const reqGetAllMessageList = (
 ) =>
   ajax(
     BASE_URL +
-      "/users/" +
-      userId +
       "/messages?isread=" +
       isRead +
       "&pagenum=" +
@@ -558,8 +555,8 @@ export const reqGetAllMessageList = (
  * @param {*} accountId 
  * @param {*} messageIdList 
  */
-export const reqReadMessage = (accountId, messageIdList) =>
-ajax(BASE_URL + "/messages", { accountId, messageIdList}, "PUT");
+export const reqReadMessage = (messageIdList) =>
+ajax(BASE_URL + "/messages", {messageIdList}, "PUT");
 
 
 /**
@@ -567,11 +564,11 @@ ajax(BASE_URL + "/messages", { accountId, messageIdList}, "PUT");
  * @param {*} accountId 
  * @param {*} messageIdList 
  */
-export const reqDeleteMessage = (accountId, messageIdList) =>
-ajax(BASE_URL + "/messages", { accountId, messageIdList}, "DELETE");
+export const reqDeleteMessage = (messageIdList) =>
+ajax(BASE_URL + "/messages", {messageIdList}, "DELETE");
 
 /**
  * 获取用户的未读消息数量
  * @param {*} accountId
  */
-export const reqGetUnReadMessageCount = (accountId) => ajax(BASE_URL + "/users/"+accountId+"/messages/unread/count");
+export const reqGetUnReadMessageCount = () => ajax(BASE_URL + "/messages/unread/count");

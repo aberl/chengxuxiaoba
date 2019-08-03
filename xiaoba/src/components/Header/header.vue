@@ -55,7 +55,7 @@ export default {
   mounted() {
     this.getCurrentLoginUserInfo();
     this.getAllEffectCourseList();
-    this.reqGetUnReadMessageCount(this.userInfo.id);
+    this.getUnReadMessageCount();
   },
   computed: mapState({
     courseList: state => state.course.courseList,
@@ -63,7 +63,7 @@ export default {
     unReadMessageCount: state => state.message.unReadMessageCount
   }),
   methods: {
-    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo","reqGetUnReadMessageCount"]),
+    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo","getUnReadMessageCount"]),
     goTo(path) {
       this.$router.push(path);
     },

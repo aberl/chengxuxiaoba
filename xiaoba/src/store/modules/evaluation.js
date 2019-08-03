@@ -62,7 +62,7 @@ const actions = {
       });
     }
   },
-  async getAllUserEvaluationList({ commit }, { pageNum, pagesize }) {
+  async getAllUserEvaluationList({ commit }, {pageNum, pagesize }) {
     const result = await reqGetUserAllEvaluatesList(
       pageNum,
       pagesize,

@@ -100,7 +100,6 @@ export default {
     },
     getIssueList() {
       this.getUserAllIssueList({
-        userId: this.userInfo.id,
         pageNum: this.currentPageNum,
         pagesize: this.pageSize
       });
