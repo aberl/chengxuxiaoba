@@ -321,10 +321,10 @@ export const reqModifyVideo = (
  * @param {*} stars
  * @param {*} accountId
  */
-export const reqAddEvaluate = (videoId, content, stars, accountId) =>
+export const reqAddEvaluate = (videoId, content, stars) =>
   ajax(
     BASE_URL + "/videos/evaluates",
-    { videoId, content, stars, accountId },
+    { videoId, content, stars },
     "POST"
   );
 

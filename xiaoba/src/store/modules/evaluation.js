@@ -26,8 +26,7 @@ const actions = {
     const result = await reqAddEvaluate(
       evaluation.videoId,
       evaluation.content,
-      evaluation.stars,
-      evaluation.accountId
+      evaluation.stars
     );
 
     commit(REQUEST_ADD_EVALUATION, { result: result });

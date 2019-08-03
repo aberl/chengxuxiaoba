@@ -122,8 +122,7 @@ export default {
       await this.addEvaluation({
         videoId: this.$route.query.id,
         content: this.postForm.evaluation,
-        stars: this.postForm.stars,
-        accountId: this.userInfo.id
+        stars: this.postForm.stars
       });
 
       if (this.result.code != 0) {
