@@ -14,13 +14,8 @@
         会员福利&nbsp;&nbsp;
         <img src="./images/vip2.png" />
         <div style="margin: 20px;"></div>
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="permission in this.role.permissionList" :key="permission.id">
-            <div class="grid-content bg-purple-dark message">&nbsp;</div>
-            <div class="grid-content bg-purple-dark message">{{permission.description}}</div>
-            <div class="grid-content bg-purple-dark message">&nbsp;</div>
-          </el-carousel-item>
-        </el-carousel>
+        <div  v-for="permission in this.role.permissionList" :key="permission.id" class="message">
+          {{permission.description}}</div>
       </div>
     </div>
     <div class="container">
