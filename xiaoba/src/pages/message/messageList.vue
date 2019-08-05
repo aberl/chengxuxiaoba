@@ -17,7 +17,10 @@
           <el-col :span="12">
             <div class="grid-content bg-purple div-right">
               <el-button type="info" plain @click="filterMessageList(1)">只看已读</el-button>
-              <el-button type="info" plain @click="filterMessageList(-1)">只看未读</el-button>
+
+              <el-badge :value="unReadMessageCount" :max="99" class="item" :hidden="unReadMessageCount ==0">
+                <el-button type="info" plain @click="filterMessageList(-1)">只看未读</el-button>
+              </el-badge>
             </div>
           </el-col>
         </el-row>
@@ -60,7 +63,6 @@
         </div>
       </el-col>
     </el-row>
-    {{selectedMessageItems}}
     <footerGuide />
     <el-dialog title="消息内容" :visible.sync="centerDialogVisible" width="30%" center>
       <span>{{messageContent}}</span>
@@ -79,6 +81,7 @@ import footerGuide from "../../components/Footer/footer.vue";
 export default {
   mounted() {
     this.getMessageList();
+    this.getUnReadMessageCount();
   },
   data() {
     return {
@@ -115,7 +118,8 @@ export default {
       "getAllUnReadMessageList",
       "getAllReadMessageList",
       "readMessage",
-      "deleteMessage"
+      "deleteMessage",
+      "getUnReadMessageCount"
     ]),
     toggleSelection(rows) {
       if (rows) {
@@ -154,11 +158,11 @@ export default {
       var index = this.readMessageIdList.indexOf(row.id);
 
       if (index >= 0) return;
-
       this.readMessageIdList.push(row.id);
       this.readMessage({
         messageIdList: this.readMessageIdList
       });
+      this.getUnReadMessageCount();
     },
     filterMessageList(filteType) {
       this.filteType = filteType;
