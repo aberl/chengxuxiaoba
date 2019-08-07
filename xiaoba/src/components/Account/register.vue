@@ -122,20 +122,13 @@ export default {
         return;
       }
 
-      const userInfo = await reqGetUserInfoByMobilePhone(this.mobilephone4reg);
-      if (userInfo.code != 0) {
-        warn(userInfo.message, "");
-        return;
-      }
-
-      //this.receiveUserInfo(userInfo.data);
-      this.conserveCurrentUserInfo(userInfo.data);
+      this.conserveCurrentUserInfo(result.data);
       //去首页
       this.$router.replace("/");
     },
 
     countDown() {
-      const totalTime = 3;
+      const totalTime = 120;
       this.countDountTime = totalTime;
       if (!this.timer) {
         this.timer = window.setInterval(() => {
