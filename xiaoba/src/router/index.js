@@ -36,7 +36,14 @@ import Admin_addmaterial from "../pages/admin/material/addmaterial.vue";
 import Admin_modifymaterial from "../pages/admin/material/modifymaterial.vue";
 import Admin_materiallist from "../pages/admin/material/materiallist.vue";
 
+import permission from "../constants/permission"
+import prompt from "../constants/prompt"
+
+
+
 Vue.use(VueRouter);
+Vue.prototype.PERMISSION=permission;
+Vue.prototype.PROMPT=prompt;
 
 export default new VueRouter({
   routes: [

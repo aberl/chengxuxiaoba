@@ -27,7 +27,7 @@ const state = {
   usercount: 0,
   userlist: { currentNum: 1, data: [], totalCount: 0 },
   userInfo: {},
-  currentLoginUser: {},
+  currentLoginUser: { permissions: {} },
   roles: [],
   result: {},
   role: {},

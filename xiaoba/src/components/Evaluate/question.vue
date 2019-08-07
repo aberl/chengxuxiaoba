@@ -12,7 +12,7 @@
           v-model="postForm.issue"
         ></el-input>
         <div style="margin: 20px 0;"></div>
-        <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitIssue">提交问题</el-button>
+        <el-button type="primary" :disabled="!(this.canBeSubmit && this.userInfo.permissions[this.PERMISSION.SUBMITISSUE])" @click="submitIssue">提交问题</el-button>
       </form>
     </div>
     <div>
@@ -22,7 +22,7 @@
             @click="displayQuestionWindow"
             type="primary"
             round
-            v-if="questionSubmitButtonDisplay"
+            v-if="questionSubmitButtonDisplay && this.userInfo.permissions[this.PERMISSION.SUBMITISSUE]"
           >我要提问</el-button>
         </small>
         <div v-for="issue in issueList" :key="issue.id">

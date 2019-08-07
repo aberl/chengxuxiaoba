@@ -16,7 +16,7 @@
         ></el-input>
       </form>
       <div style="margin: 20px 0;"></div>
-      <el-button type="primary" :disabled="!this.canBeSubmit" @click="submitEvaluation">提交评价</el-button>
+      <el-button type="primary" :disabled="!(this.canBeSubmit && this.userInfo.permissions[this.PERMISSION.SUBMITEVALUATION])" @click="submitEvaluation">提交评价</el-button>
     </div>
 
     <div class="p-3">
@@ -25,7 +25,7 @@
           @click="displayEvaluateWindow"
           type="primary"
           round
-          v-if="evaluateSubmitButtonDisplay"
+          v-if="evaluateSubmitButtonDisplay && this.userInfo.permissions[this.PERMISSION.SUBMITEVALUATION]"
         >我要评价</el-button>
       </small>
       <div v-for="evaluation in evaluationList" :key="evaluation.id">
