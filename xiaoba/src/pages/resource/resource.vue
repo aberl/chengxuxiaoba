@@ -9,10 +9,17 @@
         <el-collapse v-model="activeNames" v-for="resource in resourceList" :key="resource.id">
           <el-collapse-item :title="resource.name" :name="resource.index">
             <div>描述：{{resource.description}}</div>
-           <br> 
-            DOWNLOAD：<el-link type="primary" @click="download(resource.file.downloadurl)">
+            <br />DOWNLOAD：
+            <el-link
+              v-if="hasDownLoadPermission"
+              type="primary"
+              @click="download(resource.file.downloadurl)"
+            >
               <i class="el-icon-download"></i>
             </el-link>
+             <el-tooltip v-else class="item" effect="dark" :content="nopermissiontooperation" placement="right">
+          <el-link disabled>{{nopermission}}</el-link>
+        </el-tooltip>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -33,11 +40,15 @@ export default {
   },
   data() {
     return {
+      nopermissiontooperation:this.PROMPT.NOPERMISSIONTOOPERATION,
+      nopermission:this.PROMPT.NOPERMISSION,
       activeNames: ["1"]
     };
   },
   computed: {
     ...mapState({
+      userInfo: state => state.user.currentLoginUser,
+      hasDownLoadPermission:state =>state.user.currentLoginUser.permissions["DOWNLOADINGNOLIMITED"]?true:false,
       resourceList: state => state.material.materialList
     })
   },
