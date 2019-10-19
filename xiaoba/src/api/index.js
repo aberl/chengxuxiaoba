@@ -226,7 +226,7 @@ export const reqGetCourseModuleDetails = courseModuleId =>
  */
 export const reqAddVideo = (
   courseModuleId,
-  file,
+  aliVideoId,
   name,
   attachments,
   duration,
@@ -235,7 +235,7 @@ export const reqAddVideo = (
 ) =>
   ajax(
     BASE_URL + "/videos",
-    { courseModuleId, file, name, attachments, duration, description, status },
+    { courseModuleId, aliVideoId, name, attachments, duration, description, status },
     "POST"
   );
 
@@ -278,7 +278,7 @@ export const reqGetVideo = videoId => ajax(BASE_URL + "/videos/" + videoId);
 /**
  * 修改视频
  * @param {*} id
- * @param {*} file
+ * @param {*} aliVideoId
  * @param {*} name
  * @param {*} attachments
  * @param {*} duration

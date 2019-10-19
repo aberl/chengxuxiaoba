@@ -35,7 +35,7 @@ const actions = {
   async addVideo({ commit }, video) {
     const result = await reqAddVideo(
       video.courseModuleId,
-      video.video,
+      video.aliVideoId,
       video.name,
       video.attachments,
       video.duration,

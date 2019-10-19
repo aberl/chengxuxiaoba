@@ -32,18 +32,8 @@
     <el-form-item label="视频名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="视频" ref="registerRef" prop="video">
-      <el-upload
-        class="upload-demo"
-        action="string"
-        :multiple="false"
-        :before-upload="beforeUploadVideo"
-        :on-remove="handleRemoveVideo"
-        :http-request="httprequestVideo"
-        accept=".mp4, .rmvb"
-      >
-        <el-button size="small" type="primary">点击上传</el-button>
-      </el-upload>
+    <el-form-item label="ali视频Id" prop="aliVideoId">
+      <el-input v-model="ruleForm.aliVideoId"></el-input>
     </el-form-item>
     <el-form-item label="附件">
       <el-upload
@@ -68,6 +58,7 @@
         <el-radio class="radio" label="1">激活</el-radio>
         <el-radio class="radio" label="-1">注销</el-radio>
       </el-radio-group>
+
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -119,7 +110,7 @@ export default {
       ruleForm: {
         courseId: "",
         courseModuleId: "",
-        video: "",
+        aliVideoId: "",
         attachments: [],
         name: "",
         duration: "",
@@ -141,13 +132,7 @@ export default {
         duration: [
           { required: true, message: "请填写视频播放时长", trigger: "blur" }
         ],
-        video: [
-          {
-            required: true,
-            message: "只能上传mp4/rmvb文件",
-            trigger: "blur"
-          }
-        ]
+        aliVideoId: [{ required: true, message: "请输入阿里云视频id", trigger: "blur" }]
       }
     };
   },
@@ -156,32 +141,6 @@ export default {
     courseSelected(val) {
       this.getAllCourseModuleList(val);
       this.ruleForm.courseModuleId = "";
-    },
-    beforeUploadVideo(file) {
-      if (this.ruleForm.video) {
-        this.$message.error("视频已上传，请删除后再上传");
-        return false;
-      }
-      return true;
-    },
-    async handleRemoveVideo(file, fileList) {
-      if (file.status != "success") return false;
-
-      var fileList = [];
-      fileList.push(this.ruleForm.video);
-      var result = await removeFile(file, fileList);
-      if (result.code == 0) {
-        this.ruleForm.video = "";
-      }
-    },
-    async httprequestVideo(uploader) {
-      const result = await uploadFile(uploader, "COURSE_VIDEO");
-      if (result.code == 0) {
-        this.ruleForm.video = {
-          name: uploader.file.name,
-          newname: result.data.name
-        };
-      }
     },
     beforeUploadAttachments(file) {
       var _flag = isMatchUploaded(file, this.ruleForm.attachments);
@@ -223,7 +182,6 @@ export default {
       });
       
       this.ruleForm.attachments = JSON.stringify(_attachments);
-      this.ruleForm.video=this.ruleForm.video.newname;
      
       await this.addVideo(this.ruleForm);
        if (eval(this.addResult.data)) {
