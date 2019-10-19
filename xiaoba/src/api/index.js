@@ -289,7 +289,7 @@ export const reqGetVideo = videoId => ajax(BASE_URL + "/videos/" + videoId);
  */
 export const reqModifyVideo = (
   id,
-  file,
+  aliVideoId,
   name,
   attachments,
   duration,
@@ -302,7 +302,7 @@ export const reqModifyVideo = (
     BASE_URL + "/videos",
     {
       id,
-      file,
+      aliVideoId,
       name,
       attachments,
       duration,

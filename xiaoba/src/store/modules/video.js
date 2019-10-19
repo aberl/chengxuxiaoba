@@ -59,7 +59,7 @@ const actions = {
     console.log(video);
     const result = await reqModifyVideo(
       video.id,
-      video.video,
+      video.aliVideoId,
       video.name,
       JSON.stringify(_attachments),
       video.duration,
@@ -129,8 +129,9 @@ const mutations = {
     }
     state.videoDetail = {
       id: video.id,
+      aliVideoId:video.aliVideoId,
       courseModuleId: video.courseModuleId,
-      video: video.aliVideoInfo,
+      aliVideoInfo: video.aliVideoInfo,
       name: video.name,
       attachments: _attachments,
       duration: video.duration,

@@ -8,7 +8,12 @@
     class="demo-ruleForm"
   >
     <el-form-item label="课程模块" prop="courseModuleId">
-      <el-select disabled @change="courseSelected" v-model="this.courseoptions[0].value" placeholder="请选择课程">
+      <el-select
+        disabled
+        @change="courseSelected"
+        v-model="this.courseoptions[0].value"
+        placeholder="请选择课程"
+      >
         <el-option
           v-for="item in this.courseoptions"
           :key="item.value"
@@ -17,13 +22,13 @@
         ></el-option>
       </el-select>
       <el-select
-      disabled
-      v-model="this.coursemoduleoptions[0].value"
+        disabled
+        v-model="this.coursemoduleoptions[0].value"
         @change="courseModuleSelected"
         placeholder="请选择模块"
       >
         <el-option
-          v-for="item in this.coursemoduleoptions" 
+          v-for="item in this.coursemoduleoptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -33,19 +38,8 @@
     <el-form-item label="视频名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="视频" ref="registerRef" prop="video">
-      <el-upload
-        class="upload-demo"
-        action="string"
-        :multiple="false"
-        :before-upload="beforeUploadVideo"
-        :on-remove="handleRemoveVideo"
-        :http-request="httprequestVideo"
-        :file-list="ruleForm.video"
-        accept=".mp4, .rmvb"
-      >
-        <el-button size="small" type="primary">点击上传</el-button>
-      </el-upload>
+    <el-form-item label="ali视频Id" prop="aliVideoId">
+      <el-input v-model="ruleForm.aliVideoId"></el-input>
     </el-form-item>
     <el-form-item label="附件">
       <el-upload
@@ -130,15 +124,9 @@ export default {
           { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
+        aliVideoId: [{ required: true, message: "请输入阿里云视频id", trigger: "blur" }],
         duration: [
           { required: true, message: "请填写视频播放时长", trigger: "blur" }
-        ],
-        video: [
-          {
-            required: true,
-            message: "只能上传mp4/rmvb文件",
-            trigger: "blur"
-          }
         ]
       }
     };
@@ -148,31 +136,6 @@ export default {
     courseSelected(val) {
       this.getAllCourseModuleList(val);
       this.ruleForm.courseModuleId = "";
-    },
-    beforeUploadVideo(file) {
-      if (this.ruleForm.video && this.ruleForm.video.length >0) {
-        this.$message.error("视频已上传，请删除后再上传");
-        return false;
-      }
-      return true;
-    },
-    async handleRemoveVideo(file, fileList) {
-      if (file.status != "success") return false;
-
-      var result = await removeFile(file, this.ruleForm.video);
-      if (result.code == 0) {
-        this.ruleForm.video = [];
-      }
-    },
-    async httprequestVideo(uploader) {
-      const result = await uploadFile(uploader, "COURSE_VIDEO");
-      if (result.code == 0) {
-        this.ruleForm.video = [{
-          name: result.data.originName,
-          newname: result.data.name,
-          url:result.data.path
-        }];
-      }
     },
     beforeUploadAttachments(file) {
       var _flag = isMatchUploaded(file, this.ruleForm.attachments);
@@ -195,7 +158,7 @@ export default {
         this.ruleForm.attachments.push({
           name: uploader.file.name,
           newname: result.data.name,
-          url:result.data.path
+          url: result.data.path
         });
       }
     },
@@ -208,8 +171,7 @@ export default {
         }
       });
       if (!flag) return false;
-      
-      this.ruleForm.video=this.ruleForm.video[0].newname;
+
       await this.modifyVideo(this.ruleForm);
       if (eval(this.modifyResult.data)) {
         this.$router.replace("/op/videolist");
