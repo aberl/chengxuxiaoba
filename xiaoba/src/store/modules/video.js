@@ -117,13 +117,6 @@ const mutations = {
     state.result = video;
   },
   [REQUEST_RECEIVE_VIDEODETAILS](state, { video, courseModule }) {
-    let _video = [
-      {
-        name: video.video.originName,
-        newname: video.video.name,
-        url: video.video.url
-      }
-    ];
     let _attachments = [];
     if (video.attachmentList) {
       for (var index in video.attachmentList) {
@@ -137,7 +130,7 @@ const mutations = {
     state.videoDetail = {
       id: video.id,
       courseModuleId: video.courseModuleId,
-      video: _video,
+      video: video.aliVideoInfo,
       name: video.name,
       attachments: _attachments,
       duration: video.duration,

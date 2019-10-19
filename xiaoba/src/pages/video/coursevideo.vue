@@ -23,7 +23,7 @@
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <videoPlay :videoSrc="videoSrc" :videoId="this.$route.query.id"/>
+        <videoPlay :videoId="this.$route.query.id"/>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
       <br>
@@ -61,12 +61,7 @@ export default {
     ...mapState({
       userInfo: state => state.user.currentLoginUser,
       videoDetail: state => state.video.videoDetail,
-      courseModuleDetail: state => state.video.videoCourseModule,
-      videoSrc: state => {
-        if (state.video.videoDetail.video.length > 0) {
-          return state.video.videoDetail.video[0].url;
-        }
-      }
+      courseModuleDetail: state => state.video.videoCourseModule
     })
   },
   methods: {
