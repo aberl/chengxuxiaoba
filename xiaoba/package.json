@@ -10,12 +10,14 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ajv": "^6.10.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "element-ui": "^2.8.2",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7",
     "vue": "^2.5.2",
+    "vue-aliplayer": "0.0.8",
     "vue-router": "^3.0.1",
     "vue-video-player": "^5.0.2",
     "vuex": "^3.1.0"
@@ -53,6 +55,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
+    "vue2-aliplayer": "^1.0.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
@@ -66,5 +69,8 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".postcssrc.js",
+  "keywords": [],
+  "license": "ISC"
 }

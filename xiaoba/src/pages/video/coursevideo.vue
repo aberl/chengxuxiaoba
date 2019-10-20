@@ -23,7 +23,7 @@
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <videoPlay :videoId="this.$route.query.id"/>
+        <ali-player :vid ="this.videoDetail.aliVideoInfo.videoId" :playauth="this.videoDetail.aliVideoInfo.playAuth"/>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
       <br>
@@ -33,16 +33,19 @@
       :accountId="videoDetail.accountId"
       :attachment="videoDetail.attachments"
     />
+    {{this.videoDetail.aliVideoInfo.videoId}}
+    {{this.videoDetail.aliVideoInfo.playAuth}}
     <footerGuide/>
   </div>
 </template>
 
 <script>
+import VueAliplayer from 'vue-aliplayer'
 import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
 import comment from "../../components/Evaluate/comment.vue";
-import videoPlay from "../../components/Video/videoPlay.vue";
+import aliplayer from "../../components/Video/aliVideoPlay.vue";
 export default {
   mounted() {
     this.increaseVideoWatchRecord({
@@ -55,7 +58,7 @@ export default {
     headerTop,
     footerGuide,
     comment,
-    videoPlay
+    'ali-player': VueAliplayer
   },
   computed: {
     ...mapState({
