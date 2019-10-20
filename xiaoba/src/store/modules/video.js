@@ -24,7 +24,7 @@ import {
 
 const state = {
   videoCourseModule: {},
-  videoDetail: { video: [] },
+  videoDetail: { aliVideoInfo: {"videoId":"","playAuth":""} },
   videoList: { currentNum: 1, data: [], totalCount: 0 },
   result: {},
   recordStatistic:[],

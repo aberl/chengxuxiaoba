@@ -24,6 +24,9 @@
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
         <ali-player :vid ="this.videoDetail.aliVideoInfo.videoId" :playauth="this.videoDetail.aliVideoInfo.playAuth"/>
+       <button @click="play">播放</button>
+    <button @click="pause">暂停</button>
+    <button @click="replay">重播</button>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
       <br>
@@ -68,7 +71,19 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["getVideo", "increaseVideoWatchRecord"])
+    ...mapActions(["getVideo", "increaseVideoWatchRecord"]),
+      play: function(){
+        const player = this.$refs.player.instance;
+        player && player.play()
+      },
+      pause: function() {
+        const player = this.$refs.player.instance;
+        player && player.pause()
+      },
+      replay: function() {
+        const player = this.$refs.player.instance;
+        player && player.replay()
+      }
   }
 };
 </script>
