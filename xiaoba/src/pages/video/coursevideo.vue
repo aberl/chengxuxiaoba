@@ -19,14 +19,29 @@
         </el-breadcrumb>
       </div>
       <br>
+    {{this.videoDetail.aliVideoInfo.videoId}}
+    {{this.videoDetail.aliVideoInfo.playAuth}}
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-        <ali-player :vid ="this.videoDetail.aliVideoInfo.videoId" :playauth="this.videoDetail.aliVideoInfo.playAuth"/>
-       <button @click="play">播放</button>
-    <button @click="pause">暂停</button>
-    <button @click="replay">重播</button>
+      <ali-player
+      @play="play" 
+    :vid="this.videoDetail.aliVideoInfo.videoId"
+    :playauth="this.videoDetail.aliVideoInfo.playAuth"
+		:playsinline="true"
+    :autoplay="false" 
+		:isLive="false" 
+		:rePlay="false"
+		:showBuffer="true"
+    :preload="false"
+    :useH5Prism="true"
+    format="mp4"
+		showBarTime="5000"
+		width="500px" 
+		height="400px" 
+		controlBarVisibility="hover"
+     ></ali-player>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
       <br>
@@ -36,8 +51,6 @@
       :accountId="videoDetail.accountId"
       :attachment="videoDetail.attachments"
     />
-    {{this.videoDetail.aliVideoInfo.videoId}}
-    {{this.videoDetail.aliVideoInfo.playAuth}}
     <footerGuide/>
   </div>
 </template>
@@ -61,7 +74,7 @@ export default {
     headerTop,
     footerGuide,
     comment,
-    'ali-player': VueAliplayer
+    'ali-player': aliplayer
   },
   computed: {
     ...mapState({
@@ -72,18 +85,10 @@ export default {
   },
   methods: {
     ...mapActions(["getVideo", "increaseVideoWatchRecord"]),
-      play: function(){
-        const player = this.$refs.player.instance;
-        player && player.play()
-      },
-      pause: function() {
-        const player = this.$refs.player.instance;
-        player && player.pause()
-      },
-      replay: function() {
-        const player = this.$refs.player.instance;
-        player && player.replay()
-      }
+      play(event) {
+      alert(222)
+      console.log(event);
+    }
   }
 };
 </script>
