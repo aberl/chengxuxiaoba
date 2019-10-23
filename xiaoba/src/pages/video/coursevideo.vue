@@ -1,6 +1,6 @@
 <template>
   <div>
-    <headerTop/>
+    <headerTop />
     <main role="main">
       <div class="container">
         <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -18,50 +18,48 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <br>
-    {{this.videoDetail.aliVideoInfo.videoId}}
-    {{this.videoDetail.aliVideoInfo.playAuth}}
+      <br />
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
-      <ali-player
-      @play="play" 
-    :vid="this.videoDetail.aliVideoInfo.videoId"
-    :playauth="this.videoDetail.aliVideoInfo.playAuth"
-		:playsinline="true"
-    :autoplay="false" 
-		:isLive="false" 
-		:rePlay="false"
-		:showBuffer="true"
-    :preload="false"
-    :useH5Prism="true"
-    format="mp4"
-		showBarTime="5000"
-		width="500px" 
-		height="400px" 
-		controlBarVisibility="hover"
-     ></ali-player>
+        <div class="container">
+          <ali-player
+            @play="play"
+            :vid="this.videoDetail.aliVideoInfo.videoId"
+            :playauth="this.videoDetail.aliVideoInfo.playAuth"
+            :playsinline="true"
+            :autoplay="false"
+            :rePlay="false"
+            :showBuffer="true"
+            :preload="false"
+            :useH5Prism="true"
+            format="mp4"
+            width="80%"
+            height="400px"
+            controlBarVisibility="hover"
+          ></ali-player>
+        </div>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
-      <br>
+      <br />
     </main>
     <comment
       :videoId="this.$route.query.id"
       :accountId="videoDetail.accountId"
       :attachment="videoDetail.attachments"
     />
-    <footerGuide/>
+    <footerGuide />
   </div>
 </template>
-
 <script>
-import VueAliplayer from 'vue-aliplayer'
+import VueAliplayer from "vue-aliplayer";
 import { mapState, mapActions } from "vuex";
 import headerTop from "../../components/Header/header.vue";
 import footerGuide from "../../components/Footer/footer.vue";
 import comment from "../../components/Evaluate/comment.vue";
 import aliplayer from "../../components/Video/aliVideoPlay.vue";
+
 export default {
   mounted() {
     this.increaseVideoWatchRecord({
@@ -74,7 +72,7 @@ export default {
     headerTop,
     footerGuide,
     comment,
-    'ali-player': aliplayer
+    "ali-player": aliplayer
   },
   computed: {
     ...mapState({
@@ -85,14 +83,12 @@ export default {
   },
   methods: {
     ...mapActions(["getVideo", "increaseVideoWatchRecord"]),
-      play(event) {
-      alert(222)
+    play(event) {
       console.log(event);
     }
   }
 };
 </script>
-
 <style>
 .nav_show {
   font-size: 20px;

@@ -260,6 +260,14 @@ export default {
       this.insertScriptTag();
     }
   },
+  watch: {
+    //监听playauth,当值改变的时候，执行初始化
+    playauth(newVal, oldVal) {
+      if (newVal != oldVal && newVal != "") {
+        this.reloadPlayer();
+      }
+    }
+  },
   methods: {
     insertScriptTag() {
       const _this = this;
@@ -378,7 +386,7 @@ export default {
      * 播放视频
      */
     play: function() {
-      alert(111)
+      alert(111);
       this.instance.play();
     },
     /**
