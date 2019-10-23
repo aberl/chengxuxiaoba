@@ -94,7 +94,8 @@ export default {
       default: 0
     },
     autoPlayDelayDisplayText: {
-      type: String
+      type: String,
+      default: "正在加载..."
     }
   },
   data() {
@@ -265,6 +266,13 @@ export default {
     playauth(newVal, oldVal) {
       if (newVal != oldVal && newVal != "") {
         this.reloadPlayer();
+        return;
+      }
+
+      if(newVal == "")
+      {
+        this.initAliplayer();
+        return;
       }
     }
   },
@@ -386,7 +394,7 @@ export default {
      * 播放视频
      */
     play: function() {
-      alert(111);
+      alert(1)
       this.instance.play();
     },
     /**

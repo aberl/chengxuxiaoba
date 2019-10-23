@@ -127,11 +127,14 @@ const mutations = {
         });
       }
     }
+
+    let _aliVideoInfo = {}
+
     state.videoDetail = {
       id: video.id,
       aliVideoId:video.aliVideoId,
       courseModuleId: video.courseModuleId,
-      aliVideoInfo: video.aliVideoInfo,
+      aliVideoInfo: video.aliVideoInfo?video.aliVideoInfo:{},
       name: video.name,
       attachments: _attachments,
       duration: video.duration,

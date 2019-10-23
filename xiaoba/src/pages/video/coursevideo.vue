@@ -25,6 +25,7 @@
         </div>
         <div class="container">
           <ali-player
+          ref="player"
             @play="play"
             :vid="this.videoDetail.aliVideoInfo.videoId"
             :playauth="this.videoDetail.aliVideoInfo.playAuth"
@@ -84,7 +85,8 @@ export default {
   methods: {
     ...mapActions(["getVideo", "increaseVideoWatchRecord"]),
     play(event) {
-      console.log(event);
+      const player = this.$refs.player.instance
+      console.log(player);
     }
   }
 };
