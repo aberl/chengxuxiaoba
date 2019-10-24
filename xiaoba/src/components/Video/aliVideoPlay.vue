@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false
     },
+    showBarTime: {
+      type: String,
+      default: 5000
+    },
     playsinline: {
       type: Boolean,
       default: false
@@ -332,6 +336,7 @@ export default {
             playauth: _this.playauth,
             source: _this.source,
             cover: _this.cover,
+            showBarTime:_this.showBarTime,
             skinLayout: skin,
             x5_video_position: _this.x5_video_position,
             x5_type: _this.x5_type,
@@ -394,7 +399,6 @@ export default {
      * 播放视频
      */
     play: function() {
-      alert(1)
       this.instance.play();
     },
     /**

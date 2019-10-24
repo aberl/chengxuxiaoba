@@ -32,13 +32,16 @@
             :playsinline="true"
             :autoplay="false"
             :rePlay="false"
-            :showBuffer="true"
-            :preload="false"
             :useH5Prism="true"
+            :preload="false"
+            :x5_fullscreen="true"
             format="mp4"
             width="80%"
-            height="400px"
-            controlBarVisibility="hover"
+            height="520px"
+            prism-cover="http://a.hiphotos.baidu.com/image/pic/item/838ba61ea8d3fd1fc9c7b6853a4e251f94ca5f46.jpg"
+            controlBarVisibility="click"
+            showBarTime="6000"
+            autoPlayDelayDisplayText="000"
           ></ali-player>
         </div>
       </section>
