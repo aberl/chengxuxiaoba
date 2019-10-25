@@ -276,6 +276,11 @@ export const reqGetAllVideoList = (courseModuleId, pageNum, pageSize, sort) =>
 export const reqGetVideo = videoId => ajax(BASE_URL + "/videos/" + videoId);
 
 /**
+ * 获取阿里云视频
+ */
+export const reqGetAliVideo = alivid => ajax(BASE_URL + "/videos/ali/" + alivid);
+
+/**
  * 修改视频
  * @param {*} id
  * @param {*} aliVideoId

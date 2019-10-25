@@ -25,10 +25,11 @@
         </div>
         <div class="container">
           <ali-player
-          ref="player"
+            v-if="watchNoLimitPermission"
+            ref="player"
             @play="play"
-            :vid="this.videoDetail.aliVideoInfo.videoId"
-            :playauth="this.videoDetail.aliVideoInfo.playAuth"
+            :vid="this.aliVideoInfo.videoId"
+            :playauth="this.aliVideoInfo.playAuth"
             :playsinline="true"
             :autoplay="false"
             :rePlay="false"
@@ -38,11 +39,12 @@
             format="mp4"
             width="80%"
             height="520px"
-            prism-cover="http://a.hiphotos.baidu.com/image/pic/item/838ba61ea8d3fd1fc9c7b6853a4e251f94ca5f46.jpg"
+            :prism-cover="this.aliVideoInfo.cover"
             controlBarVisibility="click"
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
+        <el-image v-else :src="nopermission_image_src"></el-image>
         </div>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
@@ -71,6 +73,11 @@ export default {
       watchAccountId: this.userInfo.id
     });
     this.getVideo(this.$route.query.id);
+  }, 
+  data(){
+    return{
+      nopermission_image_src:this.PROMPT.VIDEOWATCHINGLIMITATIONIMAGEURL
+    }
   },
   components: {
     headerTop,
@@ -78,17 +85,29 @@ export default {
     comment,
     "ali-player": aliplayer
   },
+
+  watch: {
+    aliVideoId(newVal, oldVal) {
+      if (newVal != oldVal && newVal != "") {
+        this.getAliVideo(newVal);
+      }
+    }
+  },
+
   computed: {
     ...mapState({
       userInfo: state => state.user.currentLoginUser,
       videoDetail: state => state.video.videoDetail,
-      courseModuleDetail: state => state.video.videoCourseModule
-    })
+      aliVideoId: state => state.video.videoDetail.aliVideoId,
+      aliVideoInfo: state => state.video.aliVideoDetail,
+      courseModuleDetail: state => state.video.videoCourseModule,
+      watchNoLimitPermission:state =>state.user.currentLoginUser.permissions["WATCHINGNOLIMITED"]?true:false,
+     })
   },
   methods: {
-    ...mapActions(["getVideo", "increaseVideoWatchRecord"]),
+    ...mapActions(["getVideo", "increaseVideoWatchRecord", "getAliVideo"]),
     play(event) {
-      const player = this.$refs.player.instance
+      const player = this.$refs.player.instance;
       console.log(player);
     }
   }

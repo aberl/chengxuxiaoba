@@ -6,6 +6,7 @@ import {
   REQUEST_ADD_VIDEO,
   REQUEST_RECEIVE_VIDEOALLLIST,
   REQUEST_RECEIVE_VIDEODETAILS,
+  REQUEST_RECEIVE_ALIVIDEODETAILS,
   REQUEST_MODIFY_VIDEO,
   REQUEST_RECEIVE_RECORDSTATISTIC,
   REQUEST_RECEIVE_VIDEORECORDLIST
@@ -15,6 +16,7 @@ import {
   reqAddVideo,
   reqGetAllVideoList,
   reqGetVideo,
+  reqGetAliVideo,
   reqGetCourseModuleDetails,
   reqModifyVideo,
   reqIncreaseVideoWatchRecord,
@@ -24,7 +26,8 @@ import {
 
 const state = {
   videoCourseModule: {},
-  videoDetail: { aliVideoInfo: {"videoId":"","playAuth":""} },
+  videoDetail: {},
+  aliVideoDetail:{},
   videoList: { currentNum: 1, data: [], totalCount: 0 },
   result: {},
   recordStatistic:[],
@@ -83,6 +86,15 @@ const actions = {
       });
     }
   },
+
+  async getAliVideo({ commit }, alivid) {
+    const result = await reqGetAliVideo(alivid);
+    if (result.code == 0) {
+      commit(REQUEST_RECEIVE_ALIVIDEODETAILS, {
+        aliVideoInfo: result.data
+      });
+    }
+  },
   async getAllVideoList({ commit }, { courseModuleId, pageNum, pagesize }) {
     const result = await reqGetAllVideoList(
       courseModuleId,
@@ -128,13 +140,10 @@ const mutations = {
       }
     }
 
-    let _aliVideoInfo = {}
-
     state.videoDetail = {
       id: video.id,
       aliVideoId:video.aliVideoId,
       courseModuleId: video.courseModuleId,
-      aliVideoInfo: video.aliVideoInfo?video.aliVideoInfo:{},
       name: video.name,
       attachments: _attachments,
       duration: video.duration,
@@ -146,6 +155,11 @@ const mutations = {
     };
     state.videoCourseModule = courseModule;
   },
+  [REQUEST_RECEIVE_ALIVIDEODETAILS](state, { aliVideoInfo}) {
+
+    state.aliVideoDetail = aliVideoInfo;
+  },
+  
   [REQUEST_RECEIVE_VIDEOALLLIST](state, { videoList }) {
     state.videoList.data = videoList.data;
     state.videoList.totalCount = videoList.totalCount;
