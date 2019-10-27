@@ -33,6 +33,7 @@ export const REQUEST_MODIFY_VIDEO = 'request_modify_video'
 export const REQUEST_RECEIVE_VIDEODETAILS = 'request_receive_videodetails'
 export const REQUEST_RECEIVE_ALIVIDEODETAILS = 'request_receive_alivideodetails'
 export const REQUEST_RECEIVE_VIDEOALLLIST = 'request_receive_videoalllist'
+export const REQUEST_RECEIVE_PREANDNEXTVIDEOS = 'request_receive_preandnextvideos'
 
 export const REQUEST_ADD_EVALUATION = 'request_add_evaluation'
 export const REQUEST_DELETE_EVALUATION = 'request_delete_evaluation'
@@ -78,6 +79,7 @@ export default {
   REQUEST_MODIFY_COURSEMODULEDETAILS,
   REQUEST_ADD_VIDEO,
   REQUEST_RECEIVE_VIDEOALLLIST,
+  REQUEST_RECEIVE_PREANDNEXTVIDEOS,
   REQUEST_RECEIVE_VIDEODETAILS,
   REQUEST_RECEIVE_ALIVIDEODETAILS,
   REQUEST_MODIFY_VIDEO,

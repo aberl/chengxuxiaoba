@@ -18,14 +18,13 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      {{this.hasSurpassWatchLimitAlert}}
-        {{this.aliVideoInfo}}
       <br />
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
         <div class="container">
+        {{this.nextVideo.name}}
         <el-image v-if="hasSurpassWatchLimitAlert" :src="nopermission_image_src"></el-image>
           <ali-player
             v-else
@@ -47,6 +46,8 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
+          <i class="el-icon-caret-left" v-if="this.preVideo" @click="goto('/coursevideo?id='+preVideo.id)">{{this.preVideo.name}}</i>
+          <i class="el-icon-caret-right" v-if="this.nextVideo" @click="goto('/coursevideo?id='+nextVideo.id)">{{this.nextVideo.name}}</i>
         </div>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
@@ -75,6 +76,7 @@ export default {
       watchAccountId: this.userInfo.id
     });
     this.getVideo(this.$route.query.id);
+    this.getPreviousAndNextVideos(this.$route.query.id);
   }, 
   data(){
     return{
@@ -103,14 +105,19 @@ export default {
       aliVideoId: state => state.video.videoDetail.aliVideoId,
       aliVideoInfo: state => state.video.aliVideoDetail.data,
       courseModuleDetail: state => state.video.videoCourseModule,
+      preVideo: state => state.video.preVideo,
+      nextVideo: state => state.video.nextVideo,
       hasSurpassWatchLimitAlert:state =>state.video.aliVideoDetail.code ==-3,
      })
   },
   methods: {
-    ...mapActions(["getVideo", "increaseVideoWatchRecord", "getAliVideo"]),
+    ...mapActions(["getVideo", "increaseVideoWatchRecord", "getPreviousAndNextVideos","getAliVideo"]),
     play(event) {
       const player = this.$refs.player.instance;
       console.log(player);
+    },
+    goto(path){
+      this.$router.replace(path)
     }
   }
 };

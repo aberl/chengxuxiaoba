@@ -235,7 +235,15 @@ export const reqAddVideo = (
 ) =>
   ajax(
     BASE_URL + "/videos",
-    { courseModuleId, aliVideoId, name, attachments, duration, description, status },
+    {
+      courseModuleId,
+      aliVideoId,
+      name,
+      attachments,
+      duration,
+      description,
+      status
+    },
     "POST"
   );
 
@@ -271,14 +279,21 @@ export const reqGetAllVideoList = (courseModuleId, pageNum, pageSize, sort) =>
   );
 
 /**
+ * 获取上一个和下一个视频
+ */
+export const reqGetPreviousAndNextVideos = videoId => ajax(BASE_URL + "/videos/" + videoId+"/preandnext");
+
+/**
  * 获取视频
  */
-export const reqGetVideo = videoId => ajax(BASE_URL + "/videos/" + videoId);
+export const reqGetVideo = videoId =>
+  ajax(BASE_URL + "/videos/" + videoId);
 
 /**
  * 获取阿里云视频
  */
-export const reqGetAliVideo = alivid => ajax(BASE_URL + "/videos/ali/" + alivid);
+export const reqGetAliVideo = alivid =>
+  ajax(BASE_URL + "/videos/ali/" + alivid);
 
 /**
  * 修改视频
@@ -327,11 +342,7 @@ export const reqModifyVideo = (
  * @param {*} accountId
  */
 export const reqAddEvaluate = (videoId, content, stars) =>
-  ajax(
-    BASE_URL + "/videos/evaluates",
-    { videoId, content, stars },
-    "POST"
-  );
+  ajax(BASE_URL + "/videos/evaluates", { videoId, content, stars }, "POST");
 
 /**
  * 删除评论
@@ -411,11 +422,7 @@ export const reqGetEffectiveEvaluatesList = (
  * @param {*} questionerId
  */
 export const reqAddIssues = (videoId, name, content) =>
-  ajax(
-    BASE_URL + "/videos/issues",
-    { videoId, name, content },
-    "POST"
-  );
+  ajax(BASE_URL + "/videos/issues", { videoId, name, content }, "POST");
 
 /**
  * 根据视频获取问题列表
@@ -486,7 +493,7 @@ export const reqVideoWatchingRecordStatistic = () =>
 /**
  * 获取视频观看列表
  */
-export const reqVideoRecordList = (courseModuleId) =>
+export const reqVideoRecordList = courseModuleId =>
   ajax(BASE_URL + "/videos/record/" + courseModuleId);
 
 /**
@@ -531,18 +538,13 @@ export const reqInactiveMaterial = id =>
 
 /**
  * 获取用户消息列表
- * @param {*} userId 
+ * @param {*} userId
  * @param {*} isRead 0:未读，1:已读
- * @param {*} pageNum 
- * @param {*} pageSize 
- * @param {*} sort 
+ * @param {*} pageNum
+ * @param {*} pageSize
+ * @param {*} sort
  */
-export const reqGetAllMessageList = (
-  isRead,
-  pageNum,
-  pageSize,
-  sort
-) =>
+export const reqGetAllMessageList = (isRead, pageNum, pageSize, sort) =>
   ajax(
     BASE_URL +
       "/messages?isread=" +
@@ -557,23 +559,23 @@ export const reqGetAllMessageList = (
 
 /**
  * 读消息（批量）
- * @param {*} accountId 
- * @param {*} messageIdList 
+ * @param {*} accountId
+ * @param {*} messageIdList
  */
-export const reqReadMessage = (messageIdList) =>
-ajax(BASE_URL + "/messages", {messageIdList}, "PUT");
-
+export const reqReadMessage = messageIdList =>
+  ajax(BASE_URL + "/messages", { messageIdList }, "PUT");
 
 /**
  * 读删除消息（批量）
- * @param {*} accountId 
- * @param {*} messageIdList 
+ * @param {*} accountId
+ * @param {*} messageIdList
  */
-export const reqDeleteMessage = (messageIdList) =>
-ajax(BASE_URL + "/messages", {messageIdList}, "DELETE");
+export const reqDeleteMessage = messageIdList =>
+  ajax(BASE_URL + "/messages", { messageIdList }, "DELETE");
 
 /**
  * 获取用户的未读消息数量
  * @param {*} accountId
  */
-export const reqGetUnReadMessageCount = () => ajax(BASE_URL + "/messages/unread/count");
+export const reqGetUnReadMessageCount = () =>
+  ajax(BASE_URL + "/messages/unread/count");
