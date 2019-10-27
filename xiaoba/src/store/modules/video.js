@@ -27,7 +27,7 @@ import {
 const state = {
   videoCourseModule: {},
   videoDetail: {},
-  aliVideoDetail:{},
+  aliVideoDetail:{data:{video:""}},
   videoList: { currentNum: 1, data: [], totalCount: 0 },
   result: {},
   recordStatistic:[],
@@ -89,11 +89,9 @@ const actions = {
 
   async getAliVideo({ commit }, alivid) {
     const result = await reqGetAliVideo(alivid);
-    if (result.code == 0) {
       commit(REQUEST_RECEIVE_ALIVIDEODETAILS, {
-        aliVideoInfo: result.data
+        aliVideoInfo: result
       });
-    }
   },
   async getAllVideoList({ commit }, { courseModuleId, pageNum, pagesize }) {
     const result = await reqGetAllVideoList(
@@ -156,7 +154,6 @@ const mutations = {
     state.videoCourseModule = courseModule;
   },
   [REQUEST_RECEIVE_ALIVIDEODETAILS](state, { aliVideoInfo}) {
-
     state.aliVideoDetail = aliVideoInfo;
   },
   

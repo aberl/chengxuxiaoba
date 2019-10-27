@@ -18,14 +18,17 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      {{this.hasSurpassWatchLimitAlert}}
+        {{this.aliVideoInfo}}
       <br />
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
         <div class="container">
+        <el-image v-if="hasSurpassWatchLimitAlert" :src="nopermission_image_src"></el-image>
           <ali-player
-            v-if="watchNoLimitPermission"
+            v-else
             ref="player"
             @play="play"
             :vid="this.aliVideoInfo.videoId"
@@ -44,7 +47,6 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
-        <el-image v-else :src="nopermission_image_src"></el-image>
         </div>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
@@ -99,9 +101,9 @@ export default {
       userInfo: state => state.user.currentLoginUser,
       videoDetail: state => state.video.videoDetail,
       aliVideoId: state => state.video.videoDetail.aliVideoId,
-      aliVideoInfo: state => state.video.aliVideoDetail,
+      aliVideoInfo: state => state.video.aliVideoDetail.data,
       courseModuleDetail: state => state.video.videoCourseModule,
-      watchNoLimitPermission:state =>state.user.currentLoginUser.permissions["WATCHINGNOLIMITED"]?true:false,
+      hasSurpassWatchLimitAlert:state =>state.video.aliVideoDetail.code ==-3,
      })
   },
   methods: {
