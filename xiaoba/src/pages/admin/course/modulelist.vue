@@ -45,7 +45,6 @@ export default {
   methods: {
     ...mapActions(["getAllCourseModuleList"]),
     goToDetail(path, id) {
-      console.log(id)
       this.$router.replace({ path: path, query: { id: id } });
     }
   }

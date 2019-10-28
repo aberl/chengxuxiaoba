@@ -32,7 +32,6 @@ export default {
   methods: {
     ...mapActions(["getAllCourseList"]),
     handleClick() {
-      console.log(1);
     },
     goToDetail(path,id) {
       this.$router.replace({path:path, query:{id:id}});

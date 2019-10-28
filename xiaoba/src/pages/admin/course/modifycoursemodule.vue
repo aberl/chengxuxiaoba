@@ -121,7 +121,6 @@ export default {
 
         this.ruleForm.courseName = this.options[index].label;
       }
-      console.log(this.ruleForm.courseName);
     },
     beforeUpload(file) {
       var _flag = isMatchFileSize(file, this.fileLimitSize);
@@ -143,7 +142,6 @@ export default {
       }
     },
     handlePreview(file) {
-      console.log(file);
     },
     async httprequest(uploader) {
       const result = await uploadFile(uploader,"COURSE_MODULE_DETAILS");

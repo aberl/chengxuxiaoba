@@ -163,7 +163,6 @@ export default {
         inputErrorMessage: "答复必须为1-10位"
       })
         .then(async ({ value }) => {
-          console.log(id + "|!>" + value);
           await this.answerIssue({
             issueId: id,
             content: value

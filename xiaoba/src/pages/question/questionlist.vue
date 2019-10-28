@@ -98,7 +98,6 @@ export default {
   },
    watch: {
     videoId(val) {
-      console.log(val)
     }
   },
   computed: {

@@ -19,7 +19,6 @@ export function uploadFile(uploader, filepurpose) {
       }
     }
   };
-console.log("xxx")
   const result = reqUploadFile(form, config);
   return result;
 }

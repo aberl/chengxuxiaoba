@@ -28,7 +28,6 @@ export default {
   },
   watch: {
     displayflag: function(newval, oldval) {
-      console.log(newval, oldval);
       this.dialogVisible = newval;
     }
   }

@@ -29,7 +29,6 @@ const actions = {
       }
     };
 
-    console.log(uploader.file);
     const result = await reqUploadFile(form, config);
     if (result.code == 0) {
       var uploadResult = {
@@ -45,16 +44,12 @@ const actions = {
   async removeFile({ commit }, file) {
     var newname = "";
     var removeIndex = -1;
-    console.log(state.uploadFiles);
-    console.log("delete file name : " + file.name);
     for (var index in state.uploadFiles) {
-      console.log(state.uploadFiles[index].originname);
       if ( state.uploadFiles[index].originname == file.name) {
         removeIndex = index;
         newname = state.uploadFiles[index].newname;
       }
     }
-    console.log(removeIndex);
     if (removeIndex != -1) {
       const result = await reqRemoveUploadFile(newname);
       if (result.code == 0) {

@@ -213,7 +213,6 @@ export default {
             (this.selectRolePayment.selectRoleEndDate =
               rolePaymentItem.endDate);
         }
-        console.log(this.selectRolePayment);
       }
     },
     rolePayChange(type) {

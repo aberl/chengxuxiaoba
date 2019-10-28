@@ -54,7 +54,6 @@ const actions = {
   },
 
   increaseVideoWatchRecord({ commit }, { videoId, watchAccountId }) {
-    console.log(watchAccountId);
     reqIncreaseVideoWatchRecord(videoId, watchAccountId);
   },
 
@@ -63,7 +62,6 @@ const actions = {
     video.attachments.forEach(item => {
       _attachments.push(item.newname);
     });
-    console.log(video);
     const result = await reqModifyVideo(
       video.id,
       video.aliVideoId,

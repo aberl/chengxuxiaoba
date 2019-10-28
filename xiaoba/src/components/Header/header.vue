@@ -11,8 +11,13 @@
         <li>
           <a class="p-2 text-dark dropdown-toggle" data-toggle="dropdown" href="#">课程</a>
           <div class="dropdown-menu">
-            <router-link v-for="course in courseList" :key="course.id" 
-            class="dropdown-item" :to="'/coursedetail?id='+course.id">{{course.name}}</router-link>
+            <router-link
+              v-for="course in courseList"
+              :key="course.id"
+              class="dropdown-item"
+              :to="'/coursedetail?id='+course.id"
+            >{{course.name}}</router-link>
+             <router-link to="/index" class="dropdown-item">更多...</router-link>
           </div>
         </li>
         <li>
@@ -20,9 +25,8 @@
         </li>
         <li v-if="userInfo.name">
           <router-link class="p-2 text-dark" to="/messagelist">
-          消息<span class="badge badge-danger" v-if="unReadMessageCount > 0">
-            {{unReadMessageCount}}
-          </span>
+            消息
+            <span class="badge badge-danger" v-if="unReadMessageCount > 0">{{unReadMessageCount}}</span>
           </router-link>
         </li>
         <li v-if="userInfo.name">
@@ -58,12 +62,24 @@ export default {
     this.getUnReadMessageCount();
   },
   computed: mapState({
-    courseList: state => state.course.courseList,
+    courseList: state => {
+      let showCourseList = [];
+      if (state.course.courseList) {
+        showCourseList = state.course.courseList.slice(0,4);
+      }
+
+      return showCourseList;
+    },
     userInfo: state => state.user.currentLoginUser,
     unReadMessageCount: state => state.message.unReadMessageCount
   }),
   methods: {
-    ...mapActions(["removeCurrentUserInfo", "getAllEffectCourseList","getCurrentLoginUserInfo","getUnReadMessageCount"]),
+    ...mapActions([
+      "removeCurrentUserInfo",
+      "getAllEffectCourseList",
+      "getCurrentLoginUserInfo",
+      "getUnReadMessageCount"
+    ]),
     goTo(path) {
       this.$router.push(path);
     },

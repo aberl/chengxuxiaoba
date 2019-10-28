@@ -236,7 +236,6 @@ export default {
       this.getMessageList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.currentPageNum = val;
       this.getMessageList();
     },

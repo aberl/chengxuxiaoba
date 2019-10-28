@@ -109,7 +109,6 @@ export default {
       this.getIssueList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.currentPageNum = val;
       this.getIssueList();
     },

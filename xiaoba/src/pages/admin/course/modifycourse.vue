@@ -105,7 +105,6 @@ export default {
       }
     },
     handlePreview(file) {
-      console.log(file);
     },
     async httprequest(uploader) {
       const result = await uploadFile(uploader,"COURSE_BACKGROUND");

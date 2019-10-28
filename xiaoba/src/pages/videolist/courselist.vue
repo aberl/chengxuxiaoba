@@ -86,7 +86,6 @@ export default {
         var _data = [];
         for (var index in state.video.videoList.data) {
           var description = state.video.videoList.data[index].description;
-          console.log(description.length);
           if (description.length > 110) {
             description = description.substring(0, 110) + "...";
           }
@@ -120,12 +119,10 @@ export default {
       this.getVideoList();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.currentPageNum = val;
       this.getVideoList();
     },
     goto(path){
-      console.log(path)
       this.$router.replace(path)
     }
     ,

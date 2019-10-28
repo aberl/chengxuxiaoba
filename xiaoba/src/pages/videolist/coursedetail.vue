@@ -1,6 +1,6 @@
 <template>
   <div>
-    <headerTop/>
+    <headerTop />
     <div class="container">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">
@@ -11,7 +11,7 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <br>
+    <br />
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">{{courseDetails.name}}</h1>
@@ -22,7 +22,7 @@
     <el-row :gutter="12" class="row_padding">
       <el-col :span="6" v-for="cmodule in courseModuleList" :key="cmodule.id">
         <el-card>
-          <img :src="cmodule.imageList[0].url" class="image" @click="ToCourseList(cmodule.id)">
+          <img :src="cmodule.imageList[0].url" class="image" @click="ToCourseList(cmodule.id)" />
           <div>
             <span class="bottom clearfix">{{cmodule.name}}</span>
             <span
@@ -36,7 +36,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <footerGuide/>
+    <footerGuide />
   </div>
 </template>
 
@@ -49,6 +49,11 @@ export default {
   mounted() {
     this.getCourseDetails(this.$route.query.id);
     this.getAllEffectiveCourseModuleList(this.$route.query.id);
+  },
+  watch: {
+    $route(to, from) {
+      window.location.reload();
+    }
   },
   computed: {
     ...mapState({
@@ -104,9 +109,9 @@ export default {
 .clearfix:after {
   clear: both;
 }
-.nav_show{
-   font-size: 20px;
-   font-family:"Microsoft YaHei" ;
-   font-weight:normal
+.nav_show {
+  font-size: 20px;
+  font-family: "Microsoft YaHei";
+  font-weight: normal;
 }
 </style>

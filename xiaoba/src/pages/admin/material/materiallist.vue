@@ -43,7 +43,6 @@ export default {
   methods: {
     ...mapActions(["getMaterialAllList"]),
     goToDetail(path, id) {
-      console.log(id)
       this.$router.replace({ path: path, query: { id: id } });
     }
   }
