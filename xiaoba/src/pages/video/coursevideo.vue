@@ -19,7 +19,6 @@
         </el-breadcrumb>
       </div>
       <br />
-      {{this.userInfo}}==>{{this.aliVideoInfo}}
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
@@ -46,7 +45,7 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
-          <el-image v-else :src="nologin_image_src"></el-image>
+          <el-image v-else :src="nologin_image_src" @click="goto('/login')"></el-image>
           <i
             class="el-icon-caret-left"
             v-if="this.preVideo"

@@ -123,13 +123,14 @@ export default {
       this.getVideoList();
     },
     goto(path){
-      this.$router.push(path)
+      this.$router.push(path);
     }
     ,
     watchCourseVideo(id) {
       this.$router.push("/coursevideo");
     }
   },
+  inject: ["reload"],
   data() {
     return {
       currentPageNum: 1,
