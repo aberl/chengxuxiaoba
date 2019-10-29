@@ -25,7 +25,7 @@
           @click="displayEvaluateWindow"
           type="primary"
           round
-          v-if="evaluateSubmitButtonDisplay && this.userInfo.permissions[this.PERMISSION.SUBMITEVALUATION]"
+          v-if="evaluateSubmitButtonDisplay && this.userInfo.permissions && this.userInfo.permissions[this.PERMISSION.SUBMITEVALUATION]"
         >我要评价</el-button>
       </small>
       <div v-for="evaluation in evaluationList" :key="evaluation.id">

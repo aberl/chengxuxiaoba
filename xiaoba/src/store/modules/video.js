@@ -29,7 +29,7 @@ import {
 const state = {
   videoCourseModule: {},
   videoDetail: {},
-  aliVideoDetail: { data: { video: "" } },
+  aliVideoDetail: { data: { videoId: "" } },
   videoList: { currentNum: 1, data: [], totalCount: 0 },
   result: {},
   recordStatistic: [],

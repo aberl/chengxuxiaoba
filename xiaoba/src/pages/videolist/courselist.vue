@@ -123,11 +123,11 @@ export default {
       this.getVideoList();
     },
     goto(path){
-      this.$router.replace(path)
+      this.$router.push(path)
     }
     ,
     watchCourseVideo(id) {
-      this.$router.replace("/coursevideo");
+      this.$router.push("/coursevideo");
     }
   },
   data() {

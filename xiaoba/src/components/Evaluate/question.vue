@@ -22,7 +22,7 @@
             @click="displayQuestionWindow"
             type="primary"
             round
-            v-if="questionSubmitButtonDisplay && this.userInfo.permissions[this.PERMISSION.SUBMITISSUE]"
+            v-if="questionSubmitButtonDisplay && this.userInfo.permissions && this.userInfo.permissions[this.PERMISSION.SUBMITISSUE]"
           >我要提问</el-button>
         </small>
         <div v-for="issue in issueList" :key="issue.id">

@@ -6,7 +6,7 @@
         <el-link
           type="primary"
           @click="download(url)"
-          v-if="this.userInfo.permissions[this.PERMISSION.SUBMITISSUE]"
+          v-if="this.userInfo.permissions && this.userInfo.permissions[this.PERMISSION.SUBMITISSUE]"
         >
           <i class="el-icon-download"></i>
         </el-link>

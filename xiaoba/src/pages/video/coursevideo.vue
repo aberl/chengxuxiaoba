@@ -19,6 +19,7 @@
         </el-breadcrumb>
       </div>
       <br />
+      {{this.userInfo}}==>{{this.aliVideoInfo}}
       <section class="jumbotron text-center">
         <div class="container">
           <p class="lead text-muted">{{videoDetail.desc}}</p>
@@ -26,7 +27,7 @@
         <div class="container">
           <el-image v-if="hasSurpassWatchLimitAlert" :src="nopermission_image_src"></el-image>
           <ali-player
-            v-else
+            v-else-if="this.aliVideoInfo"
             ref="player"
             @play="play"
             :vid="this.aliVideoInfo.videoId"
@@ -45,6 +46,7 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
+          <el-image v-else :src="nologin_image_src"></el-image>
           <i
             class="el-icon-caret-left"
             v-if="this.preVideo"
@@ -83,9 +85,11 @@ export default {
   },
   data() {
     return {
-      nopermission_image_src: this.PROMPT.VIDEOWATCHINGLIMITATIONIMAGEURL
+      nopermission_image_src: this.PROMPT.VIDEOWATCHINGLIMITATIONIMAGEURL,
+      nologin_image_src: this.PROMPT.NOLOGINIMAGEURL
     };
   },
+  inject: ["reload"],
   components: {
     headerTop,
     footerGuide,
