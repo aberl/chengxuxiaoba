@@ -24,7 +24,8 @@
           <p class="lead text-muted">{{videoDetail.desc}}</p>
         </div>
         <div class="container">
-          <el-image v-if="hasSurpassWatchLimitAlert" :src="nopermission_image_src"></el-image>
+          <el-image v-if="!this.userInfo.id" :src="nologin_image_src" @click="goto('/login')"></el-image>
+          <el-image v-else-if="hasSurpassWatchLimitAlert" :src="nopermission_image_src"></el-image>
           <ali-player
             v-else-if="this.aliVideoInfo"
             ref="player"
@@ -45,7 +46,7 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
-          <el-image v-else :src="nologin_image_src" @click="goto('/login')"></el-image>
+          
           <i
             class="el-icon-caret-left"
             v-if="this.preVideo"
@@ -102,7 +103,9 @@ export default {
     },
     aliVideoId(newVal, oldVal) {
       if (newVal != oldVal && newVal != "") {
-        this.getAliVideo(newVal);
+        console.log(newVal);
+        let aliVid=newVal.split('.')[1];
+        this.getAliVideo(aliVid);
       }
       this.increaseVideoWatchRecord({
         videoId: this.$route.query.id,

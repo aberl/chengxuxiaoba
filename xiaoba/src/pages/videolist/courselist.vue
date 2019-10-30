@@ -31,7 +31,7 @@
               >{{ video.index }} . {{video.name}}&nbsp;&nbsp;({{video.duration}}分钟/{{video.viewCount}}人观看)</strong>
             </p>
           </div>
-          <div @click="goto('/coursevideo?id='+video.id)">
+          <div @click="goto('/coursevideo', video.id)">
           <el-alert
             :title="video.description"
             class="iconfont ai-iconbofang"
@@ -122,8 +122,9 @@ export default {
       this.currentPageNum = val;
       this.getVideoList();
     },
-    goto(path){
-      this.$router.push(path);
+    goto(path, id){
+      // this.$router.push(path);
+      this.$router.push({path:path, query:{id:String(id), option:""}});
     }
     ,
     watchCourseVideo(id) {
