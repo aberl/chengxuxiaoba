@@ -27,7 +27,7 @@ import {
 } from "../../api";
 
 const state = {
-  courseDetails: { name: "", desc: "", status: 0, images: [] },
+  courseDetails: { name: "", desc: "", status: 0, aliImageUrls: [],aliImageUrlsStr:"" },
   courseList: [],
   courseModuleList:[],
   courseModuleDetails:{},
@@ -39,7 +39,7 @@ const actions = {
     const result = await reqAddCourse(
       course.name,
       course.desc,
-      course.images,
+      course.aliImgUrls,
       course.status
     );
 
@@ -64,8 +64,8 @@ const actions = {
     }
   },
 
-  async modifyCourseDetails({ commit }, { id, name, desc, images, status }) {
-    const result = await reqModifyCourse(id, name, desc, images, status);
+  async modifyCourseDetails({ commit }, { id, name, desc, aliImgUrls, status }) {
+    const result = await reqModifyCourse(id, name, desc, aliImgUrls, status);
     commit(REQUEST_MODIFY_COURSEDETAILS, { course: result });
   },
 
@@ -75,7 +75,7 @@ const actions = {
       coursemodule.courseName,
       coursemodule.name,
       coursemodule.desc,
-      coursemodule.images,
+      coursemodule.aliImgUrls,
       coursemodule.status
     );
 
@@ -99,8 +99,8 @@ const actions = {
       commit(REQUEST_RECEIVE_COURSEMODULEALLLIST, { courseModuleList: result.data });
     }
   },
-  async modifyCourseModuleDetails({ commit }, { id, courseId,courseName,name, desc, images, status }) {
-    const result = await reqModifyCourseModule(id, courseId,courseName,name, desc, images, status);
+  async modifyCourseModuleDetails({ commit }, { id, courseId,courseName,name, desc, aliImgUrls, status }) {
+    const result = await reqModifyCourseModule(id, courseId,courseName,name, desc, aliImgUrls, status);
     commit(REQUEST_MODIFY_COURSEMODULEDETAILS, { coursemodule: result });
   },
 };
@@ -120,24 +120,15 @@ const mutations = {
     let _name = course.name;
     let _desc = course.description;
     let _status = course.status;
-
-    let _imageDetail = [];
-    if (course.imageList != null && course.imageList.length > 0) {
-      for (var index in course.imageList) {
-        _imageDetail.push({
-          name:  course.imageList[index].originName,
-          newname:  course.imageList[index].name,
-          url: course.imageList[index].url
-        });
-      }
-    }
+    let _aliImageUrls = course.aliImageUrls;
 
     state.courseDetails = {
       id: _id,
       name: _name,
       desc: _desc,
       status: String(_status),
-      images: _imageDetail
+      aliImageUrls: _aliImageUrls,
+      aliImageUrlsStr: _aliImageUrls.join(";")
     };
   },
   [REQUEST_MODIFY_COURSEDETAILS](state, { course }) {
@@ -162,17 +153,8 @@ const mutations = {
     let _name = courseModule.name;
     let _desc = courseModule.description;
     let _status = courseModule.status;
+    let _aliImageUrls = courseModule.aliImageUrls;
 
-    let _imageDetail = [];
-    if (courseModule.imageList != null && courseModule.imageList.length > 0) {
-      for (var index in courseModule.imageList) {
-        _imageDetail.push({
-          name:  courseModule.imageList[index].originName,
-          newname:  courseModule.imageList[index].name,
-          url: courseModule.imageList[index].url
-        });
-      }
-    }
     state.courseModuleDetails = {
       id: _id,
       courseId:_courseId,
@@ -180,7 +162,8 @@ const mutations = {
       name: _name,
       desc: _desc,
       status: String(_status),
-      images: _imageDetail
+      aliImageUrls: _aliImageUrls,
+      aliImageUrlsStr: _aliImageUrls.join(";")
     };
   }
 };

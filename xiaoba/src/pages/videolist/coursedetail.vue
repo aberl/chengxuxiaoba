@@ -22,7 +22,7 @@
     <el-row :gutter="12" class="row_padding">
       <el-col :span="6" v-for="cmodule in courseModuleList" :key="cmodule.id">
         <el-card>
-          <img :src="cmodule.imageList[0].url" class="image" @click="ToCourseList(cmodule.id)" />
+          <el-image @click="ToCourseList(cmodule.id)" :src="cmodule.aliImageUrls[0]"></el-image>
           <div>
             <span class="bottom clearfix">{{cmodule.name}}</span>
             <span

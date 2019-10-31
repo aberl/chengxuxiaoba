@@ -125,8 +125,8 @@ export const reqRemoveUploadFile = filename =>
  * @param {*} images
  * @param {*} status
  */
-export const reqAddCourse = (name, description, images, status) =>
-  ajax(BASE_URL + "/courses", { name, description, images, status }, "POST");
+export const reqAddCourse = (name, description, aliImgUrls, status) =>
+  ajax(BASE_URL + "/courses", { name, description, aliImgUrls, status }, "POST");
 
 /**
  * 获取所有课程列表
@@ -151,8 +151,8 @@ export const reqGetCourseDetails = courseId =>
  * @param {*} images
  * @param {*} status
  */
-export const reqModifyCourse = (id, name, description, images, status) =>
-  ajax(BASE_URL + "/courses", { id, name, description, images, status }, "PUT");
+export const reqModifyCourse = (id, name, description, aliImgUrls, status) =>
+  ajax(BASE_URL + "/courses", { id, name, description, aliImgUrls, status }, "PUT");
 
 /**
  * 添加课程模块
@@ -167,12 +167,12 @@ export const reqAddCourseModule = (
   courseName,
   name,
   description,
-  images,
+  aliImgUrls,
   status
 ) =>
   ajax(
     BASE_URL + "/courses/module",
-    { courseId, courseName, name, description, images, status },
+    { courseId, courseName, name, description, aliImgUrls, status },
     "POST"
   );
 
@@ -189,12 +189,12 @@ export const reqModifyCourseModule = (
   courseName,
   name,
   description,
-  images,
+  aliImgUrls,
   status
 ) =>
   ajax(
     BASE_URL + "/courses/module",
-    { id, courseId, courseName, name, description, images, status },
+    { id, courseId, courseName, name, description, aliImgUrls, status },
     "PUT"
   );
 

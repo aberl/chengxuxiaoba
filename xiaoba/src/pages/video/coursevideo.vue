@@ -46,17 +46,21 @@
             showBarTime="6000"
             autoPlayDelayDisplayText="000"
           ></ali-player>
-          
-          <i
-            class="el-icon-caret-left"
-            v-if="this.preVideo"
-            @click="goto('/coursevideo?id='+preVideo.id)"
-          >{{this.preVideo.name}}</i>
-          <i
-            class="el-icon-caret-right"
-            v-if="this.nextVideo"
-            @click="goto('/coursevideo?id='+nextVideo.id)"
-          >{{this.nextVideo.name}}</i>
+          <br />
+          <div>
+            <span
+              style="float:left"
+              class="el-icon-caret-left"
+              v-if="this.preVideo"
+              @click="goto('/coursevideo?id='+preVideo.id)"
+            >{{this.preVideo.name}}</span>
+            <span
+              style="float:right"
+              class="el-icon-caret-right"
+              v-if="this.nextVideo"
+              @click="goto('/coursevideo?id='+nextVideo.id)"
+            >{{this.nextVideo.name}}</span>
+          </div>
         </div>
       </section>
       <div class="container">共{{videoDetail.viewCount}}人次观看</div>
@@ -104,7 +108,7 @@ export default {
     aliVideoId(newVal, oldVal) {
       if (newVal != oldVal && newVal != "") {
         console.log(newVal);
-        let aliVid=newVal.split('.')[1];
+        let aliVid = newVal.split(".")[1];
         this.getAliVideo(aliVid);
       }
       this.increaseVideoWatchRecord({

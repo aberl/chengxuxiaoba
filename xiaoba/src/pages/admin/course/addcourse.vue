@@ -9,22 +9,8 @@
     <el-form-item label="名称" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="图片" ref="registerRef" prop="images">
-      <el-upload
-        class="upload-demo"
-        action="string"
-        :multiple=false
-        :before-upload="beforeUpload"
-        :on-success="uploadSuccess"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :http-request="httprequest"
-        list-type="picture"
-        accept=".png,.jpg"
-      >
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过5M</div>
-      </el-upload>
+    <el-form-item label="图片" prop="aliImgUrls">
+      <el-input v-model="ruleForm.aliImgUrls"></el-input>
     </el-form-item>
     <el-form-item label="描述" prop="desc">
       <el-input type="textarea" v-model="ruleForm.desc"></el-input>
@@ -65,7 +51,7 @@ export default {
         name: "",
         desc: "",
         status: "1",
-        images: []
+        aliImgUrls: ""
       },
       rules: {
         name: [
@@ -73,49 +59,12 @@ export default {
           { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
         ],
         desc: [{ required: true, message: "请填写描述", trigger: "blur" }],
-        images: [
-          {
-            required: true,
-            message: "只能上传jpg/png文件，且不超过5M",
-            trigger: "blur"
-          }
-        ]
+        aliImgUrls: [{ required: true, message: "请输入图片url地址", trigger: "blur" }]
       }
     };
   },
   methods: {
     ...mapActions(["addCourse"]),
-    beforeUpload(file) {
-      var _flag = isMatchFileSize(file, this.fileLimitSize);
-      if (!_flag) return _flag;
-
-      _flag = isMatchUploaded(file, this.ruleForm.images);
-      if (!_flag) return _flag;
-
-      return true;
-    },
-    async uploadSuccess(response, file, fileList) {},
-    async handleRemove(file, fileList) {
-      if (file.status != "success") return false;
-
-      var result = await removeFile(file, this.ruleForm.images);
-      if (result.code == 0) {
-        var _index = getIndex(file, this.ruleForm.images);
-        this.ruleForm.images.splice(_index, 1);
-      }
-    },
-    handlePreview(file) {
-    },
-    async httprequest(uploader) {
-      const result = await uploadFile(uploader,"COURSE_BACKGROUND");
-      if (result.code == 0) {
-        this.ruleForm.images.push({
-          name: uploader.file.name,
-          newname: result.data.name,
-          url: result.data.url
-        });
-      }
-    },
 
     async submitForm(formName) {
       var flag = true;
@@ -126,12 +75,12 @@ export default {
       });
       if (!flag) return false;
 
-      var _images = [];
-      this.ruleForm.images.forEach(item => {
-        _images.push(item.newname);
-      });
+      // var _images = [];
+      // this.ruleForm.images.forEach(item => {
+      //   _images.push(item.newname);
+      // });
 
-      this.ruleForm.images = JSON.stringify(_images);
+      // this.ruleForm.images = JSON.stringify(_images);
       await this.addCourse(this.ruleForm);
 
       if(eval(this.addResult.data)){
