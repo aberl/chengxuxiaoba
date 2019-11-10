@@ -38,7 +38,7 @@
             :useH5Prism="true"
             :preload="false"
             :x5_fullscreen="true"
-            format="mp4"
+            format="m3u8"
             width="80%"
             height="520px"
             :prism-cover="this.aliVideoInfo.cover"
