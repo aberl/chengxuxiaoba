@@ -2,7 +2,7 @@
   <div>
           <div style="margin: 20px 0;"></div>
           <div>
-            <img src="./images/QRCode.png" width="100" height="100" class="img-circle">
+            <img :src="wechatloginimgurl" width="100" height="100" class="img-circle">
           </div>
           <div style="margin: 20px 0;"></div>
           <div>
@@ -13,6 +13,11 @@
 
 <script>
 export default {
+  data(){
+    return {
+      wechatloginimgurl:this.PROMPT.WECHATLOGINIMGURL
+      }
+  },
   methods: {
 
   },

@@ -11,22 +11,13 @@
     </div>
     <div class="container">
       <div class="my-3 p-3 bg-white rounded box-shadow title_font">
-        会员福利&nbsp;&nbsp;
-        <img src="./images/vip2.png" />
-        <div style="margin: 20px;"></div>
-        <div  v-for="permission in this.role.permissionList" :key="permission.id" class="message">
-          {{permission.description}}</div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         讲师介绍&nbsp;&nbsp;
         <img src="./images/vip2.png" />
         <div style="margin: 20px;"></div>
         <el-row>
           <el-col :span="8">
             <div class="grid-content bg-purple">
-              <img src="./images/teacher.jpg" />
+               <el-image :src="instructor_001" ></el-image>
             </div>
           </el-col>
           <el-col :span="16">
@@ -67,6 +58,7 @@ export default {
   },
   data() {
     return {
+      instructor_001: this.PROMPT.INSTRUCTOR_001,
       src:
         "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
     };

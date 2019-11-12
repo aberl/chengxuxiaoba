@@ -144,7 +144,7 @@ export default {
       this.countDownToLogin();
     },
     countDown() {
-      const totalTime = 3;
+      const totalTime = 120;
       this.countDountTime = totalTime;
       if (!this.timer) {
         this.timer = window.setInterval(() => {
