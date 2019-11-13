@@ -4,7 +4,6 @@
     <div class="container">
       <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         小巴宣言&nbsp;&nbsp;
-        <img src="./images/declaration.png" />
         <div style="margin: 20px;"></div>
         <div class="message">最纯粹的程序员技术梦工厂</div>
       </div>
@@ -12,7 +11,6 @@
     <div class="container">
       <div class="my-3 p-3 bg-white rounded box-shadow title_font">
         讲师介绍&nbsp;&nbsp;
-        <img src="./images/vip2.png" />
         <div style="margin: 20px;"></div>
         <el-row>
           <el-col :span="8">
@@ -29,18 +27,6 @@
             <div class="grid-content bg-purple-light">熟悉MYSQL,MSSQL,Redis等各种类型数据库</div>
           </el-col>
         </el-row>
-      </div>
-    </div>
-    <div class="container">
-      <div class="my-3 p-3 bg-white rounded box-shadow title_font">
-        网站介绍&nbsp;&nbsp;
-        <img src="./images/vip2.png" />
-        <div style="margin: 20px;"></div>
-        <el-carousel :interval="4000" type="card" height="400px">
-          <el-carousel-item v-for="item in 3" :key="item">
-            <el-image :src="src"></el-image>
-          </el-carousel-item>
-        </el-carousel>
       </div>
     </div>
     <footerGuide />

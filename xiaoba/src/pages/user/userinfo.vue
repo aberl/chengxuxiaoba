@@ -11,7 +11,7 @@
           <el-divider></el-divider>
           <el-form-item label="手机号">&#8195;&#8195;{{this.userInfo.mobilePhoneNo}}</el-form-item>
           <el-divider></el-divider>
-          <el-form-item label="会员详情">
+          <!-- <el-form-item label="会员详情">
             &#8195;&#8195;当前等级&#8195;&#8195;
             <el-tag type="success">{{role.description}}</el-tag>
             <div class="padding-top"></div>
@@ -38,7 +38,7 @@
               <div class="padding-top"></div>
               &#8195;&#8195;{{permission.description}}
             </div>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </div>
     </div>
