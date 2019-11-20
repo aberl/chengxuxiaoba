@@ -1,6 +1,8 @@
 import ajax from "./ajax";
 
-const BASE_URL = "/api";
+const BASE_URL= process.env.API_ROOT;
+
+//const BASE_URL = "/api";
 
 /**
  * 发生验证码
