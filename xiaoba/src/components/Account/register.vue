@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Captcha @success="SetToken"></Captcha>
     <div style="margin-top: 15px;">
       <el-input placeholder="手机号码" v-model="mobilephone4reg" clearable>
         <el-button
@@ -11,16 +12,16 @@
         >{{validationCodeButtonContent}}</el-button>
       </el-input>
     </div>
-    <br>
+    <br />
     <div class="input-group">
       <el-input placeholder="验证码" v-model="validationcode4reg" clearable></el-input>
     </div>
-    <br>
+    <br />
 
     <div class="input-group">
       <el-input type="password" placeholder="密码由6-12位数字或字母组成" v-model="password4reg" show-password></el-input>
     </div>
-    <br>
+    <br />
     <button type="button" class="btn btn-success btn-lg btn-block" @click="register">注 册</button>
   </div>
 </template>
@@ -28,6 +29,9 @@
 <script>
 import { mapActions } from "vuex";
 import { warn } from "../../VueAPI/Dialog/dialog";
+
+import Captcha from "../Captcha/captcha.vue";
+
 import {
   matchMobilePhone,
   matchRegisterPassword
@@ -60,7 +64,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["receiveUserInfo","conserveCurrentUserInfo"]),
+    ...mapActions(["receiveUserInfo", "conserveCurrentUserInfo"]),
     async sendcode() {
       if (this.mobilephone4reg == null || this.mobilephone4reg == "") {
         warn("手机号不能为空", "");
@@ -146,9 +150,26 @@ export default {
           this.isValidationCodeButtonDisabled = false;
         }, 1000);
       }
+    },
+    ncVerify() {
+      if (!this.form.token) {
+        this.ResetValidate();
+        return false;
+      }
+      return true;
+    },
+    ResetValidate() {
+      this.form.token = "";
+      // eslint-disable-next-line
+      LUOCAPTCHA && LUOCAPTCHA.reset();
+    },
+    SetToken(resp) {
+      this.submit = true;
+      this.form.token = resp;
     }
   },
   components: {
+    Captcha
   }
 };
 </script>
