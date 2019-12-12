@@ -9,8 +9,8 @@ const BASE_URL = "/api";
  * @param {*} mobilePhoneNo
  * @param {*} category
  */
-export const reqSendValidationCode = (mobilePhoneNo, category) =>
-  ajax(BASE_URL + "/validation/code", { mobilePhoneNo, category }, "POST");
+export const reqSendValidationCode = (captcha, mobilePhoneNo, category) =>
+  ajax(BASE_URL + "/validation/code", { captcha,mobilePhoneNo, category }, "POST");
 
 /**
  * 注册

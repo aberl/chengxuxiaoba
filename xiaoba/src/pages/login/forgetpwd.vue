@@ -94,6 +94,7 @@ export default {
       }
 
       const result = await reqSendValidationCode(
+        "",
         this.mobilephone,
         this.category
       );

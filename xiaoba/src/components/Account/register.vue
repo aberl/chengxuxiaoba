@@ -23,6 +23,7 @@
     </div>
     <br />
     <button type="button" class="btn btn-success btn-lg btn-block" @click="register">注 册</button>
+    {{this.form.token}}
   </div>
 </template>
 
@@ -54,7 +55,11 @@ export default {
       validationCodeButtonContent: "发送验证码",
       disabledContent: "s后重新发送", // 按钮里显示的内容
       enableContent: "发送验证码", // 按钮里显示的内容
-      countDountTime: "" //记录具体倒计时时间
+      countDountTime: "", //记录具体倒计时时间
+      form: {
+        token: ""
+      },
+      submit: false
     };
   },
   computed: {
@@ -66,6 +71,11 @@ export default {
   methods: {
     ...mapActions(["receiveUserInfo", "conserveCurrentUserInfo"]),
     async sendcode() {
+       if (!this.submit) {
+          warn("请先进行验证", "");
+        return;
+      }
+
       if (this.mobilephone4reg == null || this.mobilephone4reg == "") {
         warn("手机号不能为空", "");
         return;
