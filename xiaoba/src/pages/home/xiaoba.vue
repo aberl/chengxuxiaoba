@@ -20,11 +20,7 @@
           </el-col>
           <el-col :span="16">
             <div style="margin: 20px;"></div>
-            <div class="grid-content bg-purple-light">就职于计算机世界，易车，优信，戴姆勒等公司</div>
-            <div style="margin: 20px;"></div>
-            <div class="grid-content bg-purple-light">11年后端开发经验熟悉.NET，JAVA</div>
-            <div style="margin: 20px;"></div>
-            <div class="grid-content bg-purple-light">熟悉MYSQL,MSSQL,Redis等各种类型数据库</div>
+            <div class="grid-content bg-purple-light">待完善</div>
           </el-col>
         </el-row>
       </div>

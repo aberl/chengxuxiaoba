@@ -10,7 +10,7 @@
     <el-row :gutter="12" class="row_padding">
       <el-col :span="6" v-for="course in courseList" :key="course.id">
         <el-card>
-          <el-image @click="ToCourseDetail(course.id)" :src="course.aliImageUrls[0]"></el-image>
+          <el-image @click="ToCourseDetail(course.id)" :src="course.aliImageUrls[0]" fit="cover"></el-image>
           <div>
             <span>{{course.name}}</span>
             <div class="bottom clearfix">

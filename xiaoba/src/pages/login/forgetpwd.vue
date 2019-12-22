@@ -3,11 +3,12 @@
     <div style="margin: 200px 0;"></div>
 
     <form class="form-signin">
-      <headwe4login/>
+      <headwe4login />
       <i class="iconfont ai-iconwangjimima"></i>
       <strong>忘记密码</strong>
       <div style="margin: 20px 0;"></div>
       <div v-if="!isResetSuccess">
+        <Captcha @success="SetToken"></Captcha>
         <el-input placeholder="手机号码" v-model="mobilephone" clearable>
           <el-button
             slot="append"
@@ -26,7 +27,7 @@
         <div class="input-group">
           <el-input type="password" placeholder="密码由6-12位数字或字母组成" v-model="password" show-password></el-input>
         </div>
-        <br>
+        <br />
         <div style="margin: 20px 0;"></div>
         <button type="button" class="btn btn-success btn-lg btn-block" @click="resetPassword">提 交</button>
       </div>
@@ -45,6 +46,8 @@ import {
 import headwe4login from "../../components/Header/header4login.vue";
 import { reqSendValidationCode, reResetPassword } from "../../api";
 
+import Captcha from "../../components/Captcha/captcha.vue";
+
 export default {
   data() {
     return {
@@ -62,13 +65,17 @@ export default {
       countDountTime: "", //记录具体倒计时时间
       countDountTimeToLogin: "5", //记录具体倒计时时间
       innerRdirectContent: "s后自动跳转到登录页",
-      rdirectContent: "5s后自动跳转到登录页"
+      rdirectContent: "5s后自动跳转到登录页",
+      form: {
+        token: ""
+      },
+      submit: false
     };
   },
   mounted: function() {
-    var localUserInfo=JSON.parse(localStorage.getItem("userInfo"));
-    if(localUserInfo.name){
-      this.goTo('/');
+    var localUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (localUserInfo.name) {
+      this.goTo("/");
     }
   },
   computed: {
@@ -83,6 +90,11 @@ export default {
       this.$router.replace(path);
     },
     async sendcode() {
+      if (!this.submit) {
+        warn("请先进行验证", "");
+        return;
+      }
+
       if (this.mobilephone == null || this.mobilephone == "") {
         warn("手机号不能为空", "");
         return;
@@ -94,7 +106,7 @@ export default {
       }
 
       const result = await reqSendValidationCode(
-        "",
+        this.form.token,
         this.mobilephone,
         this.category
       );
@@ -177,9 +189,25 @@ export default {
         this.redirectTimer = null;
         this.goTo("/login");
       }, 1000);
+    },
+    ncVerify() {
+      if (!this.form.token) {
+        this.ResetValidate();
+        return false;
+      }
+      return true;
+    },
+    ResetValidate() {
+      this.form.token = "";
+      // eslint-disable-next-line
+      LUOCAPTCHA && LUOCAPTCHA.reset();
+    },
+    SetToken(resp) {
+      this.submit = true;
+      this.form.token = resp;
     }
   },
-  components: { headwe4login }
+  components: { headwe4login, Captcha }
 };
 </script>
 
