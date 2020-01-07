@@ -33,7 +33,9 @@
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
     <el-form-item label="ali视频Id" prop="aliVideoId">
-      <el-input v-model="ruleForm.aliVideoId"></el-input>
+      <el-input v-model="ruleForm.aliVideoId">
+         <el-button slot="append" icon="el-icon-magic-stick">转码</el-button>
+      </el-input>
     </el-form-item>
     <el-form-item label="附件">
       <el-upload
