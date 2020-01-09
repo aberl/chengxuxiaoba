@@ -298,6 +298,26 @@ export const reqGetAliVideo = alivid =>
   ajax(BASE_URL + "/videos/ali/" + alivid);
 
 /**
+ * 添加视频
+ * @param {*} courseModuleId
+ * @param {*} file
+ * @param {*} name
+ * @param {*} attachments
+ * @param {*} duration
+ * @param {*} description
+ */
+export const reqEncodeAliVideo = (
+  aliVideoId
+) =>
+  ajax(
+    BASE_URL + "/videos/ali/encode",
+    {
+      aliVideoId
+    },
+    "POST"
+  );
+
+/**
  * 修改视频
  * @param {*} id
  * @param {*} aliVideoId

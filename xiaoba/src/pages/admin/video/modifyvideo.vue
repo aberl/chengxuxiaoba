@@ -39,7 +39,10 @@
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
     <el-form-item label="ali视频Id" prop="aliVideoId">
-      <el-input v-model="ruleForm.aliVideoId"></el-input>
+      <el-input v-model="ruleForm.aliVideoId">
+         <el-button slot="append" icon="el-icon-magic-stick" 
+         @click="encodeAliVideoById(ruleForm.aliVideoId)">转码</el-button>
+      </el-input>
     </el-form-item>
     <el-form-item label="附件">
       <el-upload
@@ -93,6 +96,7 @@ export default {
   computed: {
     ...mapState({
       modifyResult: state => state.video.result,
+      result: state => state.video.result,
       ruleForm: state => state.video.videoDetail,
       courseModule: state => {
         return state.video.videoCourseModule;
@@ -132,7 +136,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["getVideo", "modifyVideo"]),
+    ...mapActions(["getVideo", "modifyVideo","encodeAliVideo"]),
     courseSelected(val) {
       this.getAllCourseModuleList(val);
       this.ruleForm.courseModuleId = "";
@@ -176,6 +180,20 @@ export default {
       if (eval(this.modifyResult.data)) {
         this.$router.replace("/op/videolist");
       }
+    },
+    async encodeAliVideoById(aliVideoId){
+     
+    await this.encodeAliVideo(aliVideoId);
+
+      if (this.result.code != 0) {
+        this.$message.error("转码"+this.result.message);
+      } else {
+        this.$message({
+          message: "转码"+this.result.message,
+          type: "success"
+        });
+      }
+
     }
   },
   components: {}

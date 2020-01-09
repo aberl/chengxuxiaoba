@@ -10,7 +10,8 @@ import {
   REQUEST_RECEIVE_ALIVIDEODETAILS,
   REQUEST_MODIFY_VIDEO,
   REQUEST_RECEIVE_RECORDSTATISTIC,
-  REQUEST_RECEIVE_VIDEORECORDLIST
+  REQUEST_RECEIVE_VIDEORECORDLIST,
+  REQUEST_RECEIVE_ENCODEALIVIDEO
 } from "../mutation-types.js";
 
 import {
@@ -23,7 +24,8 @@ import {
   reqModifyVideo,
   reqIncreaseVideoWatchRecord,
   reqVideoWatchingRecordStatistic,
-  reqVideoRecordList
+  reqVideoRecordList,
+  reqEncodeAliVideo
 } from "../../api";
 
 const state = {
@@ -52,7 +54,13 @@ const actions = {
 
     commit(REQUEST_ADD_VIDEO, { video: result });
   },
+  async encodeAliVideo({ commit }, aliVideoId) {
+     const result = await reqEncodeAliVideo(
+      aliVideoId
+    );
 
+    commit(REQUEST_RECEIVE_ENCODEALIVIDEO, { result });
+  },
   increaseVideoWatchRecord({ commit }, { videoId, watchAccountId }) {
     reqIncreaseVideoWatchRecord(videoId, watchAccountId);
   },
@@ -181,6 +189,9 @@ const mutations = {
   },
   [REQUEST_RECEIVE_VIDEORECORDLIST](state, { recordList }) {
     state.videoRecordList = recordList;
+  },
+  [REQUEST_RECEIVE_ENCODEALIVIDEO](state, { result }) {
+    state.result = result;
   }
 };
 

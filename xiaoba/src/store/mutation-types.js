@@ -34,6 +34,7 @@ export const REQUEST_RECEIVE_VIDEODETAILS = 'request_receive_videodetails'
 export const REQUEST_RECEIVE_ALIVIDEODETAILS = 'request_receive_alivideodetails'
 export const REQUEST_RECEIVE_VIDEOALLLIST = 'request_receive_videoalllist'
 export const REQUEST_RECEIVE_PREANDNEXTVIDEOS = 'request_receive_preandnextvideos'
+export const REQUEST_RECEIVE_ENCODEALIVIDEO = 'request_receive_encodealivideo'
 
 export const REQUEST_ADD_EVALUATION = 'request_add_evaluation'
 export const REQUEST_DELETE_EVALUATION = 'request_delete_evaluation'
@@ -83,6 +84,7 @@ export default {
   REQUEST_RECEIVE_VIDEODETAILS,
   REQUEST_RECEIVE_ALIVIDEODETAILS,
   REQUEST_MODIFY_VIDEO,
+  REQUEST_RECEIVE_ENCODEALIVIDEO,
   REQUEST_RECEIVE_ROLEALLLIST,
   REQUEST_UPDATE_USERINFO,
   REQUEST_ADD_EVALUATION,
