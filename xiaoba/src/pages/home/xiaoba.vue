@@ -20,7 +20,9 @@
           </el-col>
           <el-col :span="16">
             <div style="margin: 20px;"></div>
-            <div class="grid-content bg-purple-light">待完善</div>
+            <div class="grid-content bg-purple-light">资深JAVA架构师,10余年 JAVA 、.NET 等架构设计研发经验,以及多年全栈研发经验,曾就职于汽车相关行业等互联网大厂,
+              担任Team Leader、高级研发经理、基础组件架构师等核心职位，擅长系统架构，应用架构和基础组件相关设计，对高并发，高可用，分布式系统有这丰富的理解和实战经验，精通
+              互联网各类主流技术。</div>
           </el-col>
         </el-row>
       </div>
