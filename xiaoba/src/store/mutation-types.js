@@ -27,6 +27,7 @@ export const REQUEST_MODIFY_COURSEMODULEDETAILS = 'request_modify_coursemodulede
 
 export const REQUEST_REMOVE_FILE = 'request_remove_file'
 export const REQUEST_UPLOAD_FILE = 'request_upload_file'
+export const REQUEST_DOWNLOAD_FILE = 'request_download_file'
 
 export const REQUEST_ADD_VIDEO = 'request_add_video'
 export const REQUEST_MODIFY_VIDEO = 'request_modify_video'
@@ -76,6 +77,7 @@ export default {
   REQUEST_RECEIVE_COURSEMODULEALLLIST,
   REQUEST_REMOVE_FILE,
   REQUEST_UPLOAD_FILE,
+  REQUEST_DOWNLOAD_FILE,
   REQUEST_RECEIVE_COURSEMODULEDETAILS,
   REQUEST_MODIFY_COURSEMODULEDETAILS,
   REQUEST_ADD_VIDEO,

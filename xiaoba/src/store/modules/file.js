@@ -1,11 +1,12 @@
 /**
  * 文件模块
  */
-import { REQUEST_UPLOAD_FILE, REQUEST_REMOVE_FILE } from "../mutation-types.js";
+import { REQUEST_UPLOAD_FILE, REQUEST_REMOVE_FILE,REQUEST_DOWNLOAD_FILE } from "../mutation-types.js";
 
-import { reqUploadFile, reqRemoveUploadFile } from "../../api";
+import { reqUploadFile, reqRemoveUploadFile, reqDownloadFile } from "../../api";
 
 const state = {
+  result:{},
   currentUploadResult: { originname: "", newname: "" },
   uploadFiles: []
 };
@@ -58,6 +59,11 @@ const actions = {
         return false;
       }
     }
+  },
+
+  async downFile({ commit }, filename){
+    const result = await reqDownloadFile(filename);
+    commit(REQUEST_DOWNLOAD_FILE, result);
   }
 };
 
@@ -73,6 +79,10 @@ const mutations = {
 
   [REQUEST_REMOVE_FILE](state, removeIndex) {
     state.uploadFiles.splice(removeIndex, 1);
+  },
+
+  [REQUEST_DOWNLOAD_FILE](state, result) {
+    state.result=result;
   }
 };
 

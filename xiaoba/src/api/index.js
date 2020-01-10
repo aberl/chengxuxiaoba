@@ -121,6 +121,13 @@ export const reqRemoveUploadFile = filename =>
   ajax(BASE_URL + "/uploadfile/" + filename, null, "DELETE");
 
 /**
+ * 下载文件
+ * @param {*} filename
+ */
+export const reqDownloadFile = filename =>
+  ajax(BASE_URL + "/file/" + filename);
+
+/**
  * 添加课程
  * @param {*} name
  * @param {*} description
